@@ -17,7 +17,7 @@ class CarpoolsController extends Controller
                 unset($_POST['search']);
 
                 $carpool = new Carpool(Database::getPDOInstance());
-                $results = $carpool->findByCity_like($city);
+                $results = $carpool->findByCityDep_like($city);
 
             if ($results == null) {
                 exit();

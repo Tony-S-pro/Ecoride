@@ -1,6 +1,6 @@
 <?php
 
-define('APP_NAME', 'MVC');
+define('APP_NAME', 'Ecoride');
 
 // Required php extensions
 define('REQ_PHP_EXT', [
@@ -11,14 +11,14 @@ define('REQ_PHP_EXT', [
 define('DEBUG', true);
 
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-    define('BASE_APP', 'http://localhost/workspace/Ecoride-Dev/'.APP_NAME.'/');
-    define('BASE_URL', 'http://localhost/workspace/Ecoride-Dev/'.APP_NAME."/public/");
+    define('BASE_APP', 'http://localhost/workspace/'.APP_NAME.'/');
+    define('BASE_URL', 'http://localhost/workspace/'.APP_NAME."/public/");
 
     // Database config (localhost)
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASS', '');
-    define('DB_NAME', 'grafikart');
+    define('DB_NAME', 'ecoride');
 
 } else {
     define('ROOT_APP', 'https://my-app.com/');

@@ -24,10 +24,10 @@ function getTable(result)
         //use backticks `` to avoid concatenations (</td> + <td>)
         x=x+`
             <tr>
-            <td>${result[i]['dep_date']}</td>
-            <td>${result[i]['dep_hour']}</td>
-            <td>${result[i]['city']}</td>
-            <td>${result[i]['city_dest']}</td>
+            <td>${result[i]['departure_date']}</td>
+            <td>${result[i]['departure_time']}</td>
+            <td>${result[i]['departure_city']}</td>
+            <td>${result[i]['arrival_city']}</td>
             <td>${result[i]['price']}</td>
             <td><button type="button" class="btn btn-success btn-sm">Détails</button></td>
             </tr>

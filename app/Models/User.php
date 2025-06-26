@@ -35,7 +35,7 @@ class User extends Model
             firstname,
             name,
             role,
-            inscription_date
+            subscription_date
         ) VALUES (
             :email,
             :password,
@@ -43,7 +43,7 @@ class User extends Model
             :firstname,
             :name,
             :role,
-            :inscription_date
+            :subscription_date
         )";
 
         $stmt = $db->prepare($query);
@@ -61,7 +61,7 @@ class User extends Model
                 'firstname' => $data['firstname'],
                 'name' => $data['name'],
                 'role' => $data['role'],
-                'inscription_date' => $data['inscription_date']
+                'subscription_date' => $data['inscription_date']
             ]);
 
             $data['id'] = $db->lastInsertId();

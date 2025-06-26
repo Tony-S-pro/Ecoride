@@ -10,14 +10,14 @@ class Carpool extends Model
 {
     protected string $table = 'carpools';
 
-    public function findByCity_like($city)
+    public function findByCityDep_like($city)
     {
-        $query = "SELECT * FROM $this->table WHERE city LIKE :city ;";
+        $query = "SELECT * FROM $this->table WHERE departure_city LIKE :departure_city ;";
         $stmt = $this->db->prepare($query);
         
         //$stmt->execute(['email' => $email]);
         //binding the value is more secure than sending it directly
-        $stmt->bindValue(':city', $city, PDO::PARAM_STR);
+        $stmt->bindValue(':departure_city', $city, PDO::PARAM_STR);
         $stmt->execute();
         
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
