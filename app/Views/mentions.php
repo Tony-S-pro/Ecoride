@@ -1,3 +1,4 @@
+<?php defined('ROOT_PATH') OR exit("You don't have permission to access this resource."); ?>
         <h1>Mentions légales</h1></br>
 
         <section>
