@@ -58,10 +58,10 @@ $('#searchForm').on('submit', function(e) {
 
         success:function(response) {
             let x = JSON.stringify(response);
-            alert(x);
-            //let html = getTable(response);
+            //alert(x);
+            let html = getTable(response);
             //alert(html);
-            //$("#results-carpool").html(html);
+            $("#results-carpool").html(html);
         }
     });
 
