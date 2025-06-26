@@ -1,15 +1,35 @@
 <?php
-spl_autoload_register(function ($className) {
-    // Turns namespace into path
-    $className = str_replace('App\\', 'app/', $className); 
+/**
+ * Autoloader PSR-4
+ *
+ * @param string $class The fully-qualified class name.
+ * @return void
+ */
+spl_autoload_register(function ($class) {
 
-    $className = str_replace('\\', '/', $className);
+    // project's namespace prefix
+    $prefix = 'App\\';
 
-    $filePath = dirname(__DIR__) . '/' . $className . '.php';
+    // base directory matching namespace prefix
+    $base_dir = BASE_APP . 'app/';
 
-    if (file_exists($filePath)) {
-        require_once $filePath;
-    } else {
-        echo "File not found: $filePath";
-    }    
+    // check if class uses the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory
+    // replace namespace separators with dir separators in the relative class name
+    // append .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require_once $file;
+    }
 });

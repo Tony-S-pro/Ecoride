@@ -8,9 +8,10 @@ class HomeController extends Controller
     public function index(): void
     {
         $data = [
-            'title' => "Home title"
+            'title' => "Home title",
+            'view' => "home"
         ];        
 
-        Controller::render('home', $data);
+        Controller::render($data['view'], $data);
     }
 }

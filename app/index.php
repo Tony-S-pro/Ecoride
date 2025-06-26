@@ -22,8 +22,15 @@ if (!preg_match('/^[a-zA-Z0-9_]+$/', $methodName)) {
 }
 
 // Controller/methods white list (to avoid access to sensitive controllers)
-$allowedControllers = ['HomeController', 'TestController', 'RandomController'];
-$allowedMethods = ['index'];
+$allowedControllers = [
+    'HomeController', 
+    'MentionsController',
+    'SignupController', 
+    'LoginController',
+    'LogoutController',
+    'DashboardController',
+    'TestController', 'RandomController'];
+$allowedMethods = ['index', 'cookies', 'register'];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {
     require_once __DIR__ . '/Views/error404.php';

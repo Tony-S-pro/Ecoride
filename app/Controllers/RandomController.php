@@ -8,9 +8,10 @@ class RandomController extends Controller
     public function index(): void
     {
         $data = [
-            'title' => "Random title"
+            'title' => "Random title",
+            'view' => "random"
         ];        
 
-        Controller::render('random', $data);
+        Controller::render($data['view'], $data);
     }
 }

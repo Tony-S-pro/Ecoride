@@ -29,7 +29,7 @@ class Database
     }
 
     /* Singleton design (one class = one(unique) object). If We already have a pdo object, use it */
-    public static function getInstance()
+    public static function getPDOInstance()
     {
         if (self::$pdoInstance === null) {
             self::$pdoInstance = new Database();

@@ -8,9 +8,9 @@ class TestController extends Controller
     public function index(): void
     {
         $data = [
-            'title' => "Test title"
+            'title' => "Test title",
+            'view' => "test"
         ];        
-        echo 'test';
-        Controller::render('test', $data);
+        Controller::render($data['view'], $data);
     }
 }
