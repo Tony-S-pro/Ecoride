@@ -1,5 +1,5 @@
 <div class="container justify-content-center my-1 d-flex align-text-center">
-    <span class="fw-light fs-6 text-body-secondary">© 2025 EcoRide</span>
+    <span class="fw-light fs-6 text-body-secondary">&copy; <?= date("Y"); ?> EcoRide</span>
 </div>
 
 <footer class="mt-auto footer">
