@@ -10,7 +10,7 @@ class User extends Model
 {
     protected string $table = 'users';
 
-    public function is_mail_in_db($email)
+    public function isEmailIn($email)
     {
         $query = "SELECT email FROM users WHERE email = :email ;";
         $stmt = $this->db->prepare($query);
@@ -73,5 +73,23 @@ class User extends Model
             }
             return false;
         }
+    }
+
+    public function findByEmail($email)
+    {
+        $query = "SELECT * FROM users WHERE email = :email ;";
+        $stmt = $this->db->prepare($query);
+        
+        //$stmt->execute(['email' => $email]);
+        //binding the value is more secure than sending it directly
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($results !== []) {
+            return $results;
+        }
+        return null;        
     }
 }

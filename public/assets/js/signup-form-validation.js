@@ -18,37 +18,44 @@ document.addEventListener('DOMContentLoaded', function () {
         const email = document.getElementById('email');
         const password = document.getElementById('password');
         const confirm = document.getElementById('confirm_password');
+        const check = document.getElementById('check');
 
         if (pseudo.value.trim().length < 3) {
-            showError(pseudo, "Le pseudo requiert au moins 3 caractères.");
+            showError(pseudo, "Le pseudo requiert au moins 3 caractères");
             formIsValid = false;
         }
         if (name.value.trim().length < 3) {
-            showError(name, "Le nom requiert au moins 3 caractères.");
+            showError(name, "Le nom requiert au moins 3 caractères");
             formIsValid = false;
         }
         if (firstname.value.trim().length < 3) {
-            showError(firstname, "Le prénom requiert au moins 3 caractères.");
+            showError(firstname, "Le prénom requiert au moins 3 caractères");
             formIsValid = false;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.value.trim())) {
-            showError(email, "Adresse mail non valide.");
+            showError(email, "Adresse mail non valide");
             formIsValid = false;
         }
 
         const passwordValue = password.value;
         const confirmValue = confirm.value;
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{9,}$/;
+        const checkValue = check.checked;
 
         if (!passwordRegex.test(passwordValue)) {
-            showError(password, "Le mot de passe doit contenir au moins 9  caractères (au moins une majuscule et un chiffre).");
+            showError(password, "Le mot de passe doit contenir au moins 9 caractères (au moins une majuscule et un chiffre)");
             formIsValid = false;
         }
 
         if (passwordValue !== confirmValue) {
-            showError(confirm, "Mots de passe différents.");
+            showError(confirm, "Mots de passe différents");
+            formIsValid = false;
+        }
+
+        if (checkValue == false) {
+            showError(check, "Veuillez accepter les cookies.");
             formIsValid = false;
         }
 

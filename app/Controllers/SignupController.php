@@ -88,7 +88,7 @@ class SignupController extends Controller
             $userModel = new User(Database::getPDOInstance());
 
             // check if email already in db
-            $existCheck = $userModel->is_mail_in_db(strtolower($email));
+            $existCheck = $userModel->isEmailIn(strtolower($email));
             if ($existCheck===true) {
                     $errors['email'] = "Cette adresse email est déjà utilisée.";
             
