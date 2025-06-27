@@ -111,8 +111,10 @@ class SignupController extends Controller
                 'name' => $name,
                 'firstname' => $firstname,
                 'role' => 'user',
-                'inscription_date' => date('Y-m-d H:i:s')
+                'subscription_date' => date('Y-m-d H:i:s')
             ]);
+
+            // creation of a (non session) cookie
 
             // user session
             $_SESSION['user'] = [

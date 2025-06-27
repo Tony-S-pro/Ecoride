@@ -9,6 +9,13 @@ class CarpoolsController extends Controller
 {
     public function index(): void
     {        
+        /*
+        // check if user's connected
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }*/
+
         $results = false;
         if(isset($_POST['search'])) {
             if($_POST['search'] != '') {
