@@ -7,9 +7,14 @@ class TestController extends Controller
 {
     public function index(): void
     {
+        if(isset($_POST)) {
+            $post=$_POST;
+        };
+        
         $data = [
             'title' => "Test title",
-            'view' => "test"
+            'view' => "test",
+            'post' => $post
         ];        
         Controller::render($data['view'], $data);
     }

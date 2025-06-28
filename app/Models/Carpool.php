@@ -28,42 +28,81 @@ class Carpool extends Model
         return null;
     }
 
-    public function where_like(
-        string $col_name,
-        mixed $col_value, 
-        string $order_col=null, 
-        string $order_type=null,
-        int $limit=null,
-        int $limit_offset=null): array|bool 
+    public function findByCity(?string $city1, ?string $city2, ?string $date)
     {
         $query = "SELECT * FROM $this->table WHERE ";
 
-        $query .= $col_name." LIKE :".$col_name;
+        if($city1!==null) {
+            $query .="departure_city LIKE :departure_city AND ";
+        }
+        if($city2!==null) {
+            $query .="arrival_city LIKE :arrival_city AND ";
+        }
+        if($date!==null) {
+            $query .="departure_date = :departure_date AND ";
+        }
         
-        if($order_col !== null){
-            if($order_type === null) {
-                $order_type = 'ASC';
-            }
-            $query .= " ORDER BY $order_col $order_type";
-        }
-        if($limit !== null){
-            if($limit_offset === null) {
-                $limit_offset = 0;
-            }
-            $query .= " LIMIT $limit OFFSET $limit_offset";
-        }
-        $query .= ";";
+        //$today = date("Y-m-d");
+        //$query .="departure_date >= $today ";
+        $query .="departure_date >= NOW() ";
+        $query .= "ORDER BY departure_date ASC;";
 
         $stmt = $this->db->prepare($query);
         
         //$stmt->execute(['email' => $email]);
         //binding the value is more secure than sending it directly
-        $stmt->bindValue(':'.$col_name, $col_value);
+        if($city1!==null) {
+            $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
+        }
+        if($city2!==null) {
+            $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
+        }
+        if($date!==null) {
+            $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
+        }
+        
         $stmt->execute();
         
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($results !== []) {
+            return $results;
+        }
+
+        //if no results, check closest date if date and at least one city are given
+        $query = "SELECT * FROM $this->table WHERE ";
+
+        if($city1!==null) {
+            $query .="departure_city LIKE :departure_city AND ";
+        }
+        if($city2!==null) {
+            $query .="arrival_city LIKE :arrival_city AND ";
+        }     
+        $query .= "departure_date >= NOW() ";
+        $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 2;"; // limit 2 in case one before/one after ?
+
+        $stmt = $this->db->prepare($query);
+
+        if($city1!==null) {
+        $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
+        }
+        if($city2!==null) {
+            $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
+        }
+        if($date!==null) {
+            $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
+        }
+
+        $stmt->execute();
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($results !== []) {
+            return $results;
+        }
         
-        return $results; //json_encode + echo to return to client (via jquery)?
-        //turn to str before ? date format
+        return null;
     }
+
+    
 }
