@@ -33,7 +33,7 @@ class HomeController extends Controller
             }
 
             $carpool = new Carpool(Database::getPDOInstance());
-            $results = $carpool->findByCity($city1, $city2, $date);
+            $results = $carpool->findByCity_lite($city1, $city2, $date);
 
             if ($results == null) {
                 exit();

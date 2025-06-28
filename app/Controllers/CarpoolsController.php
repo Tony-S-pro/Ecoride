@@ -17,14 +17,53 @@ class CarpoolsController extends Controller
         }*/
 
         $results = false;
-        if(isset($_POST['search'])) {
-            if($_POST['search'] != '') {
+        if(isset($_POST['search_city1']) OR isset($_POST['search_city2']) OR isset($_POST['search_date'])) {
 
-                $city = '%'.$_POST['search'].'%';
-                unset($_POST['search']);
+            $city1=null;
+            $city2=null;
+            $date=null;
+            $address1=null;
+            $address2=null;
+            $checkEco=null;
+            
+            if($_POST['search_city1'] != '') {
+                $city1 = '%'.trim($_POST['search_city1']).'%';
+                unset($_POST['search_city1']);
 
-                $carpool = new Carpool(Database::getPDOInstance());
-                $results = $carpool->findByCityDep_like($city);
+                if(isset($_POST['search_address1'])) {
+                    if($_POST['search_address1'] != '') {
+                    $address1 = '%'.trim($_POST['search_address1']).'%';
+                    unset($_POST['search_address1']);
+                    }                    
+                } 
+            }      
+
+            if($_POST['search_city2'] != '') {
+                $city2 = '%'.trim($_POST['search_city2']).'%';
+                unset($_POST['search_city2']);
+
+                if(isset($_POST['search_address2'])) {
+                    if($_POST['search_address2'] != '') {
+                    $address2 = '%'.trim($_POST['search_address2']).'%';
+                    unset($_POST['search_address2']);
+                    }                    
+                } 
+            } 
+
+            if($_POST['search_date'] != '') {
+                $date = $_POST['search_date'];
+                unset($_POST['search_date']);
+            }
+
+            if(isset($_POST['checkEco'])){
+                if($_POST['checkEco'] == 'check') {
+                    $checkEco = $_POST['checkEco'];
+                    unset($_POST['checkEco']);
+                }
+            }            
+
+            $carpool = new Carpool(Database::getPDOInstance());
+            $results = $carpool->findByCity($city1, $city2, $date, $address1, $address2, $checkEco);
 
             if ($results == null) {
                 exit();
@@ -33,18 +72,13 @@ class CarpoolsController extends Controller
             $results_json = json_encode($results);
             echo $results_json; //string, still need to be parsed
             exit;
-
-
-            }
-
             
-        }
+        } 
         
         $data = [
             'title' => "Liste des covoiturages planifiés",
-            'view' => "carpools",
-            'results' => $results
-        ];        
+            'view' => "carpools"
+        ];       
 
         Controller::render($data['view'], $data);
     }

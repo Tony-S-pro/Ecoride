@@ -4,27 +4,41 @@
     <h1>Covoiturages :</h1>
 </div>
 
-<section class="p-4 d-flex flex-column align-items-center pb-4"
+<section class="p-4 d-flex flex-column align-items-center pb-4">
     
     <h2>Recherche par ville de départ et arrivée</h2>
 
     <div class="search col-md-4" >
-        <form action="<?= BASE_URL?>carpools" method="post" id="searchForm">
-            <div class="d-flex m-1 justify-content-between col-12">
-                <input type="text" name="search_city1" placeholder="Vile Départ" class="form-control me-1">
-                <input type="text" name="search_city2" placeholder="Ville Arrivée" class="form-control me-1">
+        <form action="carpools" method="post" id="searchForm-full">
+            <div class="d-flex justify-content-between col-12">
+                <input type="text" name="search_city1" placeholder="Ville Départ" class="form-control m-1">
+                <input type="text" name="search_city2" placeholder="Ville Arrivée" class="form-control m-1">
             </div>
-            <div class="d-flex m-1 justify-content-space-between col-12">
-                <input type="date" name="search_date" id="" class="form-control me-1">
-                <button type="submit" name="submit" class="btn btn-warning btn-block form-control me-1 col 2">Rechercher</button>
+            <div class="d-flex justify-content-space-between col-12">
+                <input type="date" name="search_date" class="form-control m-1" data-date-format="yyyy-mm-dd">
+                <button type="submit" name="submit" class="btn btn-warning btn-block form-control m-1 col 2">Rechercher</button>
             </div>
-        </form>
-    </div>
 
-    
+            <div class="m-2 p-1"><a href="#collapseSearch" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">Plus d'options de recherche</a></div>
+            
+            <div class="collapse" id="collapseSearch">
+                <div class="card card-body">
+                    <div><input type="text" name="search_address1" placeholder="Adresse départ" class="form-control m-1"></div>
+                    <div><input type="text" name="search_address2" placeholder="Adresse arrivée" class="form-control m-1"></div>
+                    <div class="m-2">
+                        <input type="checkbox" class="btn-check m-1" id="btn-check-outlined" autocomplete="off" name="checkEco" value="check">
+                        <label class="btn btn-outline-success" for="btn-check-outlined">Voyage Ecolo</label><br>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+   
     <div class="results" id="results-carpool">
     </div>
-    
+ <!--     
     <div class="modal" id="myModal" role="dialogue">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -87,4 +101,4 @@
         </div>
     </div>
     
-</section>
+</section> -->
