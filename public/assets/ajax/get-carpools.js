@@ -7,7 +7,7 @@ function getHtml(result)
     let animals='';
 
     //x=x+`<div><button class="btn btn-warning btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#myModal" id="btn-AddNew">Ajouter</button></div>`;
-    x=x+`<div class="table-responsive">
+    x=x+`<div class="table-responsive-sm">
         <table class="table table-responsive table-condensed table-striped mt-2">`;
 
     x=x+`<thead>
@@ -46,13 +46,13 @@ function getHtml(result)
                 <td colspan="6"=>
                     <div id="collapseTwo${i}" class="collapse">
                         <div class="p-3">
-                            <div>adr. dép. : ${result[i]['departure_address']}</div>
-                            <div>adr. arr. : ${result[i]['arrival_address']}</div>
-                            <div>durée (est.) : ${result[i]['travel_time']}h</div>
-                            <div>4,5/5 *, ${result[i]['price']} crédits, 3 places</div>
-                            <div>description : ${result[i]['description']} je rajoute du texte pour voir comment ca afect tout ca rt tout et tou.</div>
-                            <div>animaux: ${animals}, fumeur ${smoking}</div>
-                            <div>autres :${result[i]['misc']}</div>
+                            <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
+                            <div><strong>adr. arr. :</strong> ${result[i]['arrival_address']}</div>
+                            <div><strong>durée (est.) :</strong> ${result[i]['travel_time']}h</div>
+                            <div>4,5/5 *, ${result[i]['price']} crédits, ${result[i]['remaining_seats']} places</div>
+                            <div><strong>description :</strong> ${result[i]['description']}</div>
+                            <div><strong>animaux:</strong> ${animals}, <strong>fumeur :</strong> ${smoking}</div>
+                            <div><strong>autres :</strong> ${result[i]['misc']}</div>
                         </div>
                     </div>
                 </td>
@@ -64,6 +64,13 @@ function getHtml(result)
         </table>
     </div>`;
     
+    return x;
+}
+
+function getHtml_noResults()
+{
+    let x='';
+    x=x+`<p class="m-2 error-message">Aucun covoiturages disponibles</p>`;
     return x;
 }
 
@@ -82,18 +89,25 @@ $('#searchForm-full').on('submit', function(e) {
             "search_city2": $('input[name=search_city2]').val(),
             "search_address1": $('input[name=search_address1]').val(),
             "search_address1": $('input[name=search_address2]').val(),
-            //"checkEco": $('input[name=checkEco]').val(),
+            "checkEco": $('input[name=checkEco]').prop('checked'),
             "search_date": $('input[name=search_date]').val()
         },
 
         success:function(response) {
+            
+            console.log(response);
             let x = JSON.stringify(response);
+            //$("#checkEco").prop( "checked", false ); //uncheck the box
             //$('form').get(0).reset();
             //alert(x);
             //console.log(x);
             let html = getHtml(response);
             //alert(html);
             $("#results-carpool").html(html);
+            
+        },
+        error:function (e) {
+            $("#results-carpool").html(getHtml_noResults());
         }
     });
 

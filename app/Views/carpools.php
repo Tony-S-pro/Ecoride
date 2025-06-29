@@ -4,7 +4,7 @@
     <h1>Covoiturages :</h1>
 </div>
 
-<section class="p-4 d-flex flex-column align-items-center pb-4">
+<section class="p-4 d-flex flex-column align-items-center">
     
     <h2>Recherche par ville de départ et arrivée</h2>
 
@@ -26,8 +26,20 @@
                     <div><input type="text" name="search_address1" placeholder="Adresse départ" class="form-control m-1"></div>
                     <div><input type="text" name="search_address2" placeholder="Adresse arrivée" class="form-control m-1"></div>
                     <div class="m-2">
-                        <input type="checkbox" class="btn-check m-1" id="btn-check-outlined" autocomplete="off" name="checkEco" value="check">
+                        <input type="checkbox" class="btn-check m-1" id="btn-check-outlined" autocomplete="off" id="checkEco" name="checkEco">
                         <label class="btn btn-outline-success" for="btn-check-outlined">Voyage Ecolo</label><br>
+                        <!-- <div class="form-check">
+                            <input class="form-check-input" type="radio" name="checkEco" id="searchRadios1" value="" checked>
+                                <label class="form-check-label" for="searchRadios1">
+                                Tout types de véhicules
+                                </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="checkEco" id="searchRadios2" value="check">
+                                <label class="form-check-label" for="searchRadios2">
+                                Véhicules électriques uniquement
+                            </label>
+                        </div> -->
                     </div>
                 </div>
             </div>

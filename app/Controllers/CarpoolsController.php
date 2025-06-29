@@ -17,7 +17,7 @@ class CarpoolsController extends Controller
         }*/
 
         $results = false;
-        if(isset($_POST['search_city1']) OR isset($_POST['search_city2']) OR isset($_POST['search_date'])) {
+        if(isset($_POST['search_city1']) OR isset($_POST['search_city2'])) {
 
             $city1=null;
             $city2=null;
@@ -55,12 +55,11 @@ class CarpoolsController extends Controller
                 unset($_POST['search_date']);
             }
 
-            if(isset($_POST['checkEco'])){
-                if($_POST['checkEco'] == 'check') {
-                    $checkEco = $_POST['checkEco'];
-                    unset($_POST['checkEco']);
-                }
-            }            
+           if($_POST['checkEco'] === 'true') {
+                $checkEco = 'check';
+                unset($_POST['checkEco']);
+            }
+                       
 
             $carpool = new Carpool(Database::getPDOInstance());
             $results = $carpool->findByCity($city1, $city2, $date, $address1, $address2, $checkEco);
