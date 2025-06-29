@@ -6,8 +6,8 @@ function esc(string $str): string {
 
 // Headers HTTP
 header('X-Frame-Options: DENY'); // Vs clickjacking. App can't be loaded in iframe.
-//header('X-Content-Type-Options: nosniff'); // Vs MIME exploits. No sniffing (guessing) filetype -> no risk of executing code in txt/jpg/etc file.
-//header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'"); // Vs XSS. Only scripts from same domain (default;js;css).
+header('X-Content-Type-Options: nosniff'); // Vs MIME exploits. No sniffing (guessing) filetype -> no risk of executing code in txt/jpg/etc file.
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' ; style-src 'self' 'unsafe-inline' ; img-src 'self' ".BASE_URL); // Vs XSS. Only scripts from same domain (default;js;css;img).
 
 ?>
 
