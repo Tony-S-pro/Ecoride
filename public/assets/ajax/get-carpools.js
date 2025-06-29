@@ -70,7 +70,7 @@ function getHtml(result)
 function getHtml_noResults()
 {
     let x='';
-    x=x+`<p class="m-2 error-message">Aucun covoiturages disponibles</p>`;
+    x=x+`<div class="m-2 error-message">Aucun covoiturages disponibles</div>`;
     return x;
 }
 
@@ -95,7 +95,6 @@ $('#searchForm-full').on('submit', function(e) {
 
         success:function(response) {
             
-            console.log(response);
             let x = JSON.stringify(response);
             //$("#checkEco").prop( "checked", false ); //uncheck the box
             //$('form').get(0).reset();

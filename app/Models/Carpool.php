@@ -71,37 +71,39 @@ class Carpool extends Model
         }
 
         //if no results, check closest date if date and at least one city are given
-        $query = "SELECT * FROM $this->table WHERE ";
 
-        if($city1!==null) {
-            $query .="departure_city LIKE :departure_city AND ";
-        }
-        if($city2!==null) {
-            $query .="arrival_city LIKE :arrival_city AND ";
-        }     
-        $query .= "departure_date >= NOW() ";
-        $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
-
-        $stmt = $this->db->prepare($query);
-
-        if($city1!==null) {
-        $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
-        }
-        if($city2!==null) {
-            $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
-        }
         if($date!==null) {
-            $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
+            $query = "SELECT * FROM $this->table WHERE ";
+
+            if($city1!==null) {
+                $query .="departure_city LIKE :departure_city AND ";
+            }
+            if($city2!==null) {
+                $query .="arrival_city LIKE :arrival_city AND ";
+            }     
+            $query .= "departure_date >= NOW() ";
+            $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
+
+            $stmt = $this->db->prepare($query);
+
+            if($city1!==null) {
+            $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
+            }
+            if($city2!==null) {
+                $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
+            }
+            if($date!==null) {
+                $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
+            }
+
+            $stmt->execute();
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC); //keep fetchAll even with limit 1 -> compatible with js
+
+            if ($results !== []) {
+                return $results;
+            }
         }
-
-        $stmt->execute();
-
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC); //keep fetchAll even with limit 1 -> compatible with js
-
-        if ($results !== []) {
-            return $results;
-        }
-        
         return null;
     }
 
