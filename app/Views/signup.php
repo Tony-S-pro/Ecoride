@@ -56,14 +56,14 @@
         </div>
 
         <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-            <input name="check" id="check" class="form-check-input" type="checkbox" value="accept" required>
-            <label class="form-check-label" for="check">J'ai lu les <a href="<?=BASE_APP?>mentions">mentions légales</a> et accepte l'utilisation de cookies décrite sur la page de <a href="<?=BASE_APP?>mentions/cookies">politique de cookies</a>.</label>
-            </div>            
-        </div>
-        <div id="check-error" name="check-error" class="error-message"></div>
+            <div class="col d-flex justify-content-center">
+                <!-- Checkbox -->
+                <div class="form-check">
+                    <input name="check" id="check" class="form-check-input" type="checkbox" value="accept" required>
+                    <label class="form-check-label" for="check">J'ai lu les <a href="<?=BASE_APP?>mentions">mentions légales</a> et accepte l'utilisation de cookies décrite sur la page de <a href="<?=BASE_APP?>mentions/cookies">politique de cookies</a>.</label>
+                </div>            
+            </div>
+            <div id="check-error" name="check-error" class="error-message"></div>
         </div>
 
         <button type="submit" class="btn btn-warning btn-block mb-4 " data-mdb-button-initialized="true">S'inscrire</button>

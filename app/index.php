@@ -31,8 +31,9 @@ $allowedControllers = [
     'DashboardController',
     'CarpoolsController',
     'UserController',
+    'ContactController',
     'TestController', 'RandomController'];
-$allowedMethods = ['index', 'cookies', 'register', 'login', 'search', 'driver'];
+$allowedMethods = ['index', 'cookies', 'register', 'login', 'search', 'message', 'thanks', 'driver'];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {
     require_once __DIR__ . '/Views/error404.php';
