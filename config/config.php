@@ -21,6 +21,14 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('DB_PASS', '');
     define('DB_NAME', 'ecoride');
 
+    // Database config (localhost) for MongoDB
+    // no user@password by default on local
+    define('MDB_HOST', 'localhost');
+    define('MDB_PORT', '27017');
+    define('MDB_USER', '');
+    define('MDB_PASS', '');
+    define('MDB_NAME', 'ecoride');
+
 } else {
     define('ROOT_APP', 'https://my-app.com/');
     define('ROOT_URL', 'https://my-app.com/public/');
@@ -30,17 +38,21 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('DB_USER', 'username');
     define('DB_PASS', 'psw');
     define('DB_NAME', 'db');
+
+    // Database config for MongoDB
+    // check .env
+    define('MDB_NAME', 'ecoride');
 }
 
 /* Legal mentions / cookies policy */
-define('LEGAL_HOST', 'Nom_Hebergeur');
-define('LEGAL_HOST_ADRSS', 'Adresse_Hebergeur');
-define('LEGAL_HOST_MAIL', 'hebergeur@mail.com');
-define('LEGAL_HOST_PHONE', '+33 1 23 45 67 89');
-define('LEGAL_DPO_NAME', 'Nom_du_DPO');
-define('LEGAL_DPO_MAIL', 'adresse_du_DPO@mail.com');
-define('LEGAL_HOST_POLICY', 'https://www.hebergeur.com/Politique-de-Confidentialite');
-define('LEGAL_CONTRIB', 'Contributeurs, webmaster, crédit photos, ...');
+define('LEGAL_HOST', 'ALWAYSDATA, SARL');
+define('LEGAL_HOST_ADRSS', '91 rue du Faubourg Saint Honoré - 75008 Paris');
+define('LEGAL_HOST_MAIL', 'contact@alwaysdata.com');
+define('LEGAL_HOST_PHONE', '+33 1 84 16 23 40');
+define('LEGAL_DPO_NAME', '"A l’attention du Délégué à la Protection des Données (DPO)"');
+define('LEGAL_DPO_MAIL', ' dpo@alwaysdata.com');
+define('LEGAL_HOST_POLICY', 'https://www.alwaysdata.com/fr/mentions-legales');
+define('LEGAL_CONTRIB', '');
 define('LEGAL_FR_1', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000801164#LEGIARTI000042038977');
 define('LEGAL_FR_2', 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032655082');
 define('LEGAL_FR_4', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460');
