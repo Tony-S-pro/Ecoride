@@ -8,16 +8,17 @@
 </section>
 
 <?php 
+/*
     //$objection = App\Core\DatabaseDM::getDmInstance();
     $objection = new App\Models\ObjectionsLogDM(App\Core\DatabaseDM::getDmInstance());
     $cursor = $objection->readDocument(['id_employee' => 5]);
 
     //dd($cursor);
     
-    /*
-    foreach($cursor as $doc) {
-        $res[]=json_encode($doc); // not necessary if type mapping done in client
-    }*/
+    
+    //foreach($cursor as $doc) {
+    //    $res[]=json_encode($doc); // not necessary if type mapping done in client
+    //}
 
     //or convert to array, not necessary if type mapping done in client
     //$array = iterator_to_array($cursor); 
@@ -26,4 +27,8 @@
         echo $a['comment']."</br>";
     }
     dump($cursor);
+*/
+
+
+
 ?>

@@ -11,21 +11,21 @@
 
 tr.hide-table-padding td {
   padding: 0 !important;
-  }
+}
 
-  .expand-button {
-    position: relative !important;
-  }
+.expand-button {
+  position: relative !important;
+}
 
-  .accordion-toggle .expand-button:after
-  {
-    position: absolute !important;
-    left:.75rem !important;
-    top: 50% !important;
-    transform: translate(0, -50%) !important;
-    content: '-' !important;
-  }
-  .accordion-toggle.collapsed .expand-button:after
-  {
-    content: '+' !important;
-  }
+.accordion-toggle .expand-button:after
+{
+  position: absolute !important;
+  left:.75rem !important;
+  top: 50% !important;
+  transform: translate(0, -50%) !important;
+  content: '-' !important;
+}
+.accordion-toggle.collapsed .expand-button:after
+{
+  content: '+' !important;
+}
