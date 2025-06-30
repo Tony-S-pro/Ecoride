@@ -5,14 +5,7 @@ use MongoDB\Client;
 
 class DatabaseDM // Document Manager
 {
-    
-
-
-
-
-
-
-private static $dmInstance = null;
+    private static $dmInstance = null;
     private $mongoClient;
 
     private function __construct()
