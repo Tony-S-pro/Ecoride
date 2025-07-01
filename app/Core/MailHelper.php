@@ -11,7 +11,7 @@ Class MailHelper
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
     }
 
-    public static function sendContactMail(string $contact_email, string $contact_name, string $contact_message) 
+    public static function sendContactMail(string $contact_email, string $contact_name, string $contact_message, string $contact_sendMe) 
     {
         $contact_name = MailHelper::esc($contact_name);
         $contact_message = MailHelper::esc($contact_message);
@@ -46,7 +46,9 @@ Class MailHelper
 
             $mail->From = SMTP_FROM;                                    //L'email à afficher pour l'envoi (adresse email servira de référence pour répondre)
             $mail->FromName = SMTP_FROM_NAME;                           //L'alias à afficher pour l'envoi (optionnel)
-            //$mail->addCC(address: 'exemple@mail.com');                // Copie cachée
+            if($contact_sendMe == 'sendMe') {
+                $mail->addCC(address: $contact_email);
+            }
             //$mail->addBCC(address: 'exemple@mail.com');               // Copie cachée
 
             $mail->addAddress(SMTP_USER);
@@ -54,7 +56,7 @@ Class MailHelper
             $mail->isHTML(true);
             $mail->Subject = 'Ecoride Page Contact';
             $mail->Body = "
-                <h2>Message de la page contact d'Ecoride</h2>
+                <h2>Message envoyé depuis la page contact d'Ecoride</h2>
                 <p><strong>NOM : </strong>$contact_name</p>
                 <p><strong>EMAIL : </strong>$contact_email</p>
                 <p><strong>MESSAGE : </strong></br>$contact_message</p>
@@ -66,8 +68,7 @@ Class MailHelper
             return true;
 
         } catch (Exception $e) {        
-            if (DEBUG) {
-                
+            if (DEBUG) {                
                 echo "[MAILER ERROR] : {$mail->ErrorInfo}}";
                 exit;
             }

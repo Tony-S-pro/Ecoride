@@ -28,6 +28,13 @@
                 <label for="contact_message">Message :</label>
                 <textarea class="form-control" id="contact_message" name="contact_message" rows="5" maxlength="280"><?= $_SESSION['old']['contact_message'] ?? '' ?></textarea>
             </div>
+
+            <div class="mb-3">
+                <div class="form-check d-flex">
+                    <input name="checkSendMe" id="checkSendMe" class="form-check-input" type="checkbox" value="sendMe">
+                    <label class="form-check-label ms-3" for="checkSendMe">Je souhaite recevoir une copie de ce message par email.</label>
+                </div>            
+            </div>
           
             <button type="submit" class="btn btn-warning btn-block mb-4 " data-mdb-button-initialized="true">Envoyer</button>
         </form>

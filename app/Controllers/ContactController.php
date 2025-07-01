@@ -25,6 +25,7 @@ class ContactController extends Controller
             $contact_name = trim($_POST['contact_name'] ?? '');
             $contact_email = trim($_POST['contact_email'] ?? '');
             $contact_message = trim($_POST['contact_message'] ?? '');
+            $contact_sendMe = $_POST['checkSendMe'] ?? '';
             
             // Validate data received (back-end)
             if (empty($contact_email)) {
@@ -44,7 +45,7 @@ class ContactController extends Controller
             }
 
             // php mailer via MailHelper
-            $mail = MailHelper::sendContactMail($contact_email, $contact_name, $contact_message);
+            $mail = MailHelper::sendContactMail($contact_email, $contact_name, $contact_message, $contact_sendMe);
 
             if($mail) {
                 // Redirect to thankyou page
