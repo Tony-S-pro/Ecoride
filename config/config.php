@@ -44,6 +44,15 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('MDB_NAME', 'ecoride');
 }
 
+/*SMTP*/
+define('SMTP_HOST', 'smtp.gmail.com');
+define('SMTP_PORT', 587); //587->tls, 465->ssl
+define('SMTP_USER', 'jose.ecoride.2025@gmail.com');
+define('SMTP_PASS', '<<<<<REPLACE THIS>>>>>'); //app password 16char to set up in account after 2step auth
+define('SMTP_FROM', 'jose.ecoride.2025@gmail.com');
+define('SMTP_FROM_NAME', 'Ecoride Contact');
+
+
 /* Legal mentions / cookies policy */
 define('LEGAL_HOST', 'ALWAYSDATA, SARL');
 define('LEGAL_HOST_ADRSS', '91 rue du Faubourg Saint Honoré - 75008 Paris');
