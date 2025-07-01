@@ -46,10 +46,10 @@ Class MailHelper
 
             $mail->From = SMTP_FROM;                                    //L'email à afficher pour l'envoi (adresse email servira de référence pour répondre)
             $mail->FromName = SMTP_FROM_NAME;                           //L'alias à afficher pour l'envoi (optionnel)
+            //$mail->addCC(address: $contact_email)
             if($contact_sendMe == 'sendMe') {
-                $mail->addCC(address: $contact_email);
-            }
-            //$mail->addBCC(address: 'exemple@mail.com');               // Copie cachée
+                $mail->addBCC(address: $contact_email);             // Copie cachée
+            }               
 
             $mail->addAddress(SMTP_USER);
 
