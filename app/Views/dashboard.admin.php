@@ -1,6 +1,6 @@
 <?php defined('ROOT_PATH') OR exit("You don't have permission to access this resource."); ?>
 
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
 <script defer src="<?=BASE_URL?>assets/ajax/get-charts.js"></script>
 
 <h1>Votre espace</h1>
@@ -12,5 +12,5 @@
 </section>
 
 
-<canvas id="adminChart" style="width:100%;max-width:700px"></canvas>
+<canvas id="adminChart-carpools" style="width:100%;max-width:600px;max-height:400px"></canvas>
 

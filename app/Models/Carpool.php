@@ -217,7 +217,8 @@ class Carpool extends Model
             $stmt->bindValue(':date', $date, PDO::PARAM_STR);
             $stmt->execute();
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
-            array_push($results_final, ['xVal'=> $date, 'yVal'=> $results['carpools_nb']]);                                       
+            //don't forget to turn yyyy/mm/dd into dd/mm/yy
+            array_push($results_final, ['xVal'=> date('d/m', strtotime($date)), 'yVal'=> $results['carpools_nb']]);                                       
         }
 
         return $results_final;

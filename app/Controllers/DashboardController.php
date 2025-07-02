@@ -73,6 +73,7 @@ class DashboardController extends Controller
             }
             //header('Content-Type: application/json');
             $results_json = json_encode($results);
+            //return $results_json;
             echo $results_json; //string, still need to be parsed
             exit;
         }

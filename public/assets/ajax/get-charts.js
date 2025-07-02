@@ -3,39 +3,41 @@ $(document).ready(function(){
 		url:'dashboard/chart/carpools',
         type:'POST',
         dataType:'JSON',
-		success: function(data) {
-			console.log(data);
+		success: function(response) {
+			console.log(response);
 			let xValues = [];
 			let yValues = [];
 
-			for(var i in data) {
-				xValues.push(data[i].xVal);
-				yValues.push(data[i].yVal);
+			for(var i in response) {
+				xValues.push(response[i].xVal);
+				yValues.push(response[i].yVal);
 			}
+			console.log(xValues, yValues);
 
 			const chartdata = {
 				labels: xValues,
 				datasets : [
 					{
 						label: 'Nombre de covoiturages',
-						backgroundColor: 'rgba(0, 0, 0, 0.75)',
-						borderColor: 'rgba(200, 200, 200, 0.75)',
-						hoverBackgroundColor: 'rgb(0, 250, 50)',
-						hoverBorderColor: 'rgb(45, 216, 205)',
+						backgroundColor: 'rgba(255, 193, 7, 0.8)', //bootstrap5 warning
+						borderColor: 'rgba(255, 193, 7, 0.8)', //bootstrap5 light
+						hoverBackgroundColor: 'rgb(255, 218, 106)', //bootstrap5 warning-emphasis
+						hoverBorderColor: 'rgb(255, 193, 7)',
 						data: yValues
 					}
 				]
 			};
 
-			const chart = $("#adminChart");
+			let chart = $("#adminChart-carpools");
 
 			const barGraphChart = new Chart(chart, {
 				type: 'bar',
 				data: chartdata
 			});
 		},
-		error: function(data) {
-			console.log(data);
+		error: function(response) {
+			console.log(response);
 		}
 	});
 });
+
