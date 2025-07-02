@@ -49,7 +49,7 @@ class DashboardController extends Controller
         Controller::render($data['view'], $data);
     }
 
-    public function chart($param): void
+    public function chart(): void
     {
         // check if user's connected and has admin role/id
         
@@ -63,19 +63,18 @@ class DashboardController extends Controller
         }
 
         $carpool = new Carpool(Database::getPDOInstance());
+        
+        $results = $carpool->findCarpoolsNb();
 
-        if($param === 'carpools') {
-            $results = $carpool->findCarpoolsNb();
-
-            //shouldn't ever be null, but just in case
-            if ($results == null) {
-                exit();
-            }
-            //header('Content-Type: application/json');
-            $results_json = json_encode($results);
-            //return $results_json;
-            echo $results_json; //string, still need to be parsed
-            exit;
+        //shouldn't ever be null, but just in case
+        if ($results == null) {
+            exit();
         }
+        //header('Content-Type: application/json');
+        $results_json = json_encode($results);
+        //return $results_json;
+        echo $results_json; //string, still need to be parsed
+        exit;
+        
     }
 }

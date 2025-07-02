@@ -207,18 +207,28 @@ class Carpool extends Model
         }
 
         foreach ($date_arr as $date) {
+            /*
             $query = "SELECT 
                 COUNT(*) AS carpools_nb
                 FROM carpools
                 WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') 
                 AND departure_date = :date;";
+            */
+            
+            $query = "SELECT 
+                (SELECT COUNT(*) FROM carpools WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') AND departure_date = :date) AS carpools_nb,
+                (SELECT COUNT(*) FROM carpools WHERE (status = 'valide') AND departure_date = :date2) AS valid_nb,
+                (SELECT valid_nb*2) as credits_nb;";
 
             $stmt = $this->db->prepare($query);
+            //needs both even with same marker name 
+            //"You cannot use a named parameter marker of the same name more than once in a prepared statement, unless emulation mode is on."
             $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+            $stmt->bindValue(':date2', $date, PDO::PARAM_STR); 
             $stmt->execute();
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
             //don't forget to turn yyyy/mm/dd into dd/mm/yy
-            array_push($results_final, ['xVal'=> date('d/m', strtotime($date)), 'yVal'=> $results['carpools_nb']]);                                       
+            array_push($results_final, ['xVal'=> date('d/m', strtotime($date)), 'yVal'=> $results['carpools_nb'], 'y2Val'=> $results['credits_nb']]);                                       
         }
 
         return $results_final;

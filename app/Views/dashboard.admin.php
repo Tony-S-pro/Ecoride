@@ -12,5 +12,5 @@
 </section>
 
 
-<canvas id="adminChart-carpools" style="width:100%;max-width:600px;max-height:400px"></canvas>
+<canvas id="adminCharts" style="width:100%;max-width:600px;max-height:400px"></canvas>
 
