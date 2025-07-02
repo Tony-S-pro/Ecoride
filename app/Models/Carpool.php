@@ -11,24 +11,6 @@ class Carpool extends Model
     protected string $table = 'carpools';
     protected string $view = 'view_carpools_full';
 
-    public function findByCityDep_like($city)
-    {
-        $query = "SELECT * FROM $this->table WHERE departure_city LIKE :departure_city ;";
-        $stmt = $this->db->prepare($query);
-        
-        //$stmt->execute(['email' => $email]);
-        //binding the value is more secure than sending it directly
-        $stmt->bindValue(':departure_city', $city, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($results !== []) {
-            return $results;
-        }
-        return null;
-    }
-
     public function findByCity_lite(?string $city1, ?string $city2, ?string $date)
     {
         $query = "SELECT * FROM $this->table WHERE ";
@@ -214,5 +196,42 @@ class Carpool extends Model
         return null;
     }
 
+    public function findCarpoolsNb()
+    {
+        $results_final = []; // array to return json to charts.js -> [0 => [xVal, yVal], 1 => [xVal, yVal]]
+        
+        //create a date array, to be able to return every dates, including value=0, w/o making an ugly view
+        $date_arr=[];
+        for ($i=5; $i > 0; $i--) {
+            array_push($date_arr, date('Y-m-d', strtotime("-$i days")));                     
+        }
+
+        foreach ($date_arr as $date) {
+            /*
+            $query = "SELECT 
+                COUNT(*) AS carpools_nb
+                FROM carpools
+                WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') 
+                AND departure_date = :date;";
+            */
+            
+            $query = "SELECT 
+                (SELECT COUNT(*) FROM carpools WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') AND departure_date = :date) AS carpools_nb,
+                (SELECT COUNT(*) FROM carpools WHERE (status = 'valide') AND departure_date = :date2) AS valid_nb,
+                (SELECT valid_nb*2) as credits_nb;";
+
+            $stmt = $this->db->prepare($query);
+            //needs both even with same marker name 
+            //"You cannot use a named parameter marker of the same name more than once in a prepared statement, unless emulation mode is on."
+            $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+            $stmt->bindValue(':date2', $date, PDO::PARAM_STR); 
+            $stmt->execute();
+            $results = $stmt->fetch(PDO::FETCH_ASSOC);
+            //don't forget to turn yyyy/mm/dd into dd/mm/yy
+            array_push($results_final, ['xVal'=> date('d/m', strtotime($date)), 'yVal'=> $results['carpools_nb'], 'y2Val'=> $results['credits_nb']]);                                       
+        }
+
+        return $results_final;
+    }
     
 }

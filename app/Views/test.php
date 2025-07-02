@@ -31,4 +31,32 @@
 
 
 
+
+
+
 ?>
+
+
+<h2>Hash Generator</h2>
+<p>string -> bcrypt hash</p>
+<form action="" method="post">
+    <input type="text" name="hash" id="hash">
+    <button type="submit">hash</button>
+</form>
+<p>
+    result-><?php
+    if(isset($_POST['hash'])) {
+        echo password_hash($_POST['hash'] , PASSWORD_BCRYPT);
+        unset($_POST['hash']);
+    } 
+    
+$carpool = new App\Models\Carpool(App\Core\Database::getPDOInstance());
+
+dd($carpool->findCarpoolsNb());
+
+
+    
+?>
+</p>
+
+
