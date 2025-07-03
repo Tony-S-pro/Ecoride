@@ -93,98 +93,60 @@ class Carpool extends Model
     public function findByCity(?string $city1=null, ?string $city2=null, ?string $date=null, ?string $address1=null, ?string $address2=null, ?string $checkEco=null)
     {
         $query = "SELECT * FROM $this->view WHERE ";
+        $arr = [];
 
         if(!empty($city1)) {
             $query .="departure_city LIKE :departure_city AND ";
+            $arr += [':departure_city' => $city1];
         }
         if(!empty($address1)) {
             $query .="departure_address LIKE :departure_address AND ";
-            }
+            $arr += [':departure_address' => $address1];
+        }
         if(!empty($city2)) {
             $query .="arrival_city LIKE :arrival_city AND ";
+            $arr += [':arrival_city' => $city2];
         }
         if(!empty($address2)) {
             $query .="arrival_address LIKE :arrival_address AND ";
-            }
+            $arr += [':arrival_address' => $address2];
+        }
         if(!empty($checkEco)) {
             $query .="fuel = 'electrique' AND ";
         }
+
+        $query_before_date = $query;
+
         if(!empty($date)) {
             $query .="departure_date = :departure_date AND ";
+            $arr += [':departure_date' => $date];
         }
-        
-        $query .="departure_date >= NOW() AND remaining_seats > 0 ";
+
+        $query .= "remaining_seats > 0 AND departure_date >= NOW() ";
         $query .= "ORDER BY departure_date ASC;";
 
         $stmt = $this->db->prepare($query);
         
         //$stmt->execute(['email' => $email]);
-        //binding the value is more secure than sending it directly
-        if(!empty($city1)) {
-                $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
-            }
-        if(!empty($address1)) {
-            $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
-            }
-        if(!empty($city2)) {
-            $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
-        }
-        if(!empty($address2)) {
-        $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
-        }
-        if(!empty($date)) {
-            $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
-        }        
+        //binding the value is more secure than sending it directly      
         
-        $stmt->execute();        
+        $stmt->execute($arr);        
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($results !== []) {
             return $results;
         }
 
-        //if no results for a date, check closest date
+        //if no results for a date (if it was given), check closest date
         if(!empty($date)) {
-            $query = "SELECT * FROM $this->view WHERE ";
-
-            if(!empty($city1)) {
-                $query .="departure_city LIKE :departure_city AND ";                
-            }
-            if(!empty($address1)) {
-                    $query .="departure_address LIKE :departure_address AND ";
-                }
-            if(!empty($city2)) {
-                $query .="arrival_city LIKE :arrival_city AND ";                
-            }
-            if(!empty($address2)) {
-                $query .="arrival_address LIKE :arrival_address AND ";
-                }           
-            if(!empty($checkEco)) {
-                $query .="fuel = 'electrique' AND ";
-            }
+            $query = $query_before_date;
 
             $query .= "departure_date >= NOW() AND remaining_seats > 0 ";
             $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
 
             $stmt = $this->db->prepare($query);
 
-            if(!empty($city1)) {
-                $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
-            }
-            if(!empty($address1)) {
-                $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
-                }
-            if(!empty($city2)) {
-                $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
-            }
-            if(!empty($address2)) {
-                $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
-            }           
-            if(!empty($date)) {
-                $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
-            }
-
-            $stmt->execute();
+            $stmt->execute($arr);
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC); //keep fetchAll even with limit 1 -> compatible with js
 
             if ($results !== []) {
