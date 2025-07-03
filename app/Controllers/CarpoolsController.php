@@ -17,53 +17,67 @@ class CarpoolsController extends Controller
         }*/
 
         $results = false;
-        if(isset($_POST['search_city1']) OR isset($_POST['search_city2'])) {
+        if(isset($_POST['search_city1']) OR isset($_POST['search_city2']) OR isset($_POST['search_address1']) OR isset($_POST['search_address2'])) {
 
             $city1=null;
             $city2=null;
             $date=null;
             $address1=null;
             $address2=null;
+            $minRating=null;
+            $maxPrice=null;
+            $maxTime=null;
             $checkEco=null;
             
-            if($_POST['search_city1'] != '') {
-                $city1 = '%'.trim($_POST['search_city1']).'%';
+            if(!empty($_POST['search_city1'])) {
+                $city1 = '%'.trim((string)$_POST['search_city1']).'%';
                 unset($_POST['search_city1']);
-
-                if(isset($_POST['search_address1'])) {
-                    if($_POST['search_address1'] != '') {
-                    $address1 = '%'.trim($_POST['search_address1']).'%';
+            }   
+            if(!empty($_POST['search_address1'])) {
+                    $address1 = '%'.trim((string)$_POST['search_address1']).'%';
                     unset($_POST['search_address1']);
-                    }                    
-                } 
-            }      
-
-            if($_POST['search_city2'] != '') {
-                $city2 = '%'.trim($_POST['search_city2']).'%';
-                unset($_POST['search_city2']);
-
-                if(isset($_POST['search_address2'])) {
-                    if($_POST['search_address2'] != '') {
-                    $address2 = '%'.trim($_POST['search_address2']).'%';
-                    unset($_POST['search_address2']);
-                    }                    
-                } 
+            }                    
+            if(!empty($_POST['search_city2'])) {
+                $city2 = '%'.trim((string)$_POST['search_city2']).'%';
+                unset($_POST['search_city2']); 
             } 
-
-            if($_POST['search_date'] != '') {
-                $date = $_POST['search_date'];
+            if(!empty($_POST['search_address2'])) {
+                    $address2 = '%'.trim((string)$_POST['search_address2']).'%';
+                    unset($_POST['search_address2']);
+            }                    
+            if(!empty($_POST['search_date'])) {
+                $date = (string)$_POST['search_date'];
                 unset($_POST['search_date']);
             }
-
+            if(!empty($_POST['minRating'])) {
+                $minRating = abs((int)$_POST['minRating']);
+                unset($_POST['minRating']);
+            }
+            if(!empty($_POST['maxPrice'])) {
+                $maxPrice = abs((int)$_POST['maxPrice']);
+                unset($_POST['maxPrice']);
+            }
+            if(!empty($_POST['maxTime'])) {
+                $maxTime = abs((int)$_POST['maxTime']);
+                unset($_POST['maxTime']);
+            }
            if($_POST['checkEco'] === 'true') {
                 $checkEco = 'check';
                 unset($_POST['checkEco']);
-            }
-                       
+            }                       
 
             $carpool = new Carpool(Database::getPDOInstance());
 
-            $results = $carpool->findByCity($city1, $city2, $date, $address1, $address2, $checkEco);
+            $results = $carpool->findByCity(
+                $city1, 
+                $city2, 
+                $date, 
+                $address1, 
+                $address2, 
+                $minRating, 
+                $maxPrice, 
+                $maxTime, 
+                $checkEco);
 
             if ($results == null) {
                 exit();

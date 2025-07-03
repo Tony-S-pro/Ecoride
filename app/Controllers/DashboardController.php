@@ -64,7 +64,7 @@ class DashboardController extends Controller
 
         $carpool = new Carpool(Database::getPDOInstance());
         
-        $results = $carpool->findCarpoolsNb();
+        $results = $carpool->findCarpoolsAndCredits();
 
         //shouldn't ever be null, but just in case
         if ($results == null) {

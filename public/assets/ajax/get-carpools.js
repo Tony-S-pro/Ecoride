@@ -38,7 +38,7 @@ function getHtml(result)
             <td>${result[i]['departure_time']}</td>
             <td>${result[i]['departure_city']}</td>
             <td>${result[i]['arrival_city']}</td>
-            <td>${result[i]['price']}</td>
+            <td></td>
             <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${i}" aria-expanded="false" aria-controls="collapseTwo${i}" class="btn btn-success btn-sm">Détails</button></td>
             </tr>
 
@@ -49,7 +49,9 @@ function getHtml(result)
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
                             <div><strong>adr. arr. :</strong> ${result[i]['arrival_address']}</div>
                             <div><strong>durée (est.) :</strong> ${result[i]['travel_time']}h</div>
-                            <div>4,5/5 *, ${result[i]['price']} crédits, ${result[i]['remaining_seats']} places</div>
+                            <div><strong>note :</strong> ${result[i]['avg_rating']}/5 (${result[i]['ratings_nbr']} avis)</div>
+                            <div><strong>prix :</strong> ${result[i]['price']} crédits</div>
+                            <div><strong>sièges dispo :</strong> ${result[i]['remaining_seats']}</div>
                             <div><strong>description :</strong> ${result[i]['description']}</div>
                             <div><strong>animaux:</strong> ${animals}, <strong>fumeur :</strong> ${smoking}</div>
                             <div><strong>autres :</strong> ${result[i]['misc']}</div>
@@ -89,8 +91,11 @@ $('#searchForm-full').on('submit', function(e) {
             "search_city2": $('input[name=search_city2]').val(),
             "search_address1": $('input[name=search_address1]').val(),
             "search_address2": $('input[name=search_address2]').val(),
-            "checkEco": $('input[name=checkEco]').prop('checked'),
-            "search_date": $('input[name=search_date]').val()
+            "search_date": $('input[name=search_date]').val(),
+            "minRating": $('input[name=minRating]').val(),
+            "maxPrice": $('input[name=maxPrice]').val(),
+            "maxTime": $('input[name=MaxTime]').val(),
+            "checkEco": $('input[name=checkEco]').prop('checked')
         },
 
         success:function(response) {
