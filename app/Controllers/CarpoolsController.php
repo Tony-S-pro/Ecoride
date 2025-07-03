@@ -62,6 +62,7 @@ class CarpoolsController extends Controller
                        
 
             $carpool = new Carpool(Database::getPDOInstance());
+
             $results = $carpool->findByCity($city1, $city2, $date, $address1, $address2, $checkEco);
 
             if ($results == null) {

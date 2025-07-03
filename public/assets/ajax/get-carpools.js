@@ -88,7 +88,7 @@ $('#searchForm-full').on('submit', function(e) {
             "search_city1": $('input[name=search_city1]').val(),
             "search_city2": $('input[name=search_city2]').val(),
             "search_address1": $('input[name=search_address1]').val(),
-            "search_address1": $('input[name=search_address2]').val(),
+            "search_address2": $('input[name=search_address2]').val(),
             "checkEco": $('input[name=checkEco]').prop('checked'),
             "search_date": $('input[name=search_date]').val()
         },
@@ -100,10 +100,12 @@ $('#searchForm-full').on('submit', function(e) {
             //$('form').get(0).reset();
             //alert(x);
             //console.log(x);
-            let html = getHtml(response);
-            //alert(html);
-            $("#results-carpool").html(html);
-            
+            if (x = null) {
+                $("#results-carpool").html(getHtml_noResults());
+            } else {
+                let html = getHtml(response);
+                $("#results-carpool").html(html);
+            }            
         },
         error:function (e) {
             $("#results-carpool").html(getHtml_noResults());

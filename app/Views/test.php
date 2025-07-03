@@ -52,8 +52,6 @@
     
 $carpool = new App\Models\Carpool(App\Core\Database::getPDOInstance());
 
-dd($carpool->findCarpoolsNb());
-
 
     
 ?>

@@ -59,6 +59,7 @@ class Carpool extends Model
 
             if($city1!==null) {
                 $query .="departure_city LIKE :departure_city AND ";
+                
             }
             if($city2!==null) {
                 $query .="arrival_city LIKE :arrival_city AND ";
@@ -89,26 +90,26 @@ class Carpool extends Model
         return null;
     }
 
-    public function findByCity(?string $city1, ?string $city2, ?string $date, ?string $address1, ?string $address2, ?string $checkEco)
+    public function findByCity(?string $city1=null, ?string $city2=null, ?string $date=null, ?string $address1=null, ?string $address2=null, ?string $checkEco=null)
     {
         $query = "SELECT * FROM $this->view WHERE ";
 
-        if($city1!==null) {
+        if(!empty($city1)) {
             $query .="departure_city LIKE :departure_city AND ";
         }
-        if($city2!==null) {
+        if(!empty($address1)) {
+            $query .="departure_address LIKE :departure_address AND ";
+            }
+        if(!empty($city2)) {
             $query .="arrival_city LIKE :arrival_city AND ";
         }
-        if($address1!==null) {
-            $query .="departure_address LIKE :departure_address AND ";
-        }
-        if($address2!==null) {
+        if(!empty($address2)) {
             $query .="arrival_address LIKE :arrival_address AND ";
-        }
-        if($checkEco!==null) {
+            }
+        if(!empty($checkEco)) {
             $query .="fuel = 'electrique' AND ";
         }
-        if($date!==null) {
+        if(!empty($date)) {
             $query .="departure_date = :departure_date AND ";
         }
         
@@ -119,80 +120,77 @@ class Carpool extends Model
         
         //$stmt->execute(['email' => $email]);
         //binding the value is more secure than sending it directly
-        if($city1!==null) {
-            $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
-        }
-        if($city2!==null) {
+        if(!empty($city1)) {
+                $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
+            }
+        if(!empty($address1)) {
+            $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
+            }
+        if(!empty($city2)) {
             $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
         }
-        if($address1!==null) {
-            $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
+        if(!empty($address2)) {
+        $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
         }
-        if($address2!==null) {
-            $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
-        }
-        if($date!==null) {
+        if(!empty($date)) {
             $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
-        }
+        }        
         
-        $stmt->execute();
-        
+        $stmt->execute();        
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($results !== []) {
             return $results;
         }
 
-        //if no results, check closest date
-
-        if($date!==null) {
+        //if no results for a date, check closest date
+        if(!empty($date)) {
             $query = "SELECT * FROM $this->view WHERE ";
 
-            if($city1!==null) {
-                $query .="departure_city LIKE :departure_city AND ";
+            if(!empty($city1)) {
+                $query .="departure_city LIKE :departure_city AND ";                
             }
-            if($city2!==null) {
-                $query .="arrival_city LIKE :arrival_city AND ";
+            if(!empty($address1)) {
+                    $query .="departure_address LIKE :departure_address AND ";
+                }
+            if(!empty($city2)) {
+                $query .="arrival_city LIKE :arrival_city AND ";                
             }
-            if($address1!==null) {
-                $query .="departure_address LIKE :departure_address AND ";
-            }
-            if($address2!==null) {
+            if(!empty($address2)) {
                 $query .="arrival_address LIKE :arrival_address AND ";
-            }
-            if($checkEco!==null) {
+                }           
+            if(!empty($checkEco)) {
                 $query .="fuel = 'electrique' AND ";
             }
+
             $query .= "departure_date >= NOW() AND remaining_seats > 0 ";
             $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
 
             $stmt = $this->db->prepare($query);
 
-            if($city1!==null) {
+            if(!empty($city1)) {
                 $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
             }
-            if($city2!==null) {
+            if(!empty($address1)) {
+                $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
+                }
+            if(!empty($city2)) {
                 $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
             }
-            if($address1!==null) {
-                $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
-            }
-            if($address2!==null) {
+            if(!empty($address2)) {
                 $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
-            }
-            if($date!==null) {
+            }           
+            if(!empty($date)) {
                 $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
             }
 
             $stmt->execute();
-
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC); //keep fetchAll even with limit 1 -> compatible with js
 
             if ($results !== []) {
                 return $results;
             }
-        }
-        
+        }        
         return null;
     }
 
