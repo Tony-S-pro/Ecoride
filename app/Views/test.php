@@ -50,7 +50,29 @@
         unset($_POST['hash']);
     } 
     
-$carpool = new App\Models\Carpool(App\Core\Database::getPDOInstance());
+$u = new App\Models\Carpool(App\Core\Database::getPDOInstance());
+$res = $u->getPrice('1');
+dump($res);
+(int)$res = $res['price'];
+dump($res);
+
+$arr=[];
+dump($arr);
+$arr1=['credit' => '123'];
+$arr+=$arr1;
+dump($arr);
+$arr2=['price' => 456];
+$arr+=$arr2;
+dump($arr);
+$arr['pin']='pon';
+$arr['fifi']=123;
+dump($arr);
+
+$i=123;
+dump(gettype($i));
+$i=(string)$i;
+dump(gettype($i));
+
 
 
     

@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Database;
 use App\Models\Carpool;
+use App\Models\User;
 
 class CarpoolsController extends Controller
 {
@@ -96,6 +97,63 @@ class CarpoolsController extends Controller
 
         Controller::render($data['view'], $data);
     }
+
+    public function booking($carpool_id)
+    {
+        
+        // check if user's connected
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }
+
+        $user_id = $_SESSION['id'];
+        $booking = null;
+        $stats = [];
+
+        // Check if enough credits if not Error
+        $user = new User(Database::getPDOInstance());
+        $creds = $user->getCreds($user_id);
+        if($creds ===false) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }
+        (int)$creds = $creds['credit'];
+
+               
+
+        $carpool = new Carpool(Database::getPDOInstance());
+        $price = $carpool->getPrice($carpool_id);
+        (int)$price = $price['price']; //ie if false->error db, if 0->error value since (int)'string'=0 & (int)false=0;
+        if($price ===0) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }
+                
+        if($creds<$price) {
+            $booking = 'no_credits';
+        }else {
+            
+            // If enough credits, book, remove creds
+            $user = new User(Database::getPDOInstance());
+            $user->takeCreds($user_id, $price);
+            $booking = 'valid'; 
+            //get new credits balance
+            $creds = $user->getCreds($user_id);
+        } 
+
+        $stats['credit']=$creds; 
+        $stats['price']=$price;
+                
+        $data = [
+            'title' => "Réservez votre place",
+            'view' => "carpools.booking",
+            'booking' => $booking,
+            'stats' =>$stats
+        ];       
+
+        Controller::render($data['view'], $data);
+    } 
 
     
 }

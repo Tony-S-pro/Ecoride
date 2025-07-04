@@ -151,8 +151,13 @@ class Carpool extends Model
         
         $stmt->execute($arr);        
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        
         if ($results !== []) {
+            foreach($results as &$r) {
+                $r['departure_date'] = date('d/m/y', strtotime($r['departure_date']));
+                $r['departure_time'] = date('h:m', strtotime($r['departure_time']));
+                
+            }
             return $results;
         }
 
@@ -169,6 +174,9 @@ class Carpool extends Model
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC); //keep fetchAll even with limit 1 -> compatible with js
 
             if ($results !== []) {
+                foreach($results as &$r) {
+                $r['departure_date'] = date('d/m/y', strtotime($r['departure_date']));                
+                } 
                 return $results;
             }
         }        
@@ -204,6 +212,18 @@ class Carpool extends Model
         }
 
         return $results_final;
+    }
+
+    public function getPrice($carpool_id)
+    {
+        $query = "SELECT price FROM $this->table WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $results;
     }
     
 }

@@ -77,7 +77,7 @@ class User extends Model
 
     public function findByEmail($email)
     {
-        $query = "SELECT * FROM users WHERE email = :email ;";
+        $query = "SELECT * FROM $this->table WHERE email = :email ;";
         $stmt = $this->db->prepare($query);
         
         //$stmt->execute(['email' => $email]);
@@ -92,4 +92,30 @@ class User extends Model
         }
         return null;        
     }
+
+    public function getCreds($user_id)
+    {
+        $query = "SELECT credit FROM $this->table WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $results;
+        
+    }
+
+    public function takeCreds($user_id, $price)
+    {
+        $price=(string)$price;
+        $query = "UPDATE $this->table SET credit = credit - :credit WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':credit', $price, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();        
+    }
+
+    
 }
