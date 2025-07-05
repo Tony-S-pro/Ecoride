@@ -225,5 +225,20 @@ class Carpool extends Model
         
         return $results;
     }
+
+    public function isSeatAvailable($carpool_id)
+    {
+        $query = "SELECT remaining_seats FROM $this->view WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($results['remaining_seats'] > 0) {
+            return true;
+        }        
+        return false;
+    }
     
 }

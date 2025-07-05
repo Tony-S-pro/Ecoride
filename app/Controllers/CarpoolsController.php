@@ -5,6 +5,7 @@ use App\Core\Controller;
 use App\Core\Database;
 use App\Models\Carpool;
 use App\Models\User;
+use App\Models\User_Carpool;
 
 class CarpoolsController extends Controller
 {
@@ -111,16 +112,14 @@ class CarpoolsController extends Controller
         $booking = null;
         $stats = [];
 
-        // Check if enough credits if not Error
+        // Check if enough credits
         $user = new User(Database::getPDOInstance());
         $creds = $user->getCreds($user_id);
         if($creds ===false) {
             echo "Une erreur s'est produite, veuillez essayer plus tard.";
             exit();
         }
-        (int)$creds = $creds['credit'];
-
-               
+        (int)$creds = $creds['credit'];               
 
         $carpool = new Carpool(Database::getPDOInstance());
         $price = $carpool->getPrice($carpool_id);
@@ -132,14 +131,21 @@ class CarpoolsController extends Controller
                 
         if($creds<$price) {
             $booking = 'no_credits';
-        }else {
-            
-            // If enough credits, book, remove creds
-            $user = new User(Database::getPDOInstance());
-            $user->takeCreds($user_id, $price);
-            $booking = 'valid'; 
-            //get new credits balance
-            $creds = $user->getCreds($user_id);
+        }else {            
+            // check if seat still available
+            $isSeatAvailable = $carpool->isSeatAvailable($carpool_id);
+            if($isSeatAvailable) {
+                //book seat
+                $uc = new User_Carpool(Database::getPDOInstance());
+                $uc->bookSeat($user_id, $carpool_id);
+                //take credits from user
+                $user->takeCreds($user_id, $price);
+                $booking = 'valid'; 
+                //get new credits balance
+                $creds = $user->getCreds($user_id);
+            }else {
+                $booking = 'no_seats';
+            }            
         } 
 
         $stats['credit']=$creds; 

@@ -51,7 +51,7 @@
     } 
     
 $u = new App\Models\Carpool(App\Core\Database::getPDOInstance());
-$res = $u->getPrice('1');
+$res = $u->isSeatAvailable('1');
 dump($res);
 (int)$res = $res['price'];
 dump($res);
