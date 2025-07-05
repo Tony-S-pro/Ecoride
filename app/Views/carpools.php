@@ -28,6 +28,7 @@
                     <div>
                         <select class="form-select form-select-sm form-control m-1" name="minRating" aria-label="">
                             <option selected>Note min du chauffeur</option>
+                            <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>

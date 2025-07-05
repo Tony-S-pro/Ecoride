@@ -104,7 +104,7 @@ class CarpoolsController extends Controller
         
         // check if user's connected
         if (!isset($_SESSION['user'])) {
-            header('Location: '.BASE_URL.'signup');
+            header('Location: '.BASE_URL.'login');
             exit;
         }
 
