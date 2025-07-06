@@ -35,7 +35,7 @@
     <div class="ps-3 pb-3">
         <p><strong>note chauffeur :</strong> <?=$carpool['avg_rating']?>/5 (<?=$carpool['ratings_nbr']?> avis)</p>
 
-        <div class="overflow-y-auto mt-3 pb-5" style="max-width: 340px; max-height: 300px;">
+        <div class="overflow-y-auto mt-3 pb-5" style="max-width: max-w-sm; max-height: 300px;">
             <?php foreach($comments as $c) : ?>
                 <p>Le : <?=date('d/m/y', (int)$c['creation_date'])?>, note : <?=$c['rating']?>/5
                 <?=($c['comment'] !=null) ? ' </br>'.$c['comment'] : ''?></p>

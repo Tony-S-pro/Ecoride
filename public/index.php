@@ -3,6 +3,7 @@ session_start([
     'cookie_lifetime' => (30*24*60*60),
     'gc_maxlifetime' => (30*24*60*60)
 ]);
+date_default_timezone_set('Europe/Paris');
 
 /* Path to this file (to check for direct file access)*/
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
