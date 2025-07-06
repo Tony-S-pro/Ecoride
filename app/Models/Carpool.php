@@ -90,111 +90,100 @@ class Carpool extends Model
         return null;
     }
 
-    public function findByCity(?string $city1=null, ?string $city2=null, ?string $date=null, ?string $address1=null, ?string $address2=null, ?string $checkEco=null)
+    public function findByCity(
+        ?string $city1=null, 
+        ?string $city2=null, 
+        ?string $date=null, 
+        ?string $address1=null, 
+        ?string $address2=null,
+        ?string $minRating=null,
+        ?string $maxPrice=null,
+        ?string $maxTime=null, 
+        ?string $checkEco=null
+        )
     {
         $query = "SELECT * FROM $this->view WHERE ";
+        $arr = [];
 
         if(!empty($city1)) {
             $query .="departure_city LIKE :departure_city AND ";
+            $arr += [':departure_city' => $city1];
         }
         if(!empty($address1)) {
             $query .="departure_address LIKE :departure_address AND ";
-            }
+            $arr += [':departure_address' => $address1];
+        }
         if(!empty($city2)) {
             $query .="arrival_city LIKE :arrival_city AND ";
+            $arr += [':arrival_city' => $city2];
         }
         if(!empty($address2)) {
             $query .="arrival_address LIKE :arrival_address AND ";
-            }
+            $arr += [':arrival_address' => $address2];
+        }
+        if(!empty($minRating)) {
+            $query .="avg_rating >= :avg_rating AND ";
+            $arr += [':avg_rating' => $minRating];
+        }
+        if(!empty($maxPrice)) {
+            $query .="price <= :price AND ";
+            $arr += [':price' => $maxPrice];
+        }
+        if(!empty($maxTime)) {
+            $query .="travel_time <= :travel_time AND ";
+            $arr += [':travel_time' => $maxTime];
+        }
         if(!empty($checkEco)) {
             $query .="fuel = 'electrique' AND ";
         }
+
+        $query_before_date = $query;
+
         if(!empty($date)) {
             $query .="departure_date = :departure_date AND ";
+            $arr += [':departure_date' => $date];
         }
-        
-        $query .="departure_date >= NOW() AND remaining_seats > 0 ";
+
+        $query .= "remaining_seats > 0 AND departure_date >= NOW() ";
         $query .= "ORDER BY departure_date ASC;";
 
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->db->prepare($query);            
         
-        //$stmt->execute(['email' => $email]);
-        //binding the value is more secure than sending it directly
-        if(!empty($city1)) {
-                $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
-            }
-        if(!empty($address1)) {
-            $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
-            }
-        if(!empty($city2)) {
-            $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
-        }
-        if(!empty($address2)) {
-        $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
-        }
-        if(!empty($date)) {
-            $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
-        }        
-        
-        $stmt->execute();        
+        $stmt->execute($arr);        
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        
         if ($results !== []) {
+            foreach($results as &$r) {
+                $r['departure_date'] = date('d/m/y', strtotime($r['departure_date']));
+                $r['departure_time'] = date('h:m', strtotime($r['departure_time']));
+                
+            }
             return $results;
         }
 
-        //if no results for a date, check closest date
+        //if no results for a date (if it was given), check closest date
         if(!empty($date)) {
-            $query = "SELECT * FROM $this->view WHERE ";
-
-            if(!empty($city1)) {
-                $query .="departure_city LIKE :departure_city AND ";                
-            }
-            if(!empty($address1)) {
-                    $query .="departure_address LIKE :departure_address AND ";
-                }
-            if(!empty($city2)) {
-                $query .="arrival_city LIKE :arrival_city AND ";                
-            }
-            if(!empty($address2)) {
-                $query .="arrival_address LIKE :arrival_address AND ";
-                }           
-            if(!empty($checkEco)) {
-                $query .="fuel = 'electrique' AND ";
-            }
+            $query = $query_before_date;
 
             $query .= "departure_date >= NOW() AND remaining_seats > 0 ";
             $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
 
             $stmt = $this->db->prepare($query);
 
-            if(!empty($city1)) {
-                $stmt->bindValue(':departure_city', $city1, PDO::PARAM_STR);
-            }
-            if(!empty($address1)) {
-                $stmt->bindValue(':departure_address', $address1, PDO::PARAM_STR);
-                }
-            if(!empty($city2)) {
-                $stmt->bindValue(':arrival_city', $city2, PDO::PARAM_STR);
-            }
-            if(!empty($address2)) {
-                $stmt->bindValue(':arrival_address', $address2, PDO::PARAM_STR);
-            }           
-            if(!empty($date)) {
-                $stmt->bindValue(':departure_date', $date, PDO::PARAM_STR);
-            }
-
-            $stmt->execute();
+            $stmt->execute($arr);
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC); //keep fetchAll even with limit 1 -> compatible with js
 
             if ($results !== []) {
+                foreach($results as &$r) {
+                $r['departure_date'] = date('d/m/y', strtotime($r['departure_date']));                
+                } 
                 return $results;
             }
         }        
         return null;
     }
 
-    public function findCarpoolsNb()
+    public function findCarpoolsAndCredits()
     {
         $results_final = []; // array to return json to charts.js -> [0 => [xVal, yVal], 1 => [xVal, yVal]]
         
@@ -205,13 +194,6 @@ class Carpool extends Model
         }
 
         foreach ($date_arr as $date) {
-            /*
-            $query = "SELECT 
-                COUNT(*) AS carpools_nb
-                FROM carpools
-                WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') 
-                AND departure_date = :date;";
-            */
             
             $query = "SELECT 
                 (SELECT COUNT(*) FROM carpools WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') AND departure_date = :date) AS carpools_nb,
@@ -225,11 +207,37 @@ class Carpool extends Model
             $stmt->bindValue(':date2', $date, PDO::PARAM_STR); 
             $stmt->execute();
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
-            //don't forget to turn yyyy/mm/dd into dd/mm/yy
+            //don't forget to turn yyyy/mm/dd into dd/mm
             array_push($results_final, ['xVal'=> date('d/m', strtotime($date)), 'yVal'=> $results['carpools_nb'], 'y2Val'=> $results['credits_nb']]);                                       
         }
 
         return $results_final;
+    }
+
+    public function getPrice($carpool_id)
+    {
+        $query = "SELECT price FROM $this->table WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        return $results;
+    }
+
+    public function isSeatAvailable($carpool_id)
+    {
+        $query = "SELECT remaining_seats FROM $this->view WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($results['remaining_seats'] > 0) {
+            return true;
+        }        
+        return false;
     }
     
 }

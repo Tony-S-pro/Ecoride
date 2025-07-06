@@ -4,7 +4,7 @@ function getHtml(result)
     let i=0;
     let x='';
 
-    x=x+`<div class="table-responsive">
+    x=x+`<div class="table-responsive m-2 p-1">
         <table class="table table-responsive table-condensed table-striped mt-2">`;
 
     x=x+`<thead>

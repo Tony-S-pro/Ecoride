@@ -50,7 +50,8 @@
         unset($_POST['hash']);
     } 
     
-$carpool = new App\Models\Carpool(App\Core\Database::getPDOInstance());
+$u = new App\Models\View_carpool_full(App\Core\Database::getPDOInstance());
+$res = $u->findById('1');
 
 
     

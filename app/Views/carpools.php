@@ -25,21 +25,21 @@
                 <div class="card card-body">
                     <div><input type="text" name="search_address1" placeholder="Adresse départ" class="form-control m-1"></div>
                     <div><input type="text" name="search_address2" placeholder="Adresse arrivée" class="form-control m-1"></div>
+                    <div>
+                        <select class="form-select form-select-sm form-control m-1" name="minRating" aria-label="">
+                            <option selected>Note min du chauffeur</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div><input type="number" min="1" max="100" name="maxPrice" placeholder="Prix max (en Crédits)" class="form-control m-1"></div>
+                    <div><input type="number" min="1" max="24" name="maxTime" placeholder="durée max (en heures)" class="form-control m-1"></div>
                     <div class="m-2">
                         <input type="checkbox" class="btn-check m-1" id="btn-check-outlined" autocomplete="off" id="checkEco" name="checkEco">
                         <label class="btn btn-outline-success" for="btn-check-outlined">Voyage Ecolo</label><br>
-                        <!-- <div class="form-check">
-                            <input class="form-check-input" type="radio" name="checkEco" id="searchRadios1" value="" checked>
-                                <label class="form-check-label" for="searchRadios1">
-                                Tout types de véhicules
-                                </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="checkEco" id="searchRadios2" value="check">
-                                <label class="form-check-label" for="searchRadios2">
-                                Véhicules électriques uniquement
-                            </label>
-                        </div> -->
                     </div>
                 </div>
             </div>

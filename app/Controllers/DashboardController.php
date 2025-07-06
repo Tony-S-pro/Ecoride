@@ -11,11 +11,11 @@ class DashboardController extends Controller
     {
         // check if user's connected
         if (!isset($_SESSION['user'])) {
-            header('Location: '.BASE_URL.'signup');
+            header('Location: '.BASE_URL.'login');
             exit;
         }
-
-        if($_SESSION['user']['role']='admin' && $_SESSION['user']['id']=ADMIN_ID) {
+        
+        if($_SESSION['user']['role']==='admin' && $_SESSION['user']['id']===ADMIN_ID) {
             self::admin();
             exit;
         }
@@ -33,7 +33,7 @@ class DashboardController extends Controller
         // check if user's connected and has admin role/id
         
         if (!isset($_SESSION['user'])) {
-            header('Location: '.BASE_URL.'signup');
+            header('Location: '.BASE_URL.'login');
             exit;
         }
         if(!$_SESSION['user']['role']='admin' OR !$_SESSION['user']['id']=ADMIN_ID) {
@@ -54,17 +54,17 @@ class DashboardController extends Controller
         // check if user's connected and has admin role/id
         
         if (!isset($_SESSION['user'])) {
-            header('Location: '.BASE_URL.'signup');
+            header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']='admin' OR !$_SESSION['user']['id']=ADMIN_ID) {
-            header('Location: '.BASE_URL.'signup');
+        if(!$_SESSION['user']['role']==='admin' OR !$_SESSION['user']['id']===ADMIN_ID) {
+            header('Location: '.BASE_URL.'login');
             exit;
         }
 
         $carpool = new Carpool(Database::getPDOInstance());
         
-        $results = $carpool->findCarpoolsNb();
+        $results = $carpool->findCarpoolsAndCredits();
 
         //shouldn't ever be null, but just in case
         if ($results == null) {
