@@ -50,8 +50,8 @@
         unset($_POST['hash']);
     } 
     
-$u = new App\Models\Carpool(App\Core\Database::getPDOInstance());
-$res = $u->isSeatAvailable('1');
+$u = new App\Models\View_carpool_full(App\Core\Database::getPDOInstance());
+$res = $u->findById('1');
 dump($res);
 (int)$res = $res['price'];
 dump($res);

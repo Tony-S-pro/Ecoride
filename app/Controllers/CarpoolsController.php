@@ -4,8 +4,12 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Database;
 use App\Models\Carpool;
+use App\Models\Review;
+use App\Models\Vehicle;
+use App\Models\View_carpool_full;
 use App\Models\User;
 use App\Models\User_Carpool;
+use App\Models\View_driver_comments;
 
 class CarpoolsController extends Controller
 {
@@ -68,9 +72,9 @@ class CarpoolsController extends Controller
                 unset($_POST['checkEco']);
             }                       
 
-            $carpool = new Carpool(Database::getPDOInstance());
+            $vw_carpool_full = new View_carpool_full(Database::getPDOInstance());
 
-            $results = $carpool->findByCity(
+            $results = $vw_carpool_full->findByCity(
                 $city1, 
                 $city2, 
                 $date, 
@@ -99,6 +103,43 @@ class CarpoolsController extends Controller
         Controller::render($data['view'], $data);
     }
 
+    public function details($carpool_id)
+    {
+        // check if user's connected
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+
+        // Get full carpool details
+        $vw_carpool_full = new View_carpool_full(Database::getPDOInstance());
+        $results_carpool = $vw_carpool_full->findById($carpool_id);
+        if($results_carpool ===null) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            dump($carpool_id);
+            exit();
+        }
+
+        // Get comments from reviews
+        $comments = new View_driver_comments(Database::getPDOInstance());
+        $driver_id = $results_carpool['driver_id'];
+        $results_comment = $comments->findByDriver($driver_id);
+        if($results_comment ===null) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }
+        
+        $data = [
+            'title' => "Réservez votre place",
+            'view' => "carpools.details",
+            'carpool' => $results_carpool,
+            'comments' => $results_comment
+        ];       
+
+        Controller::render($data['view'], $data);
+
+    }
+
     public function booking($carpool_id)
     {
         
@@ -108,38 +149,38 @@ class CarpoolsController extends Controller
             exit;
         }
 
-        $user_id = $_SESSION['id'];
+        $user_id = $_SESSION['user']['id'];
         $booking = null;
         $stats = [];
 
         // Check if enough credits
         $user = new User(Database::getPDOInstance());
         $creds = $user->getCreds($user_id);
-        if($creds ===false) {
+        if($creds ===null) {
             echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            dump($_SESSION);
             exit();
         }
-        (int)$creds = $creds['credit'];               
-
+       
         $carpool = new Carpool(Database::getPDOInstance());
         $price = $carpool->getPrice($carpool_id);
-        (int)$price = $price['price']; //ie if false->error db, if 0->error value since (int)'string'=0 & (int)false=0;
-        if($price ===0) {
+        if($price ===null) {
             echo "Une erreur s'est produite, veuillez essayer plus tard.";
             exit();
         }
                 
-        if($creds<$price) {
+        if($creds['credit']<$price['price']) {
             $booking = 'no_credits';
         }else {            
             // check if seat still available
-            $isSeatAvailable = $carpool->isSeatAvailable($carpool_id);
-            if($isSeatAvailable) {
+            $vw_carpool_full = new View_carpool_full(Database::getPDOInstance());
+            $vw_carpool_full = $carpool->isSeatAvailable($carpool_id);
+            if($vw_carpool_full) {
                 //book seat
                 $uc = new User_Carpool(Database::getPDOInstance());
                 $uc->bookSeat($user_id, $carpool_id);
                 //take credits from user
-                $user->takeCreds($user_id, $price);
+                $user->takeCreds($user_id, $price['price']);
                 $booking = 'valid'; 
                 //get new credits balance
                 $creds = $user->getCreds($user_id);
@@ -148,8 +189,8 @@ class CarpoolsController extends Controller
             }            
         } 
 
-        $stats['credit']=$creds; 
-        $stats['price']=$price;
+        $stats['credit']=$creds['credit']; 
+        $stats['price']=$price['price'];
                 
         $data = [
             'title' => "Réservez votre place",

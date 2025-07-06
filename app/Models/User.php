@@ -100,7 +100,7 @@ class User extends Model
         
         $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         
         return $results;
         
@@ -108,7 +108,6 @@ class User extends Model
 
     public function takeCreds($user_id, $price)
     {
-        $price=(string)$price;
         $query = "UPDATE $this->table SET credit = credit - :credit WHERE id = :id;";
         $stmt = $this->db->prepare($query);
         

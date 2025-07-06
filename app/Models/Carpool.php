@@ -221,8 +221,7 @@ class Carpool extends Model
         
         $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         return $results;
     }
 

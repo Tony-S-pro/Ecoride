@@ -11,6 +11,8 @@
     <p>Vous pouvez aussi choisir devenir un conducteur en enregistrant un véhicule et vos préférences pour organiser vos propre covoiturages.</p>
 </section>
 
+<?=dump($_SESSION);?>
+
 
 <canvas id="adminCharts" style="width:100%;max-width:600px;max-height:400px"></canvas>
 

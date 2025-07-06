@@ -12,11 +12,10 @@ function getHtml(result)
 
     x=x+`<thead>
                 <tr>
+                    <th></th>
+                    <th></th>
                     <th>Départ</th>
-                    <th></th>
-                    <th></th>
                     <th>Arrivée</th>
-                    <th>Prix</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -40,9 +39,8 @@ function getHtml(result)
             <td>${result[i]['departure_time']}</td>
             <td>${result[i]['departure_city']}</td>
             <td>${result[i]['arrival_city']}</td>
-            <td>${result[i]['price']} C</td>
             <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${i}" aria-expanded="false" aria-controls="collapseTwo${i}" class="btn btn-success btn-sm">Détails</button></td>
-            <td><a href="carpools/booking/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm" onclick="return confirm('Réservez votre place pour ${result[i]['price']} C ?')">Réserver</button></a></td>
+            <td><a href="carpools/details/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Réserver</button></a></td>
             </tr>
 
             <tr class="hide-table-padding">
@@ -51,10 +49,11 @@ function getHtml(result)
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
                             <div><strong>adr. arr. :</strong> ${result[i]['arrival_address']}</div>
-                            <div><strong>durée (est.) :</strong> ${result[i]['travel_time']}h</div>
-                            <div><strong>note :</strong> ${result[i]['avg_rating']}/5 (${result[i]['ratings_nbr']} avis)</div>
-                            <div><strong>sièges dispo :</strong> ${result[i]['remaining_seats']}</div>
+                            <div><strong>durée (est.) :</strong> ${result[i]['travel_time']}h</div>                            
                             <div><strong>description :</strong> ${result[i]['description']}</div>
+                            <div><strong>prix :</strong> ${result[i]['price']} Crédit(s)</div>
+                            <div><strong>note chauffeur :</strong> ${result[i]['avg_rating']}/5 (${result[i]['ratings_nbr']} avis)</div>
+                            <div><strong>sièges dispo :</strong> ${result[i]['remaining_seats']}</div>
                             <div><strong>animaux:</strong> ${animals}, <strong>fumeur :</strong> ${smoking}</div>
                             <div><strong>autres :</strong> ${result[i]['misc']}</div>
                         </div>
