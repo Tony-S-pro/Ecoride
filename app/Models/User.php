@@ -85,12 +85,9 @@ class User extends Model
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 
-        if ($results !== []) {
-            return $results;
-        }
-        return null;        
+        return $results;        
     }
 
     public function getCreds($user_id)

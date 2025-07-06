@@ -52,27 +52,6 @@
     
 $u = new App\Models\View_carpool_full(App\Core\Database::getPDOInstance());
 $res = $u->findById('1');
-dump($res);
-(int)$res = $res['price'];
-dump($res);
-
-$arr=[];
-dump($arr);
-$arr1=['credit' => '123'];
-$arr+=$arr1;
-dump($arr);
-$arr2=['price' => 456];
-$arr+=$arr2;
-dump($arr);
-$arr['pin']='pon';
-$arr['fifi']=123;
-dump($arr);
-
-$i=123;
-dump(gettype($i));
-$i=(string)$i;
-dump(gettype($i));
-
 
 
     
