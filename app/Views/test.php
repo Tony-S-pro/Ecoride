@@ -56,25 +56,36 @@ $user_id = $_SESSION['user']['id'];
 $cs = new App\Models\View_carpools_status(App\Core\Database::getPDOInstance());
         $carpools_arr = $cs->findByUser_past($user_id);
 
-dump($carpools_arr);
-dump($carpools_arr[0]['carpool_id']);
+//dump($carpools_arr);
+//dump($carpools_arr[0]['carpool_id']);
 
 $carpools = new App\Models\View_carpool_full(App\Core\Database::getPDOInstance());
 
 //$results =  $carpools->findById($carpools_arr[0]['carpool_id']);
 $results=[];
-foreach ($carpools_arr as $c) {
-    //var_dump($carpools->findById($c['carpool_id']));
-    
-    $res = $carpools->findById($c['carpool_id']);
-    $res['departure_date'] = date('d/m/y', strtotime($res['departure_date']));
-    var_dump($res);
 
-     
-    $results[]=$res;
-}
+$carpool = new App\Models\Carpool(App\Core\Database::getPDOInstance());
+        $price = $carpool->getPrice(4);
+        if($price ===null) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }
+        $price=$price["price"];
 
-dump($results);
+        //get passengers list
+        $list=[];
+        $uc = new App\Models\User_Carpool(App\Core\Database::getPDOInstance());
+        $results_uc = $uc->findUsersByCarpool(4);
+        
+        if($results_uc===null){
+            $list=null;
+        }else{
+            foreach ($results_uc as $r) {            
+                $list[]=$r['user_id'];
+            } 
+        }
+
+        dd($results_uc, $price, $list);
 
 $arr=[];
 $arr1= ['pin'=>123];

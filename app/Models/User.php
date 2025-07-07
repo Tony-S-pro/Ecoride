@@ -90,6 +90,18 @@ class User extends Model
         return $results;        
     }
 
+    public function getIdByEmail($user_email)
+    {
+        $query = "SELECT id FROM $this->table WHERE email = :email;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':email', $user_email, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        
+        return $results;        
+    }
+
     public function getCreds($user_id)
     {
         $query = "SELECT credit FROM $this->table WHERE id = :id;";
@@ -112,6 +124,30 @@ class User extends Model
         $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
         $stmt->execute();        
     }
+
+    public function giveCreds($user_id, $price)
+    {
+        $query = "UPDATE $this->table SET credit = credit + :credit WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':credit', $price, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();        
+    }
+
+    public function getEmail($user_id)
+    {
+        $query = "SELECT email FROM $this->table WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        
+        return $results;        
+    }
+
+
 
     
 }

@@ -1,38 +1,74 @@
 <?php defined('ROOT_PATH') OR exit("You don't have permission to access this resource."); ?>
 <script defer src="<?=BASE_URL?>assets/ajax/get-carpools-passenger.js"></script>
+<script defer src="<?=BASE_URL?>assets/ajax/get-carpools-driver.js"></script>
 
 <h1>Votre espace</h1>
 
 <section>
     <h2>Bienvenue <?= htmlspecialchars($_SESSION['user']['pseudo']) ?></h2>
-    <p>Dans cet espace, vous pouvez consulter vos coivoiturages passés et a venir.</p>
+    <p>Dans cet espace, vous pouvez consulter vos covoiturages passés et a venir.</p>
     <p>Vous pouvez aussi choisir devenir un conducteur en enregistrant un véhicule et vos préférences pour organiser vos propre covoiturages.</p>
 </section>
 
-<?=var_dump($_SESSION, $_SESSION['user']['role']);?>
+<?php dump($_SESSION);?>
 
 <section>
-    <h2>Vos covoiturages</h2>
-    
+    <h2>Vos covoiturages en tant que passager</h2>
+    <p>Vous trouverez ci-dessous la liste de tous les covoiturages auquels vous avez prévu de participer, ainsi que l'historique de vos trajets.</p>
+    <p>N'oubliez pas de donner votre avis après chaque covoiturages.</p>    
 
     <p class="d-inline-flex gap-1">
     <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#carpoolsPast" role="button" aria-expanded="false" aria-controls="carpoolsPast">Passés</a>
     <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#carpoolsPlanned" aria-expanded="false" aria-controls="carpoolsPlanned">A venir</button>
     </p>
     <div class="col">
-    <div class="row">
-        <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="carpoolsPast">
-            <div class="card card-body border-secondary mb-2" id="carpoolsPastResults">
+        <div class="row">
+            <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="carpoolsPast">
+                <div class="card card-body border-secondary mb-2" id="carpoolsPastResults">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="carpoolsPlanned">
+                <div class="card card-body border-success mb-2" id="carpoolsPlannedResults">
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="carpoolsPlanned">
-            <div class="card card-body border-success mb-2" id="carpoolsPlannedResults">
-            </div>
-        </div>
-    </div>
-    </div>
-
-
 </section>
+
+<?php if(empty($_SESSION['user']['vehicles'])):?>
+
+<section>
+    <h2>Devenez un chauffeur sur Ecoride</h2>
+    <p>Enregistrez un véhicule pour organiser vos covoiturages en tant que conducteur.</p>
+</section>
+
+<?php else:?>
+
+<section>
+    <h2>Vos covoiturages en tant que conducteur</h2>
+    <p>Voici la liste de tous les covoiturages que vous avez organisé en tant que conducteur.</p>
+    <p>N'oubliez pas de signaler le départ et l'arrivé de tout trajet.</p>    
+
+    <p class="d-inline-flex gap-1">
+    <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#driverPast" role="button" aria-expanded="false" aria-controls="driverPast">Passés</a>
+    <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#driverPlanned" aria-expanded="false" aria-controls="driverPlanned">A venir</button>
+    </p>
+    <div class="col">
+        <div class="row">
+            <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="driverPast">
+                <div class="card card-body border-secondary mb-2" id="driverPastResults">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="driverPlanned">
+                <div class="card card-body border-success mb-2" id="driverPlannedResults">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php endif;?>

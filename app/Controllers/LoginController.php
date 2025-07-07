@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Database;
 use App\Models\User;
+use App\Models\Vehicle;
 
 class LoginController extends Controller
 {
@@ -64,11 +65,15 @@ class LoginController extends Controller
 
                 if ($user && password_verify($password, $user['password'])) {
                     // only usefull data for other pages is stored in session (i.e. no psw, etc)
+                    $vehicle = new Vehicle(Database::getPDOInstance());
+                    $cars = $vehicle->findAllIdByUser($user['id']);
+                    
                     $_SESSION['user'] = [
                         'id' => $user['id'],
                         'email' => $user['email'],
                         'pseudo' => $user['pseudo'],
-                        'role' => $user['role']
+                        'role' => $user['role'],
+                        'vehicles' => $cars
                     ];
                     header('Location: '.BASE_URL.'dashboard');
                     exit;

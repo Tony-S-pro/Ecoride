@@ -117,7 +117,9 @@ class SignupController extends Controller
             // creation of a (non session) cookie
 
             // user session
+            $id = $userModel->getIdByEmail($email);
             $_SESSION['user'] = [
+                'id' => $id['id'],
                 'pseudo' => $pseudo,
                 'email' => $email,
                 'role' => 'user'

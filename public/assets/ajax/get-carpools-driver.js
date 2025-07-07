@@ -1,5 +1,5 @@
 
-function getHtmlPast(result)
+function getHtmlDriverPast(result)
 {
     let i=0;
     let x='';
@@ -29,22 +29,22 @@ function getHtmlPast(result)
         //use backticks `` to avoid concatenations (</td> + <td>)
         x=x+`
             <tr class="accordion-toggle collapsed"
-                id="accordionPast${i}"
+                id="accordionDriverPast${i}"
                 data-mdb-collapse-init
-                data-mdb-parent="#accordionPast${i}"
-                href="#collapsePast${i}"
-                aria-controls="collapsePast${i}">
+                data-mdb-parent="#accordionDriverPast${i}"
+                href="#collapseDriverPast${i}"
+                aria-controls="collapseDriverPast${i}">
             <td>${result[i]['departure_date']}</td>
             <td>${result[i]['departure_time']}</td>
             <td>${result[i]['departure_city']}</td>
             <td>${result[i]['arrival_city']}</td>
-            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePast${i}" aria-expanded="false" aria-controls="collapsePast${i}" class="btn btn-success btn-sm">Détails</button></td>
-            <td><a href="reviews/passenger/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Avis</button></a></td>
+            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseDriverPast${i}" aria-expanded="false" aria-controls="collapseDriverPast${i}" class="btn btn-success btn-sm">Détails</button></td>
+            <td></td>
             </tr>
 
             <tr class="hide-table-padding">
                 <td colspan="6"=>
-                    <div id="collapsePast${i}" class="collapse">
+                    <div id="collapseDriverPast${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
                             <div><strong>adr. arr. :</strong> ${result[i]['arrival_address']}</div>
@@ -67,7 +67,7 @@ function getHtmlPast(result)
     return x;
 }
 
-function getHtmlPlanned(result)
+function getHtmlDriverPlanned(result)
 {
     let i=0;
     let x='';
@@ -97,22 +97,22 @@ function getHtmlPlanned(result)
         //use backticks `` to avoid concatenations (</td> + <td>)
         x=x+`
             <tr class="accordion-toggle collapsed"
-                id="accordionPlanned${i}"
+                id="accordionDriverPlanned${i}"
                 data-mdb-collapse-init
-                data-mdb-parent="#accordionPlanned${i}"
-                href="#collapsePlanned${i}"
-                aria-controls="collapsePlanned${i}">
+                data-mdb-parent="#accordionDriverPlanned${i}"
+                href="#collapseDriverPlanned${i}"
+                aria-controls="collapseDriverPlanned${i}">
             <td>${result[i]['departure_date']}</td>
             <td>${result[i]['departure_time']}</td>
             <td>${result[i]['departure_city']}</td>
             <td>${result[i]['arrival_city']}</td>
-            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlanned${i}" aria-expanded="false" aria-controls="collapsePlanned${i}" class="btn btn-success btn-sm">Détails</button></td>
-            <td><a href="dashboard/cancel_passenger/${result[i]['id']}"><button type="button" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous sûr(e) de vouloir annuller votre participation à ce covoiturage ?')">Annuler</button></a></td>
+            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseDriverPlanned${i}" aria-expanded="false" aria-controls="collapseDriverPlanned${i}" class="btn btn-success btn-sm">Détails</button></td>
+            <td><a href="dashboard/cancel_driver/${result[i]['id']}"><button type="button" class="btn btn-danger btn-sm">Annuler</button></a></td>
             </tr>
 
             <tr class="hide-table-padding">
                 <td colspan="6"=>
-                    <div id="collapsePlanned${i}" class="collapse">
+                    <div id="collapseDriverPlanned${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
                             <div><strong>adr. arr. :</strong> ${result[i]['arrival_address']}</div>
@@ -135,14 +135,14 @@ function getHtmlPlanned(result)
     return x;
 }
 
-function getHtml_noResults_past()
+function getHtml_noResults_driver_past()
 {
     let x='';
     x=x+`<div class="m-2 error-message">Aucun covoiturage terminé</div>`;
     return x;
 }
 
-function getHtml_noResults_planned()
+function getHtml_noResults_driver_planned()
 {
     let x='';
     x=x+`<div class="m-2 error-message">Aucun covoiturage planifié</div>`;
@@ -154,7 +154,7 @@ function getHtml_noResults_planned()
 $(document).ready(function(){
 
     $.ajax({
-        url:'dashboard/carpools_passenger/past',
+        url:'dashboard/carpools_driver/past',
         type:'POST',
         dataType:'JSON',
 
@@ -162,14 +162,14 @@ $(document).ready(function(){
             let x = JSON.stringify(response);
             //console.log(x);
             if (x = null) {
-                $("#carpoolsPastResults").html(getHtml_noResults_past());
+                $("#driverPastResults").html(getHtml_noResults_driver_past());
             } else {
-                let html = getHtmlPast(response);
-                $("#carpoolsPastResults").html(html);
+                let html = getHtmlDriverPast(response);
+                $("#driverPastResults").html(html);
             }            
         },
         error:function (e) {
-            $("#carpoolsPastResults").html(getHtml_noResults_past());
+            $("#driverPastResults").html(getHtml_noResults_driver_past());
         }
     });
 });
@@ -177,21 +177,21 @@ $(document).ready(function(){
 $(document).ready(function(){
 
     $.ajax({
-        url:'dashboard/carpools_passenger/planned',
+        url:'dashboard/carpools_driver/planned',
         type:'POST',
         dataType:'JSON',
 
         success:function(response) {            
             let x = JSON.stringify(response);
             if (x = null) {
-                $("#carpoolsPlannedResults").html(getHtml_noResults_planned());
+                $("#driverPlannedResults").html(getHtml_noResults_driver_planned());
             } else {
-                let html = getHtmlPlanned(response);
-                $("#carpoolsPlannedResults").html(html);
+                let html = getHtmlDriverPlanned(response);
+                $("#driverPlannedResults").html(html);
             }            
         },
         error:function (e) {
-            $("#carpoolsPlannedResults").html(getHtml_noResults_planned());
+            $("#driverPlannedResults").html(getHtml_noResults_driver_planned());
         }
     });
 });

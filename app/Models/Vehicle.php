@@ -10,6 +10,24 @@ class Vehicle extends Model
 {
     protected string $table = 'vehicles';
 
+    public function findAllIdByUser($driver_id): array|null
+    {
+        $query = "SELECT id FROM $this->table WHERE driver_id = :driver_id ;";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':driver_id' => $driver_id]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($results)) {
+            return null;
+        }
+        
+        $arr=[];
+        foreach ($results as $r) {
+            $arr[]=$r['id'];
+        }
+        return $arr;
+    }
+
     public function createCar($data)//??????????????????????????????????????????????????????
     {
         $db = $this->db;
