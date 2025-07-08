@@ -43,7 +43,7 @@ function getHtmlDriverPast(result)
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6"=>
+                <td colspan="6">
                     <div id="collapseDriverPast${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
@@ -73,6 +73,8 @@ function getHtmlDriverPlanned(result)
     let x='';
     let smoking='';
     let animals='';
+    let statusA='';
+    let statusB='';
 
     x=x+`<div class="table-responsive">
         <table class="table table-responsive table-condensed table-striped mt-2">`;
@@ -85,6 +87,7 @@ function getHtmlDriverPlanned(result)
                     <th>Arrivée</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>`;
@@ -94,6 +97,14 @@ function getHtmlDriverPlanned(result)
         
         result[i]['smoking'] ? smoking='OUI' : smoking='NON';
         result[i]['animals'] ? animals='OUI' : animals='NON';
+        if (result[i]['status']==='en_cours') {
+            statusA = 'arrival';
+            statusB = 'Arrivé';
+        } else {
+            statusA = 'departure';
+            statusB = 'Départ';
+        }
+        
         //use backticks `` to avoid concatenations (</td> + <td>)
         x=x+`
             <tr class="accordion-toggle collapsed"
@@ -107,11 +118,12 @@ function getHtmlDriverPlanned(result)
             <td>${result[i]['departure_city']}</td>
             <td>${result[i]['arrival_city']}</td>
             <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseDriverPlanned${i}" aria-expanded="false" aria-controls="collapseDriverPlanned${i}" class="btn btn-success btn-sm">Détails</button></td>
+            <td><a href="dashboard/${statusA}/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">${statusB}</button></a></td>
             <td><a href="dashboard/cancel_driver/${result[i]['id']}"><button type="button" class="btn btn-danger btn-sm">Annuler</button></a></td>
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6"=>
+                <td colspan="6">
                     <div id="collapseDriverPlanned${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>

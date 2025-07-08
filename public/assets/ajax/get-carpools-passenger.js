@@ -43,7 +43,7 @@ function getHtmlPast(result)
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6"=>
+                <td colspan="6">
                     <div id="collapsePast${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
@@ -111,7 +111,7 @@ function getHtmlPlanned(result)
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6"=>
+                <td colspan="6">
                     <div id="collapsePlanned${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>

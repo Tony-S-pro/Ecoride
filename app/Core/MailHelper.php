@@ -128,4 +128,59 @@ Class MailHelper
         }
     }
 
+    public static function sendReviewMail(string $contact_email) 
+    {
+        try {
+
+            try {
+                $mail = new PHPMailer(true);
+                //$mail->SMTPDebug = 2;
+
+            }catch (Exception $e) {        
+                if (DEBUG) {
+                    echo "[MAILER ERROR1] : {$mail->ErrorInfo}}";
+                    exit;
+                }
+            }            
+            
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';                                 //Pièce jointes ? A TESTER
+            $mail->isSMTP();
+            
+            $mail->Host = 'smtp.gmail.com';                                    //Adresse IP ou DNS du serveur SMTP
+            $mail->Port = '587';                                    //Port TCP du serveur SMTP
+            $mail->SMTPAuth = true;                                     //Utiliser l'identification
+
+            if($mail->SMTPAuth){
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;     //Protocole de sécurisation des échanges avec le SMTP ('tls'->plus de compatibilité) / 'ssl'->plus secure)
+                $mail->Username = SMTP_USER;
+                $mail->Password = SMTP_PASS;
+            }
+
+            $mail->From = SMTP_FROM;                                    //L'email à afficher pour l'envoi (adresse email servira de référence pour répondre)
+            $mail->FromName = SMTP_FROM_NAME;                           //L'alias à afficher pour l'envoi (optionnel)              
+
+            $mail->addAddress($contact_email);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Ecoride - Valider votre covoiturage';
+            $mail->Body = "
+                <h2>Vous avez terminé un covoiturage</h2>
+                <p>Rendez-vous dans votre espace sur Ecoride pour valider votre arrivée à destination, noter votre conducteur et laisser un avis.</br> 
+                S'il y un problème avec votre trajet, vous pouvez aussi contester et demander un remboursement.</p>
+            ";
+            $mail->AltBody = "Rendez-vous dans votre espace sur Ecoride pour valider votre arrivée à destination, noter votre conducteur et laisser un avis. S'il y un problème avec votre trajet, vous pouvez aussi contester et demander un remboursement.";
+
+            $mail->send();
+
+            return true;
+
+        } catch (Exception $e) {        
+            if (DEBUG) {                
+                echo "[MAILER ERROR] : {$mail->ErrorInfo}}";
+                exit;
+            }
+        }
+    }
+
 }

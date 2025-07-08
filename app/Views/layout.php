@@ -31,7 +31,7 @@ header('X-Content-Type-Options: nosniff'); // Vs MIME exploits. No sniffing (gue
 
     <link rel="icon" type="image/x-icon" href="<?=BASE_URL?>assets/favicon.ico">
 </head>
-<body class="d-flex flex-column min-vh-100" id="bootstrap-overrides">
+<body class="d-flex flex-column min-vh-100">
     
 <div class="site">
 

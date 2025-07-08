@@ -28,10 +28,10 @@ $allowedControllers = [
     'SignupController', 
     'LoginController',
     'LogoutController',
+    'ContactController',
     'DashboardController',
     'CarpoolsController',
     'UserController',
-    'ContactController',
     'TestController', 'RandomController'
 ];
 $allowedMethods = [
@@ -51,7 +51,11 @@ $allowedMethods = [
     'cancel_passenger', 
     'carpools_driver',
     'cancel_driver',
-    'cancellation'
+    'cancellation',
+    'departure', 'arrival',
+    'new_carpool',
+    'new_vehicle',
+    'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted'
 ];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {

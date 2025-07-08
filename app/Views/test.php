@@ -52,47 +52,28 @@
     
 <?php 
 
-$user_id = $_SESSION['user']['id'];
-$cs = new App\Models\View_carpools_status(App\Core\Database::getPDOInstance());
-        $carpools_arr = $cs->findByUser_past($user_id);
+
+
 
 //dump($carpools_arr);
 //dump($carpools_arr[0]['carpool_id']);
 
-$carpools = new App\Models\View_carpool_full(App\Core\Database::getPDOInstance());
 
 //$results =  $carpools->findById($carpools_arr[0]['carpool_id']);
 $results=[];
 
-$carpool = new App\Models\Carpool(App\Core\Database::getPDOInstance());
-        $price = $carpool->getPrice(4);
-        if($price ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard.";
-            exit();
-        }
-        $price=$price["price"];
 
-        //get passengers list
-        $list=[];
-        $uc = new App\Models\User_Carpool(App\Core\Database::getPDOInstance());
-        $results_uc = $uc->findUsersByCarpool(4);
-        
-        if($results_uc===null){
-            $list=null;
-        }else{
-            foreach ($results_uc as $r) {            
-                $list[]=$r['user_id'];
-            } 
-        }
-
-        dd($results_uc, $price, $list);
+App\Core\MailHelper::sendReviewMail('tonys8478@gmail.com');
 
 $arr=[];
 $arr1= ['pin'=>123];
 $arr2= ['pon'=>456];
 
+
 $arr[]=$arr1;
 $arr[]=$arr2;
+dump($arr);
+$arr[]='pfloekfmke';
 dump($arr);
 dump($arr[0]);
 

@@ -260,7 +260,7 @@ class Carpool extends Model
 
     public function findIdByDriver_planned(string|int $driver_id): ?array
     {
-        $stmt = $this->db->prepare("SELECT id FROM {$this->table} WHERE driver_id = :driver_id AND status = 'planifie';");
+        $stmt = $this->db->prepare("SELECT id FROM {$this->table} WHERE driver_id = :driver_id AND (status = 'planifie' OR status = 'en_cours');");
         $stmt->execute([':driver_id' => $driver_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: null;
     }
@@ -269,6 +269,26 @@ class Carpool extends Model
     {
         //driver_id to be sure that the driver is deleting their own carpool
         $query = "DELETE FROM $this->table WHERE (id = :id AND driver_id = :driver_id);";;
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->bindValue(':driver_id', $driver_id, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function startTrip($driver_id,  $carpool_id)
+    {
+        //driver_id to be sure that the driver is updating their own carpool
+        $query = "UPDATE $this->table SET status = 'en_cours' WHERE (id = :id AND driver_id = :driver_id);";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->bindValue(':driver_id', $driver_id, PDO::PARAM_STR);
+        $stmt->execute();    
+    }
+
+    public function endTrip($driver_id,  $carpool_id)
+    {
+        //driver_id to be sure that the driver is updating their own carpool
+        $query = "UPDATE $this->table SET status = 'termine' WHERE (id = :id AND driver_id = :driver_id);";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
         $stmt->bindValue(':driver_id', $driver_id, PDO::PARAM_STR);
