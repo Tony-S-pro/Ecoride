@@ -31,6 +31,8 @@ $allowedControllers = [
     'ContactController',
     'DashboardController',
     'CarpoolsController',
+    'VehiclesController',
+    'CarpoolingController',
     'UserController',
     'TestController', 'RandomController'
 ];

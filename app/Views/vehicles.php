@@ -27,7 +27,7 @@
                         <li>les animaux <?=($v['animals']==0) ? 'ne sont pas' : 'sont' ?> autorisés</li>
                         <?=(empty($v['misc'])) ? '' : '<li>autre(s) : '.$v['misc'].'</li>' ?>
                     </ul>
-                    <p><a href="<?= BASE_URL ?>dashboard/delete_vehicle/<?=$v['id']?>" onclick="return confirm('Voulez-vous supprimer ce véhicule ?')">Supprimer ce vehicule</a>.</p>                    
+                    <p><a href="<?= BASE_URL ?>vehicles/delete_vehicle/<?=$v['id']?>" onclick="return confirm('Voulez-vous supprimer ce véhicule ?')">Supprimer ce vehicule</a>.</p>                    
                 </div>
                 <?php endforeach; ?>
                 <?php endif; ?>
@@ -37,7 +37,7 @@
     <div class="row">
         <div class="collapse multi-collapse overflow-y-auto" class="max-width: max-w-sm; max-height: 300px;" id="new_vehicle">
             <div class="card card-body border-success mb-2" id="new_vehicle">
-                <form id="registerVehicle" action="<?= BASE_URL ?>dashboard/register_vehicle" method="POST" novalidate>
+                <form id="registerVehicle" action="<?= BASE_URL ?>vehicles/register_vehicle" method="POST" novalidate>
                     <div class="d-flex flex-row flex-wrap">
                     <div class="mb-3 flex-grow-1">
                         <label for="brand">Marque :</label>

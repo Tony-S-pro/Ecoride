@@ -42,7 +42,7 @@
 <section>
     <h2>Devenez un chauffeur sur Ecoride</h2>
     <p>Enregistrez un véhicule pour organiser vos covoiturages en tant que conducteur.</p>
-    <p class="d-inline-flex gap-1"><a class="btn btn-warning" href="<?=BASE_URL?>dashboard/new_vehicle" role="button">Enregistrer un véhicule</a></p> 
+    <p class="d-inline-flex gap-1"><a class="btn btn-warning" href="<?=BASE_URL?>vehicles" role="button">Enregistrer un véhicule</a></p> 
 </section>
 
 <?php else:?>
@@ -50,8 +50,8 @@
 <section>
     <h2>Vos covoiturages en tant que conducteur</h2>
     <p>En tant que conducteur, vous pouvez créer vos propre covoiturages en décidant vous-même de tous les détails*.</br>*Notez que la création de chaque covoiturage vous coutera 2 crédits pour frais de gestion.</p>
-    <p class="d-inline-flex gap-1"><a class="btn btn-outline-success" href="<?=BASE_URL?>dashboard/vehicles" role="button">Vos vehicules</a></p>
-    <p class="d-inline-flex gap-1"><a class="btn btn-warning" href="<?=BASE_URL?>dashboard/new_carpool" role="button">Créer un covoiturage</a></p>
+    <p class="d-inline-flex gap-1"><a class="btn btn-outline-success" href="<?=BASE_URL?>vehicles" role="button">Vos vehicules</a></p>
+    <p class="d-inline-flex gap-1"><a class="btn btn-warning" href="<?=BASE_URL?>carpooling" role="button">Créer un covoiturage</a></p>
     
     <p>Voici la liste de tous les covoiturages que vous avez organisé en tant que conducteur. N'oubliez pas de signaler le départ et l'arrivé de tout trajet.</p>
     
