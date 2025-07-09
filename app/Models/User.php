@@ -10,7 +10,7 @@ class User extends Model
 {
     protected string $table = 'users';
 
-    public function isEmailIn($email)
+    public function isEmailIn($email): bool
     {
         $query = "SELECT email FROM users WHERE email = :email ;";
         $stmt = $this->db->prepare($query);
