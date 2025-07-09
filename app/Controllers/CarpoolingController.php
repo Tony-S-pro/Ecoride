@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Models\Carpool;
 use App\Models\Vehicle;
 
 class CarpoolingController extends Controller
@@ -31,9 +32,8 @@ class CarpoolingController extends Controller
 
         Controller::render($data['view'], $data);
     }
-
-    /*
-    public function register_vehicle()
+   
+    public function register_carpool()
     {
         
         // check if user's connected
@@ -43,136 +43,142 @@ class CarpoolingController extends Controller
         }        
 
         $user_id = $_SESSION['user']['id'];
+        $vehicle_id_arr = $_SESSION['user']['vehicles'];
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $errors = [];
-            $brand = trim($_POST['brand'] ?? '');
-            $model = trim($_POST['model'] ?? '');
-            $fuel = $_POST['fuel'] ?? '';
-            $registration_date = $_POST['registration_date'] ?? '';
-            $registration = trim(strtoupper($_POST['registration']) ?? '');
-            $color = trim($_POST['color'] ?? '');
-            $seats = $_POST['seats'] ?? '4';
-            $smoking = $_POST['smoking'] ?? '0';
-            $animals = $_POST['animals'] ?? '0';
-            $misc = trim($_POST['misc'] ?? null);
-            
-            
+            $departure_date = $_POST['departure_date'] ?? '';
+            $departure_time = $_POST['departure_time'] ?? '';
+            $travel_time = $_POST['travel_time'] ?? '';
+            $departure_city = trim($_POST['departure_city'] ?? '');
+            $arrival_city = trim($_POST['arrival_city'] ?? '');
+            $departure_address = trim($_POST['departure_address'] ?? '');
+            $arrival_address = trim($_POST['arrival_address'] ?? '');
+            $vehicle_id = $_POST['vehicle_id'] ?? '';
+            $price = $_POST['price'] ?? '';
+            $description = trim($_POST['description'] ?? null);            
+                        
             // Validate data received (back-end)
-            if (empty($brand)) {
-                $errors['brand'] = "Marque requise.";
-            } elseif (strlen($brand) < 3) {
-                $errors['brand'] = "La marque requiert au moins 3 caractères.";
+            if (empty($departure_date)) {
+                $errors['departure_date'] = "Date requise.";
+            } elseif (!preg_match('/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/', $departure_date)) { // yyyy-mm-dd or yyyy-m-d
+                $errors['departure_date'] = "Choisissez une date appropriée.";
+            } elseif ($departure_date < date("Y-m-d")) {
+                $errors['departure_date'] = "Choisissez une date appropriée.";
             }
 
-            if (empty($model)) {
-                $errors['model'] = "Modèle requis.";
-            } elseif (strlen($model) < 3) {
-                $errors['model'] = "Le modèle requiert au moins 3 caractères.";
+            if (empty($departure_time)) {
+                $errors['departure_time'] = "Heure de départ requise.";
+            } elseif (!preg_match('/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $departure_time)) { // hh:mm OR h:mm
+                $errors['departure_time'] = "Le format doit être hh:mm ou h:mm.";
             }
 
-            if (empty($fuel)) {
-                $errors['fuel'] = "Type d'énergie requise.";
-            } elseif ($fuel!=='essence' 
-                AND $fuel!=='diesel' 
-                AND $fuel!=='electrique' 
-                AND $fuel!=='hybrid' 
-                AND $fuel!=='autre') {
-                $errors['fuel'] = "Selectionnez un type d'énergie.";
+            if (empty($travel_time)) {
+                $errors['trave$travel_time'] = "Durée requis.";
+            } elseif (!preg_match('/^(0?[1-9]|1[0-9]|2[0-4])$/', $travel_time)) { //1-24, allow 01,02,etc
+                $errors['trave$travel_time'] = "La durée doit être entre 1 et 24.";
             }
 
-            if (empty($registration_date)) {
-                $errors['registration_date'] = "Année d'immatriculation requise.";
-            } elseif (!preg_match('/^(19|20)\d{2}$/', $registration_date)) { //ie 1900-2099
-                $errors['registration_date'] = "Choisissez une année appropriée (exemple: 2025).";
+            if (empty($departure_city)) {
+                $errors['departure_city'] = "Ville de départ requise.";
+            } elseif (strlen($departure_city) < 3) {
+                $errors['departure_city'] = "Requiert au moins 3 caractères.";
             }
 
-            if (empty($registration)) {
-                $errors['registration'] = "N° d'immatriculation requis.";
-            } elseif (!preg_match('/^[A-Z]{2}[-][0-9]{3}[-][A-Z]{2}$/', $registration)) {
-                $errors['registration'] = "Choisissez un n° au format AA-000-AA.";
+            if (empty($arrival_city)) {
+                $errors['arrival_city'] = "Ville d'arrivée' requise.";
+            } elseif (strlen($arrival_city) < 3) {
+                $errors['arrival_city'] = "Requiert au moins 3 caractères.";
             }
 
-            if (empty($color)) {
-                $errors['color'] = "Couleur requise.";
-            } elseif (strlen($color) < 3) {
-                $errors['color'] = "La couleur requiert au moins 3 caractères.";
+            if (empty($departure_address)) {
+                $errors['departure_address'] = "Adresse de départ requise.";
+            } elseif (strlen($departure_address) < 3) {
+                $errors['departure_address'] = "Requiert au moins 3 caractères.";
             }
 
-            if (empty($seats)) {
-                $errors['seats'] = "Nombre de places disponibles requis.";
-            } elseif (!preg_match('/^([1-9]|1[0-2])$/', $seats)) {
-                $errors['seats'] = "Le nombre de places disponibles doit être entre 1 et 12.";
+            if (empty($arrival_address)) {
+                $errors['arrival_address'] = "Adresse d'arrivée' requise.";
+            } elseif (strlen($arrival_address) < 3) {
+                $errors['arrival_address'] = "Requiert au moins 3 caractères.";
             }
 
-            if ($smoking !== '0') {
-                $smoking = '1';
-            }
-            if ($animals !== '0') {
-                $animals = '1';
+            if (empty($vehicle_id)) {
+                $errors['vehicle_id'] = "Vehicule requis.";
+            } elseif (!in_array($vehicle_id, $vehicle_id_arr)) {
+                $errors['vehicle_id'] = "Impossible de trouver ce vehicule.";
             }
 
-            if (!empty($misc)) {
-                if (strlen($misc) > 255) {
-                $errors['misc'] = "255 caractères maximum.";
+            if (empty($price)) {
+                $errors['price'] = "Prix requis.";
+            } elseif (!preg_match('/^(0?[1-9]|[1-9][0-9])$/', $price)) { //1-99, allow 01,02,etc
+                $errors['price'] = "Le prix doit être entre 1 et 99.";
+            }
+
+            if (!empty($description)) {
+                if (strlen($description) > 255) {
+                $errors['description'] = "255 caractères maximum.";
                 }
             }
 
-            // In case of error -> back to signup view w/ messages
+            // In case of error -> back to carpooling view w/ messages
             if (!empty($errors)) {
                 // Store  errors in session
                 $_SESSION['errors'] = $errors;
                 $_SESSION['old'] = $_POST;
 
-                header('Location: '.BASE_URL.'vehicles');
+                header('Location: '.BASE_URL.'carpooling');
                 exit;
             }
 
             // connect to db
-            $vehicle = new Vehicle(Database::getPDOInstance());
-
-            // check if registration already in db (or use lastInsertId?)
-            $existReg = $vehicle->isRegistrationIn(strtoupper($registration));
-            if ($existReg===true) {
-                $errors['registration'] = "Ce n° d'immatriculation est déjà utilisé.";
-            
-                $_SESSION['errors'] = $errors;
-                $_SESSION['old'] = $_POST;
-                header('Location: ' . BASE_URL . 'vehicles');
-                exit;
-            }
+            $carpool = new Carpool(Database::getPDOInstance());
 
             // insert in db
-            $vehicle->createVehicle([
+            $carpool->createCarpool([
                 'driver_id' => $user_id,
-                'brand' => $brand,
-                'model' => $model,
-                'fuel' => $fuel,
-                'registration_date' => $registration_date,
-                'registration' => $registration,
-                'color' => $color,
-                'seats' => $seats,
-                'smoking' => $smoking,
-                'animals' => $animals,
-                'misc' => $misc,
+                'departure_date' => $departure_date,
+                'departure_time' => $departure_time,
+                'travel_time' => $travel_time,
+                'departure_city' => $departure_city,
+                'arrival_city' => $arrival_city,
+                'departure_address' => $departure_address,
+                'arrival_address' => $arrival_address,
+                'vehicle_id' => $vehicle_id,
+                'price' => $price,
+                'description' => $description,
                 'creation_date' => date('Y-m-d H:i:s')
             ]);
 
-            // update user session
-            $id = $vehicle->getIdByRegistration($registration);
-            $_SESSION['user']['vehicles'][] = $id['id'];
-
-            //purge $_SESSION['errors']/$_SESSION['old']
+            //purge $_SESSION['errors'] and $_SESSION['old']
             $_SESSION['errors']=[];
             $_SESSION['old']=[];
 
-            // Redirect to dashboard
-            header('Location: '.BASE_URL.'vehicles/vehicles');
+            // Redirect to confirmed page
+            header('Location: '.BASE_URL.'carpooling/confirmed');
             exit;
         }
             
     }
+
+    public function confirmed(): void
+    {
+        // check if user's connected
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }      
+
+        $data = [
+            'title' => "Votre covoiturage est prêt.",
+            'view' => "carpooling.confirmed"
+        ];        
+
+        Controller::render($data['view'], $data);
+    }
+
+    /*
 
     public function delete_vehicle($vehicle_id)
     {

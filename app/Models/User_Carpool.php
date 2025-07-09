@@ -30,14 +30,14 @@ class User_Carpool extends Model
         $stmt->execute();
     }
 
-    public function findCarpoolsByUser($user_id): array
+    public function findCarpoolsByUser($user_id): array|null
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE user_id = :user_id");
         $stmt->execute([':user_id' => $user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: null;
     }
 
-    public function findUsersByCarpool($carpool_id): array
+    public function findUsersByCarpool($carpool_id): array|null
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE carpool_id = :carpool_id");
         $stmt->execute([':carpool_id' => $carpool_id]);

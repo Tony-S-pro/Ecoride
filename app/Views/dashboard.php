@@ -49,7 +49,8 @@
 
 <section>
     <h2>Vos covoiturages en tant que conducteur</h2>
-    <p>En tant que conducteur, vous pouvez créer vos propre covoiturages en décidant vous-même de tous les détails*.</br>*Notez que la création de chaque covoiturage vous coutera 2 crédits pour frais de gestion.</p>
+    <p>En tant que conducteur, vous pouvez créer vos propre covoiturages en décidant vous-même de tous les détails*.</p>
+    <p class="text-white-50">*Notez que la création de chaque covoiturage vous coutera 2 crédits pour frais de gestion.</p>
     <p class="d-inline-flex gap-1"><a class="btn btn-outline-success" href="<?=BASE_URL?>vehicles" role="button">Vos vehicules</a></p>
     <p class="d-inline-flex gap-1"><a class="btn btn-warning" href="<?=BASE_URL?>carpooling" role="button">Créer un covoiturage</a></p>
     
