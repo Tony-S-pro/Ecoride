@@ -28,12 +28,37 @@ $allowedControllers = [
     'SignupController', 
     'LoginController',
     'LogoutController',
+    'ContactController',
     'DashboardController',
     'CarpoolsController',
+    'VehiclesController',
+    'CarpoolingController',
     'UserController',
-    'ContactController',
-    'TestController', 'RandomController'];
-$allowedMethods = ['index', 'cookies', 'register', 'login', 'message', 'thanks', 'driver', 'admin', 'chart', 'details', 'booking', 'carpools_passenger'];
+    'TestController', 'RandomController'
+];
+$allowedMethods = [
+    'index', 
+    'cookies', 
+    'register', 
+    'login', 
+    'message', 
+    'thanks', 
+    'driver', 
+    'admin', 
+    'chart', 
+    'details', 
+    'booking', 
+    'carpools_passenger', 
+    'passenger', 
+    'cancel_passenger', 
+    'carpools_driver',
+    'cancel_driver',
+    'cancellation',
+    'departure', 'arrival',
+    'new_carpool',
+    'new_vehicle',
+    'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted'
+];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {
     require_once __DIR__ . '/Views/error404.php';

@@ -57,18 +57,24 @@ $(document).ready(function(){
 						}
 					},
 					scales: {
+						
+						x: {							
+							stacked: false
+						},
 						y: {
 							type: 'linear',
 							position: 'left',
 							ticks: {
-								color: 'rgb(25, 135, 84)'
+								color: 'rgb(25, 135, 84)',
+								precision: 0 //rounded to 0 décimals (ie only int)
 							}
 						},
 						y2: {
 							type: 'linear',
 							position: 'right',
 							ticks: {
-								color: 'rgb(255, 193, 7)'
+								color: 'rgb(255, 193, 7)',
+								precision: 0 //rounded to 0 décimals (ie only int)
 							},
 							grid: {
 								drawOnChartArea: false // gridlines only for the other yAxis

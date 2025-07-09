@@ -115,8 +115,7 @@ class CarpoolsController extends Controller
         $vw_carpool_full = new View_carpool_full(Database::getPDOInstance());
         $results_carpool = $vw_carpool_full->findById($carpool_id);
         if($results_carpool ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard.";
-            dump($carpool_id);
+            echo "Une erreur s'est produite, veuillez essayer plus tard.1";
             exit();
         }
 
@@ -124,15 +123,12 @@ class CarpoolsController extends Controller
         $comments = new View_driver_comments(Database::getPDOInstance());
         $driver_id = $results_carpool['driver_id'];
         $results_comment = $comments->findByDriver($driver_id);
-        if($results_comment ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard.";
-            exit();
-        }
+        
         
         $data = [
             'title' => "Réservez votre place",
             'view' => "carpools.details",
-            'carpool' => $results_carpool,
+            'carpool_data' => $results_carpool,
             'comments' => $results_comment
         ];       
 
@@ -157,7 +153,7 @@ class CarpoolsController extends Controller
         $user = new User(Database::getPDOInstance());
         $creds = $user->getCreds($user_id);
         if($creds ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            echo "Une erreur s'est produite, veuillez essayer plus tard3.";
             dump($_SESSION);
             exit();
         }
@@ -165,7 +161,7 @@ class CarpoolsController extends Controller
         $carpool = new Carpool(Database::getPDOInstance());
         $price = $carpool->getPrice($carpool_id);
         if($price ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            echo "Une erreur s'est produite, veuillez essayer plus tard.4";
             exit();
         }
                 

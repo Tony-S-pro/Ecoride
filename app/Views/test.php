@@ -52,36 +52,28 @@
     
 <?php 
 
-$user_id = $_SESSION['user']['id'];
-$cs = new App\Models\View_carpools_status(App\Core\Database::getPDOInstance());
-        $carpools_arr = $cs->findByUser_past($user_id);
 
-dump($carpools_arr);
-dump($carpools_arr[0]['carpool_id']);
 
-$carpools = new App\Models\View_carpool_full(App\Core\Database::getPDOInstance());
+
+//dump($carpools_arr);
+//dump($carpools_arr[0]['carpool_id']);
+
 
 //$results =  $carpools->findById($carpools_arr[0]['carpool_id']);
 $results=[];
-foreach ($carpools_arr as $c) {
-    //var_dump($carpools->findById($c['carpool_id']));
-    
-    $res = $carpools->findById($c['carpool_id']);
-    $res['departure_date'] = date('d/m/y', strtotime($res['departure_date']));
-    var_dump($res);
 
-     
-    $results[]=$res;
-}
 
-dump($results);
+App\Core\MailHelper::sendReviewMail('tonys8478@gmail.com');
 
 $arr=[];
 $arr1= ['pin'=>123];
 $arr2= ['pon'=>456];
 
+
 $arr[]=$arr1;
 $arr[]=$arr2;
+dump($arr);
+$arr[]='pfloekfmke';
 dump($arr);
 dump($arr[0]);
 

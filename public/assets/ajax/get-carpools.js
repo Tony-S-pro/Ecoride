@@ -44,7 +44,7 @@ function getHtml(result)
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6"=>
+                <td colspan="6">
                     <div id="collapseTwo${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
