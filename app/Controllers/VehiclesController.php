@@ -31,6 +31,7 @@ class VehiclesController extends Controller
         ];        
 
         Controller::render($data['view'], $data);
+        
     }
 
     public function register_vehicle()

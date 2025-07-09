@@ -157,7 +157,7 @@ class User extends Model
         $stmt->execute(); 
     }
 
-    public function findPhotoById($user_id)
+    public function findPhotoById($user_id): array|null
     {
         $query = "SELECT photo FROM $this->table WHERE id = :id ;";
         $stmt = $this->db->prepare($query);

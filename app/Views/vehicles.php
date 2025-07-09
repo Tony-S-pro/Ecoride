@@ -148,9 +148,7 @@
         <?php if (!empty($_SESSION['msg']['upload'])): ?>
             <div class="success-message"><?= $_SESSION['msg']['upload'] ?></div>
         <?php endif; ?>
-    </div>
-
-    
+    </div>    
 
 </section>
     

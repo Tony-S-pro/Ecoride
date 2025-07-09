@@ -34,10 +34,10 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('BASE_URL', 'https://tony-s-pro.alwaysdata.net/public/');
 
     // Database config 
-    define('DB_HOST', 'host');
-    define('DB_USER', 'username');
-    define('DB_PASS', 'psw');
-    define('DB_NAME', 'db');
+    define('DB_HOST', 'mysql-tony-s-pro.alwaysdata.net');
+    define('DB_USER', '409092_jose2025');
+    define('DB_PASS', 'STUDI_ecoride25');
+    define('DB_NAME', 'tony-s-pro_ecoride');
 
     // Database config for MongoDB
     // check .env
