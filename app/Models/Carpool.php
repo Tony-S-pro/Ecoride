@@ -294,5 +294,72 @@ class Carpool extends Model
         $stmt->bindValue(':driver_id', $driver_id, PDO::PARAM_STR);
         $stmt->execute();
     }
+
+
+    public function createCarpool($data)
+    {
+        $db = $this->db;
+
+        $query = "INSERT INTO $this->table (
+            driver_id,
+            departure_date,
+            departure_time,
+            travel_time,
+            departure_city,
+            arrival_city,
+            departure_address,
+            arrival_address,
+            vehicle_id,
+            price,
+            description,
+            creation_date
+        ) VALUES (
+            :driver_id,
+            :departure_date,
+            :departure_time,
+            :travel_time,
+            :departure_city,
+            :arrival_city,
+            :departure_address,
+            :arrival_address,
+            :vehicle_id,
+            :price,
+            :description,
+            :creation_date
+        )";
+
+        $stmt = $db->prepare($query);
+
+        // Debug
+        if (!$stmt && DEBUG == true) {
+            die("Error SQL Statement : " . implode(" | ", $db->errorInfo()));
+        }
+
+        try {
+            $stmt->execute([
+                'driver_id' => $data['driver_id'],
+                'departure_date' => $data['departure_date'],
+                'departure_time' => $data['departure_time'],
+                'travel_time' => $data['travel_time'],
+                'departure_city' => $data['departure_city'],
+                'arrival_city' => $data['arrival_city'],
+                'departure_address' => $data['departure_address'],
+                'arrival_address' => $data['arrival_address'],
+                'vehicle_id' => $data['vehicle_id'],
+                'price' => $data['price'],
+                'description' => $data['description'],
+                'creation_date' => $data['creation_date']
+            ]);
+
+            $data['id'] = $db->lastInsertId(); //no need to go look for Id -->A TESTER
+            return $data;
+        } catch (PDOException $e) {
+            // DEBUG only
+            if (DEBUG == true) {
+                echo $e->getMessage(); 
+            }
+            return false;
+        }
+    }
     
 }

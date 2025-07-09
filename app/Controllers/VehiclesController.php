@@ -118,7 +118,7 @@ class VehiclesController extends Controller
                 }
             }
 
-            // In case of error -> back to signup view w/ messages
+            // In case of error -> back to vehicles view w/ messages
             if (!empty($errors)) {
                 // Store  errors in session
                 $_SESSION['errors'] = $errors;

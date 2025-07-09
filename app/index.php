@@ -57,7 +57,8 @@ $allowedMethods = [
     'departure', 'arrival',
     'new_carpool',
     'new_vehicle',
-    'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted'
+    'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted',
+    'register_carpool', 'confirmed'
 ];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {
