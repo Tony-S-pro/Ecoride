@@ -41,8 +41,7 @@ $allowedMethods = [
     'cookies', 
     'register', 
     'login', 
-    'message', 
-    'thanks', 
+    'message', 'thanks', 
     'driver', 
     'admin', 
     'chart', 
@@ -57,7 +56,7 @@ $allowedMethods = [
     'departure', 'arrival',
     'new_carpool',
     'new_vehicle',
-    'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted',
+    'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted', 'upload',
     'register_carpool', 'confirmed'
 ];
 

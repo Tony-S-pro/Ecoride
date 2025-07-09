@@ -147,6 +147,29 @@ class User extends Model
         return $results;        
     }
 
+    public function uploadPhotoPath($file_name, $user_id)
+    {
+        $query = "UPDATE $this->table SET photo = :photo WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':photo', $file_name, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute(); 
+    }
+
+    public function findPhotoById($user_id)
+    {
+        $query = "SELECT photo FROM $this->table WHERE id = :id ;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+        return $results;        
+    }
+
 
 
     
