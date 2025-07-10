@@ -225,6 +225,18 @@ class Carpool extends Model
         return $results_final;
     }
 
+    public function findDriverById($carpool_id): array|false
+    {
+        $query = "SELECT driver_id FROM $this->view WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+
     public function getPrice($carpool_id)
     {
         $query = "SELECT price FROM $this->table WHERE id = :id;";
@@ -250,6 +262,8 @@ class Carpool extends Model
         }        
         return false;
     }
+
+
 
     public function findIdByDriver_past(string|int $driver_id): ?array
     {

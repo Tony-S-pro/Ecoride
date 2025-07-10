@@ -352,16 +352,6 @@ class DashboardController extends Controller
         exit;
     }
 
-    public function new_carpool()
-    {
-        $data = [
-            'title' => "Créez un covoiturage",
-            'view' => "dashboard.carpool"
-        ];        
-
-        Controller::render($data['view'], $data);
-    }
-
 
 
 }

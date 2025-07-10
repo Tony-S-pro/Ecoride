@@ -9,6 +9,10 @@
     color : red;
 }
 
+.success-message {
+    color : green;
+}
+
 tr.hide-table-padding td {
   padding: 0 !important;
 }

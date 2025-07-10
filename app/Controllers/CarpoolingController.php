@@ -75,9 +75,9 @@ class CarpoolingController extends Controller
             }
 
             if (empty($travel_time)) {
-                $errors['trave$travel_time'] = "Durée requis.";
+                $errors['travel_time'] = "Durée requise.";
             } elseif (!preg_match('/^(0?[1-9]|1[0-9]|2[0-4])$/', $travel_time)) { //1-24, allow 01,02,etc
-                $errors['trave$travel_time'] = "La durée doit être entre 1 et 24.";
+                $errors['travel_time'] = "La durée doit être entre 1 et 24.";
             }
 
             if (empty($departure_city)) {

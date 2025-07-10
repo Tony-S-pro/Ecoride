@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Core\ImageHelper;
 use App\Models\Vehicle;
 
 class VehiclesController extends Controller
@@ -30,6 +31,7 @@ class VehiclesController extends Controller
         ];        
 
         Controller::render($data['view'], $data);
+        
     }
 
     public function register_vehicle()
@@ -204,5 +206,35 @@ class VehiclesController extends Controller
         ];        
 
         Controller::render($data['view'], $data);
+    }
+
+    public function upload()
+    {
+        // check if user's connected
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        } 
+
+        $user_id = $_SESSION['user']['id'];
+        
+        if (ImageHelper::uploadPhoto($user_id)) {
+            $msg['upload'] = "Fichier enregistré.";
+            $_SESSION['msg'] = $msg;
+
+            $_SESSION['errors']=[]; //remove previous error
+
+            header('Location: '.BASE_URL.'vehicles');
+            exit;
+        }else {
+            $errors['upload'] = "Impossible d'enregistrer ce fichier";
+            $_SESSION['errors'] = $errors;
+
+            $_SESSION['msg']=[]; //remove previous message
+
+            header('Location: '.BASE_URL.'vehicles');
+            exit;
+            
+        }
     }
 }
