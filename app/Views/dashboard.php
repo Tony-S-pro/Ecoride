@@ -10,8 +10,6 @@
     <p>Vous pouvez aussi choisir devenir un conducteur en enregistrant un véhicule et vos préférences pour organiser vos propre covoiturages.</p>
 </section>
 
-<?php dump($_SESSION);?>
-
 <section>
     <h2>Vos covoiturages en tant que passager</h2>
     <p>Vous trouverez ci-dessous la liste de tous les covoiturages auquels vous avez prévu de participer, ainsi que l'historique de vos trajets.</p>

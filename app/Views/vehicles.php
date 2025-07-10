@@ -135,7 +135,7 @@
 
 <section>
     <h2>Votre portrait</h2>
-    <p>Vous pouvez permettre aux utilisateur d'Ecoride de vous reconnaitre en fournissant un portrait au format png, jpg/jpeg ou gif (10Mb max).</p>
+    <p>Vous pouvez permettre aux utilisateur d'Ecoride de vous reconnaitre en fournissant un portrait au format png, jpg/jpeg ou webp (10Mb max).</p>
     <div class="container">
         <form class="" action="<?= BASE_URL ?>vehicles/upload" method="POST" enctype="multipart/form-data">
             <label for="file">Votre photo</label>

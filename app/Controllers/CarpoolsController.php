@@ -15,13 +15,6 @@ class CarpoolsController extends Controller
 {
     public function index(): void
     {        
-        /*
-        // check if user's connected
-        if (!isset($_SESSION['user'])) {
-            header('Location: '.BASE_URL.'signup');
-            exit;
-        }*/
-
         $results = false;
         if(isset($_POST['search_city1']) OR isset($_POST['search_city2']) OR isset($_POST['search_address1']) OR isset($_POST['search_address2'])) {
 
@@ -123,13 +116,27 @@ class CarpoolsController extends Controller
         $comments = new View_driver_comments(Database::getPDOInstance());
         $driver_id = $results_carpool['driver_id'];
         $results_comment = $comments->findByDriver($driver_id);
+
+        // Get driver name/pic
+        $user = new User(Database::getPDOInstance());
+        $results_user = $user->findById($driver_id);
+        if($results_user ===null) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }
+        $results_driver=[
+            'name' =>  $results_user['firstname'],
+            'pseudo' =>  $results_user['pseudo'],
+            'photo' =>  $results_user['photo'] ?: 'pfp.default.webp'
+        ];
         
         
         $data = [
             'title' => "Réservez votre place",
             'view' => "carpools.details",
             'carpool_data' => $results_carpool,
-            'comments' => $results_comment
+            'comments' => $results_comment,
+            'driver_data' => $results_driver
         ];       
 
         Controller::render($data['view'], $data);
@@ -149,41 +156,52 @@ class CarpoolsController extends Controller
         $booking = null;
         $stats = [];
 
+        // Check if it's the user's own carpool
+        $carpool = new Carpool(Database::getPDOInstance());
+        $driver = $carpool->findDriverById($carpool_id);
+        if (!isset($driver)) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }elseif($driver['driver_id']===$user_id) {
+            $booking = 'yours';
+        }
+
         // Check if enough credits
+        $price = $carpool->getPrice($carpool_id);
+        if($price === null) {
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
+            exit();
+        }
+        
         $user = new User(Database::getPDOInstance());
         $creds = $user->getCreds($user_id);
         if($creds ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard3.";
+            echo "Une erreur s'est produite, veuillez essayer plus tard.";
             dump($_SESSION);
-            exit();
-        }
-       
-        $carpool = new Carpool(Database::getPDOInstance());
-        $price = $carpool->getPrice($carpool_id);
-        if($price ===null) {
-            echo "Une erreur s'est produite, veuillez essayer plus tard.4";
             exit();
         }
                 
         if($creds['credit']<$price['price']) {
             $booking = 'no_credits';
-        }else {            
-            // check if seat still available
-            $vw_carpool_full = new View_carpool_full(Database::getPDOInstance());
-            $vw_carpool_full = $carpool->isSeatAvailable($carpool_id);
-            if($vw_carpool_full) {
-                //book seat
-                $uc = new User_Carpool(Database::getPDOInstance());
-                $uc->bookSeat($user_id, $carpool_id);
-                //take credits from user
-                $user->takeCreds($user_id, $price['price']);
-                $booking = 'valid'; 
-                //get new credits balance
-                $creds = $user->getCreds($user_id);
-            }else {
-                $booking = 'no_seats';
-            }            
-        } 
+        }
+
+        // check if seat still available
+        $vw_carpool_full = new View_carpool_full(Database::getPDOInstance());
+        $vw_carpool_full = $carpool->isSeatAvailable($carpool_id);
+        if(!$vw_carpool_full) {
+            $booking = 'no_seats';
+        }                
+        
+        //book seat if no problems
+        if($booking===null) {
+            $uc = new User_Carpool(Database::getPDOInstance());
+            $uc->bookSeat($user_id, $carpool_id);
+            //take credits from user
+            $user->takeCreds($user_id, $price['price']);
+            $booking = 'valid'; 
+            //get new credits balance
+            $creds = $user->getCreds($user_id);
+        }      
 
         $stats['credit']=$creds['credit']; 
         $stats['price']=$price['price'];
