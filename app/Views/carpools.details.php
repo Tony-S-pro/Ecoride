@@ -15,7 +15,7 @@
         <p><strong>sièges disponibles : </strong><?=$carpool_data['remaining_seats']?></p>                          
         <p><strong>description : </strong></br> 
             <?=$carpool_data['description']?></p>
-        <a href="<?=BASE_URL?>carpools/booking/<?=$carpool_data['id']?>"><button type="button" class="btn btn-warning btn-sm" onclick="return confirm('Réservez votre place pour <?=$carpool_data['price']?> Crédit(s) ?')">Réserver</button></a>     
+        <a href="<?=BASE_URL?>carpools/booking/<?=$carpool_data['id']?>"><button type="button" class="btn btn-warning btn-sm" onclick="return confirm('Réservez votre place pour <?=$carpool_data['price']?> Crédit(s) ?')">Confirmer votre réservation</button></a>     
     </div>
 
     <h2>Le vehicule</h2>

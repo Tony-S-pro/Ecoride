@@ -20,13 +20,15 @@ header('X-Content-Type-Options: nosniff'); // Vs MIME exploits. No sniffing (gue
     
     <!-- Bootstrap v5.3.6 - Compiled and minified CSS bundle -->
     <link rel="stylesheet" href="<?=BASE_URL?>assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?=BASE_URL?>assets/css/style.css">
-
     <!-- JQuery v3.7.1 - Compressed, production version -->
     <script defer src="<?=BASE_URL?>assets/js/jquery-3.7.1.min.js"></script>
-
     <!-- Bootstrap v5.3.6 - Compiled and minified JS bundle (includes Popper but not jQuery, jQuery must come first) -->
     <script defer src="<?=BASE_URL?>assets/js/bootstrap.bundle.min.js"></script>
+
+    
+    
+    <link rel="stylesheet" href="<?=BASE_URL?>assets/css/style.css">
+    
     <script defer src="<?= BASE_URL ?>assets/js/script.js"></script>
 
     <link rel="icon" type="image/x-icon" href="<?=BASE_URL?>assets/favicon.ico">

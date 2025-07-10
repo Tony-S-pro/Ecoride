@@ -18,14 +18,14 @@
 
                         <?php if (isset($_SESSION['user'])): ?>
                         <a href="<?=BASE_URL?>dashboard" role="button">
-                            <button type="button" class="btn btn-outline-light me-2">Dashboard</button>
+                            <button type="button" class="btn btn-light me-2">Dashboard</button>
                         </a>
                         <a href="<?=BASE_URL?>logout" role="button">
                             <button type="button" class="btn btn-warning">Déconnexion</button>
                         </a>
                         <?php else: ?>
                         <a href="<?=BASE_URL?>signup" role="button">
-                            <button type="button" class="btn btn-outline-light me-2">Inscription</button>
+                            <button type="button" class="btn btn-light me-2">Inscription</button>
                         </a>
                         <a href="<?=BASE_URL?>login" role="button">
                             <button type="button" class="btn btn-warning">Connexion</button>

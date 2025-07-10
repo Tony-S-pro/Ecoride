@@ -4,17 +4,14 @@ function getHtml(result)
     let i=0;
     let x='';
 
-    x=x+`<div class="table-responsive m-2 p-1">
-        <table class="table table-responsive table-condensed table-striped mt-2">`;
+    x=x+`<div class="table-responsive-sm">
+        <table class="table table-condensed cstmTableLite mt-2">`;
 
     x=x+`<thead>
                 <tr>
-                    <th>Date</th>
+                    <th>Date/heure</th>
                     <th>Départ</th>
-                    <th>Arrivée</th>
-                    <th>Heure</th>
-                    <th>Durée (est.)</th>
-                    <th></th>
+                    <th>Arrivée</th>                   
                 </tr>
             </thead>
             <tbody>`;
@@ -23,13 +20,27 @@ function getHtml(result)
     {
         //use backticks `` to avoid concatenations (</td> + <td>)
         x=x+`
+            <tr class="accordion-toggle collapsed"
+                id="accordionDriverPlanned${i}"
+                data-mdb-collapse-init
+                data-mdb-parent="#accordionDriverPlanned${i}"
+                href="#collapseDriverPlanned${i}"
+                aria-controls="collapseDriverPlanned${i}">
+                <td>
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div>${result[i]['departure_date']}</div>
+                        <div class="ms-2">${result[i]['departure_time']}</div>
+                    </div>
+                </td>
+                <td>${result[i]['departure_city']}</td>
+                <td>${result[i]['arrival_city']}</td>
+            </tr>
             <tr>
-            <td>${result[i]['departure_date']}</td>
-            <td>${result[i]['departure_city']}</td>
-            <td>${result[i]['arrival_city']}</td>
-            <td>${result[i]['departure_time']}</td>
-            <td>${result[i]['travel_time']}h</td>
-            <td><a href="carpools"><button type="button" class="btn btn-success btn-sm">Continuez</button></a></td>
+                <td colspan="3">
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="mx-3"><a href="carpools"><button type="button" class="btn btn-success btn-sm">En savoir plus</button></a></div>
+                    </div>
+                </td>
             </tr>
         `;
     }

@@ -7,16 +7,13 @@ function getHtmlPast(result)
     let animals='';
 
     x=x+`<div class="table-responsive-sm">
-        <table class="table table-responsive table-condensed table-striped mt-2">`;
+        <table class="table table-condensed cstmTable mt-2">`;
 
     x=x+`<thead>
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Date/Heure</th>
                     <th>Départ</th>
                     <th>Arrivée</th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>`;
@@ -34,16 +31,26 @@ function getHtmlPast(result)
                 data-mdb-parent="#accordionPast${i}"
                 href="#collapsePast${i}"
                 aria-controls="collapsePast${i}">
-            <td>${result[i]['departure_date']}</td>
-            <td>${result[i]['departure_time']}</td>
-            <td>${result[i]['departure_city']}</td>
-            <td>${result[i]['arrival_city']}</td>
-            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePast${i}" aria-expanded="false" aria-controls="collapsePast${i}" class="btn btn-success btn-sm">Détails</button></td>
-            <td><a href="reviews/passenger/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Avis</button></a></td>
+                <td>
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div>${result[i]['departure_date']}</div>
+                        <div class="ms-2">${result[i]['departure_time']}</div>
+                    </div>
+                </td>
+                <td>${result[i]['departure_city']}</td>
+                <td>${result[i]['arrival_city']}</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="mx-3"><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePast${i}" aria-expanded="false" aria-controls="collapsePast${i}" class="btn btn-success btn-sm">Détails</button></div>
+                        <div class="mx-3"><a href="reviews/passenger/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Avis</button></a></div>                        
+                    </div>
+                </td>
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6">
+                <td colspan="3">
                     <div id="collapsePast${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
@@ -74,17 +81,14 @@ function getHtmlPlanned(result)
     let smoking='';
     let animals='';
 
-    x=x+`<div class="table-responsive">
-        <table class="table table-responsive table-condensed table-striped mt-2">`;
+    x=x+`<div class="table-responsive-sm">
+        <table class="table table-condensed cstmTable mt-2">`;
 
     x=x+`<thead>
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Date/heure</th>
                     <th>Départ</th>
-                    <th>Arrivée</th>
-                    <th></th>
-                    <th></th>
+                    <th>Arrivée</th>                   
                 </tr>
             </thead>
             <tbody>`;
@@ -102,16 +106,26 @@ function getHtmlPlanned(result)
                 data-mdb-parent="#accordionPlanned${i}"
                 href="#collapsePlanned${i}"
                 aria-controls="collapsePlanned${i}">
-            <td>${result[i]['departure_date']}</td>
-            <td>${result[i]['departure_time']}</td>
-            <td>${result[i]['departure_city']}</td>
-            <td>${result[i]['arrival_city']}</td>
-            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlanned${i}" aria-expanded="false" aria-controls="collapsePlanned${i}" class="btn btn-success btn-sm">Détails</button></td>
-            <td><a href="dashboard/cancel_passenger/${result[i]['id']}"><button type="button" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous sûr(e) de vouloir annuller votre participation à ce covoiturage ?')">Annuler</button></a></td>
+                <td>
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div>${result[i]['departure_date']}</div>
+                        <div class="ms-2">${result[i]['departure_time']}</div>
+                    </div>
+                </td>
+                <td>${result[i]['departure_city']}</td>
+                <td>${result[i]['arrival_city']}</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="mx-3"><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlanned${i}" aria-expanded="false" aria-controls="collapsePlanned${i}" class="btn btn-success btn-sm">Détails</button></div>
+                        <div class="mx-3"><a href="dashboard/cancel_passenger/${result[i]['id']}"><button type="button" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous sûr(e) de vouloir annuller votre participation à ce covoiturage ?')">Annuler</button></a></div>
+                    </div>
+                </td>
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6">
+                <td colspan="3">
                     <div id="collapsePlanned${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>

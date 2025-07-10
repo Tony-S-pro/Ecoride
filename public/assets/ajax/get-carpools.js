@@ -8,16 +8,13 @@ function getHtml(result)
 
     //x=x+`<div><button class="btn btn-warning btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#myModal" id="btn-AddNew">Ajouter</button></div>`;
     x=x+`<div class="table-responsive-sm">
-        <table class="table table-responsive table-condensed table-striped mt-2">`;
+        <table class="table table-condensed cstmTable mt-2">`;
 
     x=x+`<thead>
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Date/heure</th>
                     <th>Départ</th>
-                    <th>Arrivée</th>
-                    <th></th>
-                    <th></th>
+                    <th>Arrivée</th>                   
                 </tr>
             </thead>
             <tbody>`;
@@ -35,16 +32,26 @@ function getHtml(result)
                 data-mdb-parent="#accordionTwo${i}"
                 href="#collapseTwo${i}"
                 aria-controls="collapseTwo${i}">
-            <td>${result[i]['departure_date']}</td>
-            <td>${result[i]['departure_time']}</td>
-            <td>${result[i]['departure_city']}</td>
-            <td>${result[i]['arrival_city']}</td>
-            <td><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${i}" aria-expanded="false" aria-controls="collapseTwo${i}" class="btn btn-success btn-sm">Détails</button></td>
-            <td><a href="carpools/details/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Réserver</button></a></td>
+                <td>
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div>${result[i]['departure_date']}</div>
+                        <div class="ms-2">${result[i]['departure_time']}</div>
+                    </div>
+                </td>
+                <td>${result[i]['departure_city']}</td>
+                <td>${result[i]['arrival_city']}</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="mx-3"><button type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${i}" aria-expanded="false" aria-controls="collapseTwo${i}" class="btn btn-outline-success btn-sm">Détails</button></div>
+                        <div class="mx-3"><a href="carpools/details/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Réserver</button></a></div>                        
+                    </div>
+                </td>
             </tr>
 
             <tr class="hide-table-padding">
-                <td colspan="6">
+                <td colspan="3">
                     <div id="collapseTwo${i}" class="collapse">
                         <div class="p-3">
                             <div><strong>adr. dép. :</strong> ${result[i]['departure_address']}</div>
