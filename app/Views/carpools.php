@@ -16,7 +16,7 @@
             </div>
             <div class="d-flex justify-content-space-between col-12">
                 <input type="date" name="search_date" class="form-control m-1" data-date-format="yyyy-mm-dd">
-                <button type="submit" name="submit" class="btn btn-warning btn-block form-control m-1 col 2">Rechercher</button>
+                <button type="submit" name="submit" class="btn btn-outline-warning m-1 col 2">Rechercher</button>
             </div>
 
             <div class="m-2 p-1"><a href="#collapseSearch" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">Plus d'options de recherche</a></div>

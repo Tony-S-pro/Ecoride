@@ -20,7 +20,7 @@
             </div>
             <div class="d-flex m-1 justify-content-space-between col-12">
                 <input type="date" name="search_date" class="form-control me-1" data-date-format="yyyy-mm-dd">
-                <button type="submit" name="submit" class="btn btn-warning btn-block form-control me-1 col 2">Rechercher</button>
+                <button type="submit" name="submit" class="btn btn-outline-warning me-1 col 2">Rechercher</button>
             </div>
         </form>
     </div>
