@@ -105,7 +105,7 @@ class ReviewController extends Controller
                 }
             }
 
-            // In case of error, back to page
+            // In case of error, back to page w/ messages and old values
             if (!empty($errors)) {
                 // Store errors in session
                 $_SESSION['errors'] = $errors;
@@ -163,6 +163,10 @@ class ReviewController extends Controller
                     }
                 }
             }
+
+            //purge $_SESSION['errors']/$_SESSION['old']
+            $_SESSION['errors']=[];
+            $_SESSION['old']=[];
 
             header('Location: '.BASE_URL.'review/confirmed/'.$review['id']);
             exit;
