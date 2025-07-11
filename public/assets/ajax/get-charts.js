@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$.ajax({
-		url:'dashboard/chart',
+		url:'admin/chart',
         type:'POST',
         dataType:'JSON',
 		success: function(response) {

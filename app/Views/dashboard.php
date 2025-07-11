@@ -10,6 +10,15 @@
     <p>Vous pouvez aussi choisir devenir un conducteur en enregistrant un véhicule et vos préférences pour organiser vos propre covoiturages.</p>
 </section>
 
+<?php if ($_SESSION['user']['role']==='admin' OR $_SESSION['user']['role']==='employee') :?>
+<section>
+    <div class="d-inline-flex flex-column my-3 p-2 border border-danger">
+        <p>En tant qu'<?=($_SESSION['user']['role']==='admin') ? 'administrateur' : 'employé';?>, vous avez accès à des fonctionalités particulières</p>
+        <div><a href="<?=BASE_URL?><?=($_SESSION['user']['role']==='admin') ? 'admin' : 'employee';?>" role="button"><button type="button" class="btn btn-danger m-2"><?=($_SESSION['user']['role']==='admin') ? 'ADMIN' : 'EMPLOYE';?></button></a></div>
+    </div>
+</section>
+<?php endif ;?>
+
 <section>
     <h2>Vos covoiturages en tant que passager</h2>
     <p>Vous trouverez ci-dessous la liste de tous les covoiturages auquels vous avez prévu de participer, ainsi que l'historique de vos trajets.</p>
