@@ -5,6 +5,7 @@ use App\Core\Controller;
 use App\Core\Database;
 use App\Core\MailHelper;
 use App\Models\Carpool;
+use App\Models\Review;
 use App\Models\User;
 use App\Models\User_Carpool;
 use App\Models\View_carpool_full;
@@ -109,20 +110,29 @@ class DashboardController extends Controller
         if ($carpools_arr === null) {
                 echo null;
                 exit();
-        }        
+        }      
 
         //get carpools data
         $carpools = new View_carpool_full(Database::getPDOInstance());
 
         foreach ($carpools_arr as $c) {
             $res = $carpools->findById($c['carpool_id']);
-            $res['departure_date'] = date('d/m/y', strtotime($res['departure_date']));
-            $res['departure_time'] = substr($res['departure_time'],0,-3);
             if($res===null) {
                 return null;
-            } 
-            $results[]=$res;
+            }
+            $res['departure_date'] = date('d/m/y', strtotime($res['departure_date']));
+            $res['departure_time'] = substr($res['departure_time'],0,-3);
+            
+            //check if past carpool already reviewed
+            if($param==='past') {            
+                $review = new Review(Database::getPDOInstance());
+                ($review->isReviewed($user_id, $c['carpool_id'])) ? $res['reviewed']=1 : $res['reviewed']=0  ;
+                
+            }
+
+            $results[]=$res;            
         }
+
         //header('Content-Type: application/json');
         $results_json = json_encode($results);
         //return $results_json;

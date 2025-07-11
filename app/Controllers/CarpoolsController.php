@@ -9,7 +9,6 @@ use App\Models\Vehicle;
 use App\Models\View_carpool_full;
 use App\Models\User;
 use App\Models\User_Carpool;
-use App\Models\View_driver_comments;
 
 class CarpoolsController extends Controller
 {
@@ -113,7 +112,7 @@ class CarpoolsController extends Controller
         }
 
         // Get comments from reviews
-        $comments = new View_driver_comments(Database::getPDOInstance());
+        $comments = new Review(Database::getPDOInstance());
         $driver_id = $results_carpool['driver_id'];
         $results_comment = $comments->findByDriver($driver_id);
 
@@ -177,7 +176,6 @@ class CarpoolsController extends Controller
         $creds = $user->getCreds($user_id);
         if($creds ===null) {
             echo "Une erreur s'est produite, veuillez essayer plus tard.";
-            dump($_SESSION);
             exit();
         }
                 

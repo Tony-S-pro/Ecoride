@@ -75,7 +75,7 @@ class View_carpool_full extends Model
         if ($results !== []) {
             foreach($results as &$r) {
                 $r['departure_date'] = date('d/m/y', strtotime($r['departure_date']));
-                $r['departure_time'] = date('h:m', strtotime($r['departure_time']));
+                $r['departure_time'] = substr($r['departure_time'],0,-3);
                 
             }
             return $results;
