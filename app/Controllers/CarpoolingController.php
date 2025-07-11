@@ -158,8 +158,7 @@ class CarpoolingController extends Controller
             // Redirect to confirmed page
             header('Location: '.BASE_URL.'carpooling/confirmed');
             exit;
-        }
-            
+        }            
     }
 
     public function confirmed(): void

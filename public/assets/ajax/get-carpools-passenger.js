@@ -5,6 +5,7 @@ function getHtmlPast(result)
     let x='';
     let smoking='';
     let animals='';
+    let reviewBtn='';
 
     x=x+`<div class="table-responsive-sm">
         <table class="table table-condensed cstmTable mt-2">`;
@@ -22,7 +23,8 @@ function getHtmlPast(result)
     {
         
         result[i]['smoking'] ? smoking='OUI' : smoking='NON';
-        result[i]['animals'] ? animals='OUI' : animals='NON';
+        result[i]['animals'] ? animals='OUI' : animals='NON';        
+        result[i]['reviewed'] ? reviewBtn='' : (reviewBtn=`<div class="mx-3"><a href="review/passenger/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Avis</button></a></div>`);
         //use backticks `` to avoid concatenations (</td> + <td>)
         x=x+`
             <tr class="accordion-toggle collapsed"
@@ -44,7 +46,7 @@ function getHtmlPast(result)
                 <td colspan="3">
                     <div class="d-flex flex-wrap justify-content-start">
                         <div class="mx-3"><button type="button" data-bs-toggle="collapse" data-bs-target="#collapsePast${i}" aria-expanded="false" aria-controls="collapsePast${i}" class="btn btn-success btn-sm">Détails</button></div>
-                        <div class="mx-3"><a href="reviews/passenger/${result[i]['id']}"><button type="button" class="btn btn-warning btn-sm">Avis</button></a></div>                        
+                        ${reviewBtn}                       
                     </div>
                 </td>
             </tr>
