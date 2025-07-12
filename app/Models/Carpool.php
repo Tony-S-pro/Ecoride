@@ -248,7 +248,7 @@ class Carpool extends Model
         return $results;
     }
 
-    public function isSeatAvailable($carpool_id)
+    public function isSeatAvailable($carpool_id): bool
     {
         $query = "SELECT remaining_seats FROM $this->view WHERE id = :id;";
         $stmt = $this->db->prepare($query);

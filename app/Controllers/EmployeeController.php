@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Models\Carpool;
 use App\Models\Review;
 
 class EmployeeController extends Controller
@@ -30,7 +31,17 @@ class EmployeeController extends Controller
             foreach ($results_review as $id) {
                 $results = $reviewModel->getNoValidData($id['id']);
                 $results['creation_date'] = date('d-m-y', strtotime($results['creation_date']));
-                $comments_data[] = $results;
+                //$comments_data[] = $results;
+                $comments_data[]=[
+                    "id" => $results['id'],
+                    "passenger_email" => $results['passenger_email'],
+                    "passenger_pseudo" => $results['passenger_pseudo'],
+                    "driver_email" => $results['driver_email'],
+                    "driver_pseudo" => $results['driver_pseudo'],
+                    "rating" => $results['rating'],
+                    "comment" => $results['comment'],
+                    "creation_date" => $results['creation_date']
+                ];
             }
         }
 
@@ -44,7 +55,42 @@ class EmployeeController extends Controller
             foreach ($results_review as $id) {
                 $results = $reviewModel->getNoValidData($id['id']);
                 $results['creation_date'] = date('d-m-y', strtotime($results['creation_date']));
-                $objections_data[] = $results;
+                //$objections_data[] = $results;
+                $objections_data[]=[
+                    "id" => $results['id'],
+                    "carpool_id" => $results['carpool_id'],
+                    "passenger_email" => $results['passenger_email'],
+                    "passenger_pseudo" => $results['passenger_pseudo'],
+                    "driver_email" => $results['driver_email'],
+                    "driver_pseudo" => $results['driver_pseudo'],
+                    "rating" => $results['rating'],
+                    "comment" => $results['comment'],
+                    "creation_date" => $results['creation_date']
+                ];               
+            }
+        }
+
+        //get carpool data for objections
+        if(empty($results_review)) {
+            $carpools_data = null;
+        }else {
+            $carpoolModel = new Carpool(Database::getPDOInstance());
+            foreach ($objections_data as &$id) {
+                $results_carpool = $carpoolModel->findById($id['carpool_id']);
+                $results_carpool['departure_date'] = date('d-m-y', strtotime($results_carpool['departure_date']));
+                $results_carpool['departure_time'] = substr($results_carpool['departure_time'],0,-3);
+                //$carpools_data[] = $results;
+                $carpools_data=[
+                    "departure_date" => $results_carpool['departure_date'],
+                    "departure_time" => $results_carpool['departure_time'],
+                    "departure_address" => $results_carpool['departure_address'],
+                    "departure_city" => $results_carpool['departure_city'],
+                    "arrival_city" => $results_carpool['arrival_city'],
+                    "arrival_address" => $results_carpool['arrival_address'],
+                    "travel_time" => $results_carpool['travel_time'],
+                    "description" => $results_carpool['description']
+                ];
+                $id += ['carpool' => $carpools_data];                
             }
         }
 
@@ -53,7 +99,7 @@ class EmployeeController extends Controller
             'view' => "employee",
             'comments' => $comments_data,
             'objections' => $objections_data
-        ];        
+        ];
 
         Controller::render($data['view'], $data);
     }

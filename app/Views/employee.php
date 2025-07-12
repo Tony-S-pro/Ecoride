@@ -24,12 +24,20 @@
                         <div><a class="btn btn-danger" href="<?=BASE_URL?>employee/reject_comment/<?=$c['id']?>" role="button">Rejeter</a></div>
                     </div>
                 </div>
-                <div><?=$c['comment']?></div>                       
+                <div class="mt-2"><?=$c['comment']?></div>
+                <div class="m-2 p-1"><a href="#collapseCommentMailto<?=$c['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseCommentMailto<?=$c['id']?>" aria-expanded="false" aria-controls="collapseSearch">Contacter les intéressés</a></div>
+                <div class="collapse" id="collapseCommentMailto<?=$c['id']?>">
+                    <div class="card card-body d-flex flex-row gap-2 flex-wrap justify-content-around">
+                        <div>conducteur : <a href="mailto:<?=$c['driver_email']?>"><?=$c['driver_pseudo']?></a></div>
+                        <div>passager : <a href="mailto:<?=$c['passenger_email']?>"><?=$c['passenger_pseudo']?></a></div>              
+                    </div>
+                </div>                     
             </div><hr>
         <?php endforeach; ?>
         <?php endif; ?>
     </div>
 </section>
+<?php dump($comments, $objections);?>
 
 <section class="mb-3">
     <h2>Validation des objections</h2>
@@ -48,7 +56,25 @@
                         <div><a class="btn btn-danger" href="<?=BASE_URL?>employee/reject_objection/<?=$o['id']?>" role="button">Rejeter</a></div>
                     </div>
                 </div>
-                <div><?=$o['comment']?></div>
+                <div class="mt-2"><?=$o['comment']?></div>
+                
+                <div class="m-2 p-1"><a href="#collapseObjectionMailto<?=$o['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseObjectionMailto<?=$o['id']?>" aria-expanded="false" aria-controls="collapseSearch">Contacter les intéressés</a></div>
+                <div class="m-2 p-1"><a href="#collapseObjectionCarpool<?=$o['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseObjectionCarpool<?=$o['id']?>" aria-expanded="false" aria-controls="collapseCarpool">Détails du covoiturage</a></div>
+                <div class="collapse" id="collapseObjectionMailto<?=$o['id']?>">
+                    <div class="card card-body d-flex flex-row gap-2 flex-wrap justify-content-around">
+                        <div>conducteur : <a href="mailto:<?=$o['driver_email']?>"><?=$o['driver_pseudo']?></a></div>
+                        <div>passager : <a href="mailto:<?=$o['passenger_email']?>"><?=$o['passenger_pseudo']?></a></div>              
+                    </div>
+                </div>
+                <div class="collapse" id="collapseObjectionCarpool<?=$o['id']?>">
+                    <div class="card card-body d-flex gap-1">
+                        <div><?=$o['carpool']['departure_date']?>, <?=$o['carpool']['departure_time']?></div>
+                        <div>Départ : <?=$o['carpool']['departure_city']?>, <?=$o['carpool']['departure_adress'] ?? "Pas d'adresse."?></div>
+                        <div>Arrivée : <?=$o['carpool']['arrival_city']?>, <?=$o['carpool']['arrival_adress'] ?? "Pas d'adresse."?></div>
+                        <div>Durée (est.) : <?=$o['carpool']['travel_time']?></div>
+                        <div>Description : <?=$o['carpool']['description'] ?? 'Pas de description.'?></div>
+                    </div>
+                </div>
             </div><hr>
         <?php endforeach; ?>
         <?php endif; ?>

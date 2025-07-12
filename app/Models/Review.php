@@ -111,10 +111,13 @@ class Review extends Model
     {
         $query = "SELECT 
         r.id,
+        r.carpool_id,
         r.user_id AS passenger_id,
         u_passenger.email AS passenger_email,
+        u_passenger.pseudo AS passenger_pseudo,
         c.driver_id,
         u_driver.email AS driver_email,
+        u_driver.pseudo AS driver_pseudo,
         r.rating,
         r.comment,
         r.objection,
