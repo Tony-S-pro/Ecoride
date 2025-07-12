@@ -5,6 +5,8 @@ use App\Core\Controller;
 use App\Core\Database;
 use App\Models\Carpool;
 use App\Models\Review;
+use App\Models\User;
+use App\Models\View_participants;
 
 class EmployeeController extends Controller
 {
@@ -102,5 +104,181 @@ class EmployeeController extends Controller
         ];
 
         Controller::render($data['view'], $data);
+    }
+
+    public function validate_comment($review_id)
+    {
+        // check if user's connected and has employee role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }
+
+        //validate review
+        $review = new Review(Database::getPDOInstance());
+        $review->validate($review_id);
+
+        header('Location: '.BASE_URL.'employee/confirmation/comment_validated');
+        exit;
+    }
+
+    public function reject_comment($review_id)
+    {
+        // check if user's connected and has employee role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }
+
+        //remove comment
+        $review = new Review(Database::getPDOInstance());
+        $review->remove_comment($review_id);
+        
+        //validate review
+        $review->validate($review_id);
+
+        header('Location: '.BASE_URL.'employee/confirmation/comment_removed');
+        exit;
+    }
+
+    public function validate_objection($review_id)
+    {
+        // check if user's connected and has employee role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }
+
+        //get carpool's id, then price 
+        $reviewModel= new Review(Database::getPDOInstance());
+        $carpool_id = $reviewModel->findCarpoolId($review_id);
+        $carpool_id = $carpool_id['carpool_id'];
+
+        $carpoolModel = new Carpool(Database::getPDOInstance());
+        $price = $carpoolModel->getPrice($carpool_id);
+        $price = $price['price'];
+
+        //get passenger's id, then reinburse 
+        $passenger =  $reviewModel->findUserId($review_id);
+        $passenger= $passenger['user_id'];
+
+        $userModel = new User(Database::getPDOInstance());
+        $userModel->giveCreds($passenger, $price);
+            
+
+        //how many reviews necessary (ie passengers) to change carpool status
+        $vpModel = new View_participants(Database::getPDOInstance());
+        $passengers_nb = $vpModel->countPassengers($carpool_id);
+        //how many reviews
+        $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
+        //change status if necessary
+        if($reviews_nb>=$passengers_nb) {
+            $carpoolModel->changeStatusToValid($carpool_id);
+        }
+
+
+        header('Location: '.BASE_URL.'employee/confirmation/objection_validated');
+        exit;
+    }
+
+    public function reject_objection($review_id)
+    {
+        // check if user's connected and has employee role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }
+
+        //get carpool's id, then price 
+        $reviewModel= new Review(Database::getPDOInstance());
+        $carpool_id = $reviewModel->findCarpoolId($review_id);
+        $carpool_id = $carpool_id['carpool_id'];
+
+        $carpoolModel = new Carpool(Database::getPDOInstance());
+        $price = $carpoolModel->getPrice($carpool_id);
+        $price = $price['price'];
+
+        //get driver's id, then pay 
+        $driver = $carpoolModel->findDriverById($carpool_id);
+        $driver = $driver['driver_id'];
+
+        $userModel = new User(Database::getPDOInstance());
+        $userModel->giveCreds($driver, $price);
+            
+
+        //how many reviews necessary (ie passengers) to change carpool status
+        $vpModel = new View_participants(Database::getPDOInstance());
+        $passengers_nb = $vpModel->countPassengers($carpool_id);
+        //how many reviews
+        $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
+        //change status if necessary
+        if($reviews_nb>=$passengers_nb) {
+            $carpoolModel->changeStatusToValid($carpool_id);
+        }
+
+
+        header('Location: '.BASE_URL.'employee/confirmation/objection_rejected');
+        exit;
+
+    }
+
+    public function confirmation($param)
+    {
+        // check if user's connected and has employee role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+            header('Location: '.BASE_URL.'signup');
+            exit;
+        }
+
+        $param=(string)$param;
+
+        switch ($param) {
+            case 'comment_validated':
+                $display = 'Le commentaire a bien été validé.';
+                break;
+            case 'comment_removed':
+                $display = 'Le commentaire a bien été supprimé.';
+                break;
+            case 'objection_validated':
+                $display = "L'objection a été validée et le passagé remboursé.";
+                break;
+            case 'objection_rejected':
+                $display = "L'objection a été rejetée et le conducteur a été payé.";
+                break;            
+            default:
+                $display = "Erreur.";
+                break;
+        }
+
+        $data = [
+            'title' => "Traitement de l'avis",
+            'view' => "employee.confirmation",
+            'display' => $display
+        ];
+
+        Controller::render($data['view'], $data);
+
+        sleep(10);
+        header('Location: '.BASE_URL.'employee');
     }
 }

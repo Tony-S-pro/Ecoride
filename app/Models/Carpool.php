@@ -248,7 +248,7 @@ class Carpool extends Model
         return $results;
     }
 
-    public function isSeatAvailable($carpool_id): bool
+    public function isSeatAvailable($carpool_id)
     {
         $query = "SELECT remaining_seats FROM $this->view WHERE id = :id;";
         $stmt = $this->db->prepare($query);
@@ -374,6 +374,20 @@ class Carpool extends Model
             }
             return false;
         }
+    }
+
+    /**
+     * Switch carpool status to 'valide'
+     * @param mixed $carpool_id
+     * @return void
+     */
+    public function changeStatusToValid($carpool_id): void
+    {
+        $query = "UPDATE $this->table SET status = 'valide' WHERE id = :id;";
+        $stmt = $this->db->prepare($query);        
+        $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();     
+
     }
     
 }

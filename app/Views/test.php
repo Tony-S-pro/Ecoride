@@ -53,51 +53,10 @@
 <?php 
 
 
-
-
-//dump($carpools_arr);
-//dump($carpools_arr[0]['carpool_id']);
-
-//get reviews (comments)
-$reviewModel = new App\Models\Review(App\Core\Database::getPDOInstance());
-$results_review = $reviewModel->findNoValidId(FALSE);
-
-//get reviews data (comments)
-if(empty($results_review)) {
-    $comments_data = null;
-}else {
-    foreach ($results_review as $id) {
-        $comments_data[] = $reviewModel->getNoValidData($id['id']);
-    }
-}
-
-//get reviews(objections)
-$results_review = $reviewModel->findNoValidId(TRUE);
-
-//get reviews data (objections)
-if(empty($results_review)) {
-    $objections_data = null;
-}else {
-    foreach ($results_review as $id) {
-        $objections_data[] = $reviewModel->getNoValidData($id['id']);
-    }
-}
-dd($comments_data, $objections_data);
-
-
-//App\Core\MailHelper::sendReviewMail('tonys8478@gmail.com');
-
-$arr=[];
-$arr1= ['pin'=>123];
-$arr2= ['pon'=>456];
-
-
-$arr[]=$arr1;
-$arr[]=$arr2;
-dump($arr);
-$arr[]='pfloekfmke';
-dump($arr);
-dump($arr[0]);
+$var1= ['pin'=>'17'];
+dump($var1);
+$var1 = $var1['pin'];
+dump($var1);
 
     
 ?>

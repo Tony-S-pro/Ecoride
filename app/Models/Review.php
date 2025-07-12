@@ -135,6 +135,51 @@ class Review extends Model
     }
 
 
+    public function validate($review_id)
+    {
+        $query = "UPDATE $this->table SET validated = 1 WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $review_id, PDO::PARAM_STR);
+        $stmt->execute();     
+    }
+
+    public function remove_comment($review_id)
+    {
+        $query = "UPDATE $this->table SET comment = NULL WHERE id = :id;";
+        $stmt = $this->db->prepare($query);        
+        $stmt->bindValue(':id', $review_id, PDO::PARAM_STR);
+        $stmt->execute();     
+    }
+
+    public function countByCarpoolId ($carpool_id)
+    {        
+        $query = "SELECT COUNT(*) AS reviews_nb FROM $this->table WHERE carpool_id = :carpool_id ;";
+        $stmt = $this->db->prepare($query);        
+        $stmt->bindValue(':carpool_id', $carpool_id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return (int) $stmt->fetchColumn();
+        
+    }
+
+    public function findCarpoolId($review_id)
+    {
+        $stmt = $this->db->prepare("SELECT carpool_id FROM $this->table WHERE id = :id");
+        $stmt->execute(['id' => $review_id]);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        return $results;
+    }
+
+    public function findUserId($review_id)
+    {
+        $stmt = $this->db->prepare("SELECT user_id FROM $this->table WHERE id = :id");
+        $stmt->execute(['id' => $review_id]);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        return $results;
+    }
+
+
 
 
 

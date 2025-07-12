@@ -37,7 +37,6 @@
         <?php endif; ?>
     </div>
 </section>
-<?php dump($comments, $objections);?>
 
 <section class="mb-3">
     <h2>Validation des objections</h2>
@@ -81,7 +80,6 @@
     </div>
 </section>
 
-<?php dump($_SESSION);?>
 
 
 
