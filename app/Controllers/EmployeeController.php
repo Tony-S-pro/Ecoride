@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Models\Review;
 
 class EmployeeController extends Controller
 {
@@ -18,9 +19,40 @@ class EmployeeController extends Controller
             exit;
         }
 
+        //get reviews (comments)
+        $reviewModel = new Review(Database::getPDOInstance());
+        $results_review = $reviewModel->findNoValidId(FALSE);
+
+        //get reviews data (comments)
+        if(empty($results_review)) {
+            $comments_data = null;
+        }else {
+            foreach ($results_review as $id) {
+                $results = $reviewModel->getNoValidData($id['id']);
+                $results['creation_date'] = date('d-m-y', strtotime($results['creation_date']));
+                $comments_data[] = $results;
+            }
+        }
+
+        //get reviews(objections)
+        $results_review = $reviewModel->findNoValidId(TRUE);
+
+        //get reviews data (objections)
+        if(empty($results_review)) {
+            $objections_data = null;
+        }else {
+            foreach ($results_review as $id) {
+                $results = $reviewModel->getNoValidData($id['id']);
+                $results['creation_date'] = date('d-m-y', strtotime($results['creation_date']));
+                $objections_data[] = $results;
+            }
+        }
+
         $data = [
             'title' => "Dashboard employé",
-            'view' => "employee"
+            'view' => "employee",
+            'comments' => $comments_data,
+            'objections' => $objections_data
         ];        
 
         Controller::render($data['view'], $data);
