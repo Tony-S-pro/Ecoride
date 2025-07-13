@@ -67,4 +67,5 @@ define('LEGAL_FR_2', 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI00
 define('LEGAL_FR_4', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460');
 
 define('ADMIN_ID', 5);
+define('EMPLOYEES_ID', [4]);
 

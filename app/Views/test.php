@@ -53,29 +53,10 @@
 <?php 
 
 
-
-
-//dump($carpools_arr);
-//dump($carpools_arr[0]['carpool_id']);
-
-
-//$results =  $carpools->findById($carpools_arr[0]['carpool_id']);
-$results=[];
-
-
-App\Core\MailHelper::sendReviewMail('tonys8478@gmail.com');
-
-$arr=[];
-$arr1= ['pin'=>123];
-$arr2= ['pon'=>456];
-
-
-$arr[]=$arr1;
-$arr[]=$arr2;
-dump($arr);
-$arr[]='pfloekfmke';
-dump($arr);
-dump($arr[0]);
+$var1= ['pin'=>'17'];
+dump($var1);
+$var1 = $var1['pin'];
+dump($var1);
 
     
 ?>

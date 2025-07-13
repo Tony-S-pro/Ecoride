@@ -6,6 +6,8 @@ use App\Core\Database;
 use App\Models\Carpool;
 use App\Models\User;
 use App\Models\Review;
+use App\Models\User_Carpool;
+use App\Models\View_participants;
 
 class ReviewController extends Controller
 {
@@ -158,17 +160,27 @@ class ReviewController extends Controller
 
                     //pay driver
                     if(!empty($driver['driver_id'])) {                        
-                    $userModel = new User(Database::getPDOInstance());
-                    $userModel->giveCreds($driver['driver_id'], $price['price']);
+                        $userModel = new User(Database::getPDOInstance());
+                        $userModel->giveCreds($driver['driver_id'], $price['price']);
                     }
                 }
             }
 
+            //how many reviews necessary (ie passengers) to change carpool status
+            $vpModel = new View_participants(Database::getPDOInstance());
+            $passengers_nb = $vpModel->countPassengers($carpool_id);
+            //how many reviews
+            $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
+            //change status
+            if($reviews_nb>=$passengers_nb) {
+                $carpoolModel->changeStatusToValid($carpool_id);
+            }
+            
             //purge $_SESSION['errors']/$_SESSION['old']
             $_SESSION['errors']=[];
             $_SESSION['old']=[];
 
-            header('Location: '.BASE_URL.'review/confirmed/'.$review['id']);
+            header('Location: '.BASE_URL."review/confirmed/".$review['id']);
             exit;
         }
     }

@@ -16,21 +16,31 @@
                     </ul>
                     <div class="text-end">
 
-                        <?php if (isset($_SESSION['user'])): ?>
-                        <a href="<?=BASE_URL?>dashboard" role="button">
-                            <button type="button" class="btn btn-light me-2">Dashboard</button>
-                        </a>
-                        <a href="<?=BASE_URL?>logout" role="button">
-                            <button type="button" class="btn btn-warning">Déconnexion</button>
-                        </a>
-                        <?php else: ?>
-                        <a href="<?=BASE_URL?>signup" role="button">
-                            <button type="button" class="btn btn-light me-2">Inscription</button>
-                        </a>
-                        <a href="<?=BASE_URL?>login" role="button">
-                            <button type="button" class="btn btn-warning">Connexion</button>
-                        </a>
-                        <?php endif; ?> 
+                        <div class="d-flex justify-content-center">
+                            <?php if (isset($_SESSION['user'])): ?>                            
+                                <div>
+                                    <a href="<?=BASE_URL?>dashboard" role="button">
+                                    <button type="button" class="btn btn-light m-1">Dashboard</button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="<?=BASE_URL?>logout" role="button">
+                                    <button type="button" class="btn btn-warning m-1">Déconnexion</button>
+                                    </a>
+                                </div>
+                            <?php else: ?>
+                                <div>
+                                    <a href="<?=BASE_URL?>signup" role="button">
+                                    <button type="button" class="btn btn-light m-1">Inscription</button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="<?=BASE_URL?>login" role="button">
+                                    <button type="button" class="btn btn-warning m-1">Connexion</button>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
