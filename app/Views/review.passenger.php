@@ -42,7 +42,7 @@
                     <div class="col d-flex justify-content-center">
                         <!-- Checkbox -->
                         <div class="form-check">
-                            <input name="checkObjection" id="checkObjection" class="form-check-input" type="checkbox" value="1">
+                            <input name="checkObjection" id="checkObjection" class="form-check-input" type="checkbox" value="1" <?php if (isset($_SESSION['old']['checkObjection'])){if($_SESSION['old']['checkObjection']==='1'){echo 'checked="checked"';}} ?>>
                             <label class="form-check-label" for="checkObjection">Je souhaite signaler un problème et demander un remboursement.</label>
                         </div>            
                     </div>

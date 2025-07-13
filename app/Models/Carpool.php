@@ -237,7 +237,7 @@ class Carpool extends Model
         return $results;
     }
 
-    public function getPrice($carpool_id)
+    public function getPrice($carpool_id): array|null
     {
         $query = "SELECT price FROM $this->table WHERE id = :id;";
         $stmt = $this->db->prepare($query);
