@@ -13,7 +13,7 @@ class Carpool extends Model
 
     public function findByCity_lite(?string $city1, ?string $city2, ?string $date)
     {
-        $query = "SELECT * FROM $this->table WHERE ";
+        $query = "SELECT * FROM $this->table WHERE status = 'planifie' AND ";
 
         if($city1!==null) {
             $query .="departure_city LIKE :departure_city AND ";
@@ -27,7 +27,7 @@ class Carpool extends Model
         
         //$today = date("Y-m-d");
         //$query .="departure_date >= $today ";
-        $query .="departure_date >= NOW()"; //note: carpools already full are still returned on homepage
+        $query .="departure_date >= DATE_FORMAT(NOW(),'%Y-%m-%d')"; //note: carpools already full are still returned on homepage
         $query .= "ORDER BY departure_date ASC;";
 
         $stmt = $this->db->prepare($query);
@@ -69,7 +69,7 @@ class Carpool extends Model
             if($city2!==null) {
                 $query .="arrival_city LIKE :arrival_city AND ";
             }     
-            $query .= "departure_date >= NOW() ";
+            $query .= "departure_date >= DATE_FORMAT(NOW(),'%Y-%m-%d') ";
             $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
 
             $stmt = $this->db->prepare($query);
@@ -112,7 +112,7 @@ class Carpool extends Model
         ?string $checkEco=null
         )
     {
-        $query = "SELECT * FROM $this->view WHERE ";
+        $query = "SELECT * FROM $this->view WHERE status = 'planifie' AND ";
         $arr = [];
 
         if(!empty($city1)) {
@@ -154,7 +154,7 @@ class Carpool extends Model
             $arr += [':departure_date' => $date];
         }
 
-        $query .= "remaining_seats > 0 AND departure_date >= NOW() ";
+        $query .= "remaining_seats > 0 AND departure_date >= DATE_FORMAT(NOW(),'%Y-%m-%d') ";
         $query .= "ORDER BY departure_date ASC;";
 
         $stmt = $this->db->prepare($query);            
@@ -176,7 +176,7 @@ class Carpool extends Model
         if(!empty($date)) {
             $query = $query_before_date;
 
-            $query .= "departure_date >= NOW() AND remaining_seats > 0 ";
+            $query .= "departure_date >= DATE_FORMAT(NOW(),'%Y-%m-%d') AND remaining_seats > 0 ";
             $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
 
             $stmt = $this->db->prepare($query);

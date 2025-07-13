@@ -22,7 +22,7 @@ class View_carpool_full extends Model
         ?string $checkEco=null
         )
     {
-        $query = "SELECT * FROM $this->table WHERE ";
+        $query = "SELECT * FROM $this->table WHERE status = 'planifie' AND ";
         $arr = [];
 
         if(!empty($city1)) {
@@ -64,7 +64,7 @@ class View_carpool_full extends Model
             $arr += [':departure_date' => $date];
         }
 
-        $query .= "remaining_seats > 0 AND departure_date >= NOW() ";
+        $query .= "remaining_seats > 0 AND departure_date >= DATE_FORMAT(NOW(),'%Y-%m-%d') ";
         $query .= "ORDER BY departure_date ASC;";
 
         $stmt = $this->db->prepare($query);            
@@ -85,7 +85,7 @@ class View_carpool_full extends Model
         if(!empty($date)) {
             $query = $query_before_date;
 
-            $query .= "departure_date >= NOW() AND remaining_seats > 0 ";
+            $query .= "departure_date >= DATE_FORMAT(NOW(),'%Y-%m-%d') AND remaining_seats > 0 ";
             $query .= "ORDER BY ABS(DATEDIFF(:departure_date, departure_date)) ASC LIMIT 1;"; // limit 2 in case one before/one after ?
 
             $stmt = $this->db->prepare($query);
