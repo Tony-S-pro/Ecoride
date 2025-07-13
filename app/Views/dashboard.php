@@ -8,6 +8,7 @@
     <h2>Bienvenue <?= htmlspecialchars($_SESSION['user']['pseudo']) ?></h2>
     <p>Dans cet espace, vous pouvez consulter vos covoiturages passés et a venir.</p>
     <p>Vous pouvez aussi choisir devenir un conducteur en enregistrant un véhicule et vos préférences pour organiser vos propre covoiturages.</p>
+    <p>Vous disposez de : <strong><?=$credit?> Crédits</strong>.</p>
 </section>
 
 <?php if ($_SESSION['user']['role']==='admin' OR $_SESSION['user']['role']==='employee') :?>

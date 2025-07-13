@@ -21,9 +21,17 @@ class DashboardController extends Controller
             exit;
         }
 
+        //get user credits balance
+        $user_id = $_SESSION['user']['id'];
+        $user = new User(Database::getPDOInstance());
+        $creds = $user->getCreds($user_id);
+        $creds = $creds['credit'];
+
+
         $data = [
             'title' => "Votre dashboard",
-            'view' => "dashboard"
+            'view' => "dashboard",
+            'credit' => $creds
         ];        
 
         Controller::render($data['view'], $data);

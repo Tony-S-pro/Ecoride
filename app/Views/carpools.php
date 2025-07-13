@@ -5,6 +5,9 @@
 </div>
 
 <section class="p-4 d-flex flex-column align-items-center">
+<?php if(isset($_SESSION['user'])) : ?>
+    <p>Vous disposez de : <strong><?=$credit?> Crédits</strong>.</p>
+<?php endif ;?>
     
     <h2>Recherche par ville de départ et arrivée</h2>
 

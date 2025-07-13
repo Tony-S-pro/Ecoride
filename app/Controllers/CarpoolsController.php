@@ -13,7 +13,17 @@ use App\Models\User_Carpool;
 class CarpoolsController extends Controller
 {
     public function index(): void
-    {        
+    {
+        
+        $creds=null;
+        if (isset($_SESSION['user'])) {
+            //get user credits balance
+            $user_id = $_SESSION['user']['id'];
+            $user = new User(Database::getPDOInstance());
+            $creds = $user->getCreds($user_id);
+            $creds = $creds['credit'];
+        }
+
         $results = false;
         if(isset($_POST['search_city1']) OR isset($_POST['search_city2']) OR isset($_POST['search_address1']) OR isset($_POST['search_address2'])) {
 
@@ -89,7 +99,8 @@ class CarpoolsController extends Controller
         
         $data = [
             'title' => "Liste des covoiturages planifiés",
-            'view' => "carpools"
+            'view' => "carpools",
+            'credit' =>$creds
         ];       
 
         Controller::render($data['view'], $data);
