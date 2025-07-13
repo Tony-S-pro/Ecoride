@@ -61,7 +61,7 @@ class User extends Model
                 'firstname' => $data['firstname'],
                 'name' => $data['name'],
                 'role' => $data['role'],
-                'subscription_date' => $data['inscription_date']
+                'subscription_date' => $data['subscription_date']
             ]);
 
             $data['id'] = $db->lastInsertId();
@@ -168,6 +168,62 @@ class User extends Model
         $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 
         return $results;        
+    }
+
+    public function findUsers(?string $id, ?string $pseudo, ?string $email, ?string $role = 'user')
+    {
+        $query = "SELECT * FROM $this->table WHERE role = :role AND ";
+        
+        if($id!==null) {
+            $query .="id = :id AND ";
+        }
+        if($pseudo!==null) {
+            $query .="pseudo LIKE :pseudo AND ";
+        }
+        if($email!==null) {
+            $query .="email LIKE :email AND ";
+        }
+
+        $query = trim($query, "AND ");
+        $query .= " ORDER BY id ASC;";
+
+        $stmt = $this->db->prepare($query);
+        
+        if($role!==null) {
+            $stmt->bindValue(':role', $role, PDO::PARAM_STR);
+        }
+        if($id!==null) {
+            $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        }
+        if($pseudo!==null) {
+            $stmt->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+        }
+        if($email!==null) {
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        }
+        
+        $stmt->execute();
+        
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+       return $results;
+    }
+
+    /**
+     * Set the user's suspended status
+     * @param mixed $user_id
+     * @param bool $suspended true:set to 1, false: set to 0
+     * @return void
+     */
+    public function setUserSuspended($user_id, bool $suspended)
+    {
+        $sus = $suspended ? 1 : 0;
+
+        $query = "UPDATE $this->table SET suspended = $sus WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();  
     }
 
 

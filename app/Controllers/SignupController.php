@@ -33,6 +33,11 @@ class SignupController extends Controller
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            // check CSRF token
+            if(!Controller::is_csrf_valid()) {
+                exit("Error - CSRF token invalid");
+            }
+
             $errors = [];
             $pseudo = trim($_POST['pseudo'] ?? '');
             $name = trim($_POST['name'] ?? '');
@@ -117,7 +122,7 @@ class SignupController extends Controller
             // creation of a (non session) cookie
 
             // user session
-            $id = $userModel->getIdByEmail($email);
+            $id = $userModel->getIdByEmail($email); //note: useless, create() returns data sent + user's id now
             $_SESSION['user'] = [
                 'id' => $id['id'],
                 'pseudo' => $pseudo,

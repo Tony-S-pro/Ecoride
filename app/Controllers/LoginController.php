@@ -41,7 +41,7 @@ class LoginController extends Controller
         // Check if form was sent + clean
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            // check CRSF token
+            // check CSRF token
             if(!Controller::is_csrf_valid()) {
                 exit("Error - CSRF token invalid");
             }
@@ -64,19 +64,24 @@ class LoginController extends Controller
                 $user = $userModel->findByEmail($email);
 
                 if ($user && password_verify($password, $user['password'])) {
-                    // only usefull data for other pages is stored in session (i.e. no psw, etc)
-                    $vehicle = new Vehicle(Database::getPDOInstance());
-                    $cars = $vehicle->findAllIdByUser($user['id']);
-                    
-                    $_SESSION['user'] = [
-                        'id' => $user['id'],
-                        'email' => $user['email'],
-                        'pseudo' => $user['pseudo'],
-                        'role' => $user['role'],
-                        'vehicles' => $cars
-                    ];
-                    header('Location: '.BASE_URL.'dashboard');
-                    exit;
+                    //check if suspended
+                    if ($user['suspended']==0) {
+                        // only usefull data for other pages is stored in session (i.e. no psw, etc)
+                        $vehicle = new Vehicle(Database::getPDOInstance());
+                        $cars = $vehicle->findAllIdByUser($user['id']);
+                        
+                        $_SESSION['user'] = [
+                            'id' => $user['id'],
+                            'email' => $user['email'],
+                            'pseudo' => $user['pseudo'],
+                            'role' => $user['role'],
+                            'vehicles' => $cars
+                        ];
+                        header('Location: '.BASE_URL.'dashboard');
+                        exit;
+                    } else {
+                        $errors[] = "Compte suspendu.";
+                    }                    
                 } else {
                     //hash password to have the same-ish delay when email doesn't match
                     password_hash($password, PASSWORD_BCRYPT);

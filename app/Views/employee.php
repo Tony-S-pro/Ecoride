@@ -67,7 +67,7 @@
                 </div>
                 <div class="collapse" id="collapseObjectionCarpool<?=$o['id']?>">
                     <div class="card card-body d-flex gap-1">
-                        <div><?=$o['carpool']['departure_date']?>, <?=$o['carpool']['departure_time']?></div>
+                        <div><?=$o['carpool']['departure_date']?>, <?=$o['carpool']['departure_time']?> (n°<?=$o['id']?>)</div>
                         <div>Départ : <?=$o['carpool']['departure_city']?>, <?=$o['carpool']['departure_adress'] ?? "Pas d'adresse."?></div>
                         <div>Arrivée : <?=$o['carpool']['arrival_city']?>, <?=$o['carpool']['arrival_adress'] ?? "Pas d'adresse."?></div>
                         <div>Durée (est.) : <?=$o['carpool']['travel_time']?></div>

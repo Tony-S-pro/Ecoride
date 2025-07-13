@@ -52,9 +52,24 @@
     
 <?php 
 
+// $user = new App\Models\User(App\Core\Database::getPDOInstance());
+//         $result = $user->create([
+//                 'email' => '123@123.com',
+//                 'password' => '123@123.com',
+//                 'pseudo' => '123@123.com',
+//                 'name' => '123@123.com',
+//                 'firstname' => '123@123.com',
+//                 'role' => 'user',
+//                 'subscription_date' => date('Y-m-d H:i:s')
+//             ]);
+
+if (isset($_SESSION['old'])) {
+    $_SESSION['errors']=[];
+    $_SESSION['old']=[];
+}
 
 $var1= ['pin'=>'17'];
-dump($var1);
+dump($_SESSION);
 $var1 = $var1['pin'];
 dump($var1);
 
