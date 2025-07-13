@@ -60,7 +60,7 @@ $allowedMethods = [
     'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted', 'upload',
     'register_carpool', 'confirmed',
     'passenger', 'register_review', 
-    'chart',
+    'chart', 'users', 'ban', 'reinstate',
     'validate_comment', 'reject_comment', 'validate_objection', 'reject_objection,', 'confirmation'
 ];
 
