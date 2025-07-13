@@ -3,16 +3,16 @@
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
 <script defer src="<?=BASE_URL?>assets/ajax/get-charts.js"></script>
 
-<h1>Votre espace</h1>
+<h1>Espace Admin</h1>
 
-<section>
-    <h2>Bienvenue <?= htmlspecialchars($_SESSION['user']['pseudo']) ?></h2>
-    <p>Dans cet espace, vous pouvez consulter vos coivoiturages passés et a venir.</p>
-    <p>Vous pouvez aussi choisir devenir un conducteur en enregistrant un véhicule et vos préférences pour organiser vos propre covoiturages.</p>
+<section class="m-2 p-3">
+    <h2>Statistiques du site</h2>
+    <canvas id="adminCharts" style="width:100%;max-width:600px;max-height:400px"></canvas>
+    <p>Nombre total de crédit gagné par la plateforme : <?=$credits_total ?: 'ERREUR' ?></p>
 </section>
 
 <?php dump($_SESSION);?>
 
 
-<canvas id="adminCharts" style="width:100%;max-width:600px;max-height:400px"></canvas>
+
 
