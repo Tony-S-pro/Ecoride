@@ -88,15 +88,20 @@ class Review extends Model
     /**
      * Find all non validated reviews id by their objection state
      * 
+     * Returns non validated review's comment's id. I ncase of objection, returns non reviewed objections only. 
+     * 
      * @param bool $objection FALSE: not an objection (default), TRUE: an objection
      * @return array|null an array of id (most recent first) or null if no reviews
      */
     public function findNoValidId(bool $objection = FALSE): array|null
     {
-        ($objection === FALSE) ? $obj=0 : $obj=1;
-        $query = "SELECT id FROM $this->table WHERE (validated = 0 AND objection = :objection) ORDER BY creation_date DESC;";
+        if ($objection === false) {
+             $query = "SELECT id FROM $this->table WHERE (validated = 0 AND objection = 0) ORDER BY creation_date DESC;";
+        } else {
+             $query = "SELECT id FROM $this->table WHERE (validated = 0 AND objection = 1 AND objection_reviewed = 0) ORDER BY creation_date DESC;";
+        }
         $stmt = $this->db->prepare($query);
-        $stmt->execute(['objection' => $obj]);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: null;
     }
 
@@ -152,8 +157,14 @@ class Review extends Model
         $stmt->execute();     
     }
 
+    /**
+     * Count reviews for a carpool id
+     * @param mixed $carpool_id
+     * @param bool $validated if true (default), count only validated reviews (no objections)
+     * @return int
+     */
     public function countByCarpoolId ($carpool_id)
-    {        
+    {   
         $query = "SELECT COUNT(*) AS reviews_nb FROM $this->table WHERE carpool_id = :carpool_id ;";
         $stmt = $this->db->prepare($query);        
         $stmt->bindValue(':carpool_id', $carpool_id, PDO::PARAM_STR);
@@ -177,6 +188,15 @@ class Review extends Model
         $stmt->execute(['id' => $review_id]);
         $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         return $results;
+    }
+
+
+    public function switchObjectionToReviewed($review_id)
+    {
+        $query = "UPDATE $this->table SET objection_reviewed = 1 WHERE id = :id;";
+        $stmt = $this->db->prepare($query);        
+        $stmt->bindValue(':id', $review_id, PDO::PARAM_STR);
+        $stmt->execute(); 
     }
 
 

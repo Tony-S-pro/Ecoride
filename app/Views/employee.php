@@ -13,7 +13,7 @@
     <p>Les trolls et les spams seront également exclus. Les trolls sont des messages agressifs et provocateurs. Les spams sont des envois répétitifs de liens ou de messages identiques ou très voisins.</p>
     <div class="border border-1 border-light">        
         <?php if (empty($comments)) :?>
-            <p>Il n'y a aucun commentaires à valider.</p>
+            <p class="m-2 p-1">Il n'y a aucun commentaires à valider.</p>
         <?php else :?>
         <?php foreach ($comments as $c) :?>
             <div class="px-3 py-3 d-flex flex-column">
@@ -44,14 +44,14 @@
     <p>Répondez et communiquez avec les utilisateurs toujours de manière positive</p>
     <div class="border border-1 border-danger">
         <?php if (empty($objections)) :?>
-            <p>Il n'y a aucune objections à valider.</p>
+            <p class="m-2 p-1">Il n'y a aucune objections à valider.</p>
         <?php else :?>
         <?php foreach ($objections as $o) :?>
             <div class="px-3 py-3 d-flex flex-column">
                 <div class="d-flex">
                     <div><strong><?=$o['creation_date']?></strong><?=($o['rating']!==null) ? ' ('.$o['rating'].'/5)' : ''?></div>
                     <div class="d-flex flex-grow-1 justify-content-end gap-2">
-                        <div><a class="btn btn-primary" href="<?=BASE_URL?>employee/validate_objection/<?=$o['id']?>" role="button">Valider</a></div>
+                        <div><a class="btn btn-primary" href="<?=BASE_URL?>employee/validate_objection/<?=$o['id']?>" role="button">Rembourser</a></div>
                         <div><a class="btn btn-danger" href="<?=BASE_URL?>employee/reject_objection/<?=$o['id']?>" role="button">Rejeter</a></div>
                     </div>
                 </div>

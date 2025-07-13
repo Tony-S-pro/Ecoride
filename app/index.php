@@ -61,7 +61,7 @@ $allowedMethods = [
     'register_carpool', 'confirmed',
     'passenger', 'register_review', 
     'chart',
-    'validate_comment', 'reject_comment', 'validate_objection', 'reject_objection'
+    'validate_comment', 'reject_comment', 'validate_objection', 'reject_objection,', 'confirmation'
 ];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {

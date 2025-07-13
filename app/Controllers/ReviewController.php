@@ -169,7 +169,7 @@ class ReviewController extends Controller
             //how many reviews necessary (ie passengers) to change carpool status
             $vpModel = new View_participants(Database::getPDOInstance());
             $passengers_nb = $vpModel->countPassengers($carpool_id);
-            //how many reviews
+            //how many validated reviews
             $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
             //change status
             if($reviews_nb>=$passengers_nb) {

@@ -175,19 +175,10 @@ class EmployeeController extends Controller
         $passenger= $passenger['user_id'];
 
         $userModel = new User(Database::getPDOInstance());
-        $userModel->giveCreds($passenger, $price);
-            
+        $userModel->giveCreds($passenger, $price); 
 
-        //how many reviews necessary (ie passengers) to change carpool status
-        $vpModel = new View_participants(Database::getPDOInstance());
-        $passengers_nb = $vpModel->countPassengers($carpool_id);
-        //how many reviews
-        $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
-        //change status if necessary
-        if($reviews_nb>=$passengers_nb) {
-            $carpoolModel->changeStatusToValid($carpool_id);
-        }
-
+        //mark objection as reviewed
+        $reviewModel->switchObjectionToReviewed($review_id);
 
         header('Location: '.BASE_URL.'employee/confirmation/objection_validated');
         exit;
@@ -220,18 +211,9 @@ class EmployeeController extends Controller
 
         $userModel = new User(Database::getPDOInstance());
         $userModel->giveCreds($driver, $price);
-            
 
-        //how many reviews necessary (ie passengers) to change carpool status
-        $vpModel = new View_participants(Database::getPDOInstance());
-        $passengers_nb = $vpModel->countPassengers($carpool_id);
-        //how many reviews
-        $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
-        //change status if necessary
-        if($reviews_nb>=$passengers_nb) {
-            $carpoolModel->changeStatusToValid($carpool_id);
-        }
-
+        //mark objection as reviewed
+        $reviewModel->switchObjectionToReviewed($review_id);
 
         header('Location: '.BASE_URL.'employee/confirmation/objection_rejected');
         exit;
@@ -278,7 +260,5 @@ class EmployeeController extends Controller
 
         Controller::render($data['view'], $data);
 
-        sleep(10);
-        header('Location: '.BASE_URL.'employee');
     }
 }
