@@ -19,9 +19,16 @@ class AdminController extends Controller
             exit;
         }
 
+        //total credits earned
+        $creds_total = null;
+        $carpool = new Carpool(Database::getPDOInstance());
+        $result = $carpool->findAllCreditsEarned();
+        $creds_total = $result;
+
         $data = [
             'title' => "Dashboard admin",
-            'view' => "admin"
+            'view' => "admin",
+            'credits_total' => $creds_total
         ];        
 
         Controller::render($data['view'], $data);

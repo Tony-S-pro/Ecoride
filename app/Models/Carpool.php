@@ -208,8 +208,8 @@ class Carpool extends Model
             
             $query = "SELECT 
                 (SELECT COUNT(*) FROM carpools WHERE (status = 'en_cours' OR status = 'termine' OR status = 'valide') AND departure_date = :date) AS carpools_nb,
-                (SELECT COUNT(*) FROM carpools WHERE (status = 'valide') AND departure_date = :date2) AS valid_nb,
-                (SELECT valid_nb*2) as credits_nb;";
+                (SELECT COUNT(*) FROM carpools WHERE (status = 'termine' OR status = 'valide') AND departure_date = :date2) AS carpool_done_nb,
+                (SELECT carpool_done_nb*2) as credits_nb;";
 
             $stmt = $this->db->prepare($query);
             //needs both even with same marker name 
@@ -388,6 +388,21 @@ class Carpool extends Model
         $stmt->bindValue(':id', $carpool_id, PDO::PARAM_STR);
         $stmt->execute();     
 
+    }
+
+    public function findAllCreditsEarned()
+    {
+        $query = "SELECT 
+                (SELECT COUNT(*) FROM carpools WHERE (status = 'termine' OR status = 'valide')) AS carpool_done_nb,
+                (SELECT carpool_done_nb*2) as credits_nb;";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(empty($results)) {
+            return null;
+        }
+        return $results['credits_nb'];
     }
     
 }
