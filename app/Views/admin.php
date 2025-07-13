@@ -15,16 +15,16 @@
 <section class="m-2 p-3">
     <h2>Gestion des comptes Ecoride</h2>
     <p class="d-inline-flex gap-1">
-        <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#vehicles" role="button" aria-expanded="false" aria-controls="Vehicles">Suspendre un compte</a>
-        <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#new_vehicle" aria-expanded="false" aria-controls="new_vehicle">Nouveau Véhicule</button>
+        <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#searchUsers" role="button" aria-expanded="false" aria-controls="searchUsers">Suspendre un compte</a>
+        <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#new_employee" aria-expanded="false" aria-controls="new_employee">Créer compte employé</button>
     </p>
     <div class="col">
         <div class="row">
-            <div class="collapse multi-collapse overflow-y-auto" id="vehicles">
-                <div class="card card-body border-secondary" id="vehicles">
+            <div class="collapse multi-collapse overflow-y-auto" id="searchUsers">
+                <div class="card card-body border-secondary" id="searchUsers">
 
                     <div class="search" >
-                        <form action="admin/users" method="post" id="searchFormUsers">
+                        <form action="admin/users" method="post" id="searchFormUsers">                            
                             <div class="d-flex gap-3 flex-wrap">
                                 <div class="d-flex flex-row flex-wrap gap-2 m-1 justify-content-between">
                                     <div><input type="text" name="search_id" placeholder="id" class="form-control me-1"></div>
@@ -51,104 +51,71 @@
             </div>
         </div>
         <div class="row">
-            <div class="collapse multi-collapse overflow-y-auto" id="new_vehicle">
-                <div class="card card-body border-success mb-2" id="new_vehicle">
-                    <form id="registerVehicle" action="<?= BASE_URL ?>vehicles/register_vehicle" method="POST" novalidate>
-                        <div class="d-flex flex-row flex-wrap">
-                        <div class="mb-3 flex-grow-1">
-                            <label for="brand">Marque :</label>
-                            <input type="text" class="form-control" name="brand" id="brand" value="<?= $_SESSION['old']['brand'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['brand'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['brand'] ?></div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mb-3 flex-grow-1">
-                            <label for="model">Modèle :</label>
-                            <input type="text" class="form-control" name="model" id="model" value="<?= $_SESSION['old']['model'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['model'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['model'] ?></div>
-                            <?php endif; ?>
-                        </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="fuel">Energie :</label>
-                            <select class="form-control" name="fuel" id="fuel" value="<?= $_SESSION['old']['fuel'] ?? '' ?>" required>
-                                <option value="essence">essence</option>
-                                <option value="diesel">diesel</option>
-                                <option value="electrique">électrique</option>
-                                <option value="hybride">hybride</option>
-                                <option value="autre">autre</option>
-                            </select>
-                            <?php if (!empty($_SESSION['errors']['fuel'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['fuel'] ?></div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="registration_date">Année (1ère immatriculation) :</label>
-                            <input type="number" class="form-control" min="1900" max="2099" name="registration_date" id="registration_date" value="<?= $_SESSION['old']['registration_date'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['registration_date'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['registration_date'] ?></div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="registration">Immatriculation :</label>
-                            <input type="text" class="form-control" name="registration" id="registration" value="<?= $_SESSION['old']['registration'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['registration'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['registration'] ?></div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="color">Couleur :</label>
-                            <input type="text" class="form-control" name="color" id="color" value="<?= $_SESSION['old']['color'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['color'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['color'] ?></div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="seats">Places disponibles (4 par défaut) :</label>
-                            <input type="number" class="form-control" min="1" max="9" name="seats" id="seats" value="<?= $_SESSION['old']['seats'] ?? '' ?>">
-                            <?php if (!empty($_SESSION['errors']['seats'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['seats'] ?></div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="mb-3">
-                            <p>Autorisez-vous : </p>
-                            <div class="form-check">
-                                <input name="smoking" id="smoking" class="form-check-input" type="checkbox" value="accept">
-                                <label class="form-check-label" for="smoking">Fumer dans le véhicule</label>
+            <div class="collapse multi-collapse overflow-y-auto" id="new_employee">
+                <div class="card card-body border-success mb-2" id="new_employee">
+                    <div class="pb-4">
+                        <form id="newEmployeeForm" action="<?= BASE_URL ?>admin/register" method="POST"  novalidate>
+                            <?php \App\Core\Controller::set_csrf();  ?>
+                            <div class="mb-3 col-sm-8">
+                                <label for="emp_pseudo">Pseudo :</label>
+                                <input type="text" class="form-control" name="emp_pseudo" id="emp_pseudo" value="<?= $_SESSION['old']['emp_pseudo'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['emp_pseudo'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['emp_pseudo'] ?></div>
+                                <?php endif; ?>
                             </div>
-                            <div id="smoking-error" name="smoking-error" class="error-message"></div>
-                            <div class="form-check">
-                                <input name="animals" id="animals" class="form-check-input" type="checkbox" value="accept">
-                                <label class="form-check-label" for="animals">La présence d'animaux</label>
+
+                            <div class="mb-3 col-sm-8">      
+                                <label for="emp_email">Email :</label>
+                                <input type="email" class="form-control" name="emp_email" id="emp_email" value="<?= $_SESSION['old']['emp_email'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['emp_email'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['emp_email'] ?></div>
+                                <?php endif; ?>
                             </div>
-                            <div id="animals-error" name="animals-error" class="error-message"></div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="misc">Autres préférences (optionnel) :</label>
-                            <textarea maxlength="255" rows="4" placeholder="J'aime écouter la radio..." class="form-control" name="misc" id="misc" value="<?= $_SESSION['old']['misc'] ?? '' ?>"></textarea>
-                            <?php if (!empty($_SESSION['errors']['misc'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['misc'] ?></div>
-                            <?php endif; ?>
-                        </div>
+                            <div class="mb-3 col-sm-8">
+                                <label for="emp_name">Nom :</label>
+                                <input type="text" class="form-control" name="emp_name" id="emp_name" value="<?= $_SESSION['old']['emp_name'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['emp_name'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['emp_name'] ?></div>
+                                <?php endif; ?>
+                            </div>
 
-                        <button type="submit" class="btn btn-warning btn-block mb-4" data-mdb-button-initialized="true">Enregistrer</button>
-                    </form>                
+                            <div class="mb-3 col-sm-8">
+                                <label for="emp_firstname">Prénom :</label>
+                                <input type="text" class="form-control" name="emp_firstname" id="emp_firstname" value="<?= $_SESSION['old']['emp_firstname'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['emp_firstname'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['emp_firstname'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3 col-sm-8">
+                                <label for="emp_password">Mot de passe :</label>
+                                <input type="password" class="form-control" name="emp_password" id="emp_password" required>
+                                <?php if (!empty($_SESSION['errors']['emp_password'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['emp_password'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3 col-sm-8">
+                                <label for="emp_confirm_password">Confirmer le mot de passe :</label>
+                                <input type="password" class="form-control" name="emp_confirm_password" id="emp_confirm_password" required>
+                                <?php if (!empty($_SESSION['errors']['emp_confirm'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['emp_confirm_password'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div id="check-error" name="check-error" class="error-message"></div>
+                            
+                            <button type="submit" class="btn btn-warning btn-block mb-4" data-mdb-button-initialized="true">Envoyer</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<?php dump($_SESSION);?>
+<?php dump($_SESSION, $_POST);?>
 
 
 

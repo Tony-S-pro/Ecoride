@@ -7,6 +7,9 @@
 <section class="w-100 p-4 d-flex justify-content-center pb-4">
 
     <form id="signupForm" action="<?= BASE_URL ?>signup/register" method="POST"  style="width: 22rem;" novalidate>
+
+        <?php \App\Core\Controller::set_csrf(); ?>
+
         <div class="mb-3">
             <label for="pseudo">Pseudo :</label>
             <input type="text" class="form-control" name="pseudo" id="pseudo" value="<?= $_SESSION['old']['pseudo'] ?? '' ?>" required>

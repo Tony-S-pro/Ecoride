@@ -8,7 +8,7 @@
 <section>    
     <h2>Vos véhicules</h2>
     <p class="d-inline-flex gap-1">
-        <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#vehicles" role="button" aria-expanded="false" aria-controls="Vehicles">Mes véhicules</a>
+        <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#vehicles" role="button" aria-expanded="false" aria-controls="vehicles">Mes véhicules</a>
         <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#new_vehicle" aria-expanded="false" aria-controls="new_vehicle">Nouveau Véhicule</button>
     </p>
     <div class="col">

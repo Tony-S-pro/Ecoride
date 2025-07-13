@@ -41,7 +41,7 @@ class LoginController extends Controller
         // Check if form was sent + clean
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            // check CRSF token
+            // check CSRF token
             if(!Controller::is_csrf_valid()) {
                 exit("Error - CSRF token invalid");
             }

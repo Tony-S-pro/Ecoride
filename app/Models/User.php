@@ -61,7 +61,7 @@ class User extends Model
                 'firstname' => $data['firstname'],
                 'name' => $data['name'],
                 'role' => $data['role'],
-                'subscription_date' => $data['inscription_date']
+                'subscription_date' => $data['subscription_date']
             ]);
 
             $data['id'] = $db->lastInsertId();
