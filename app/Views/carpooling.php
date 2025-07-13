@@ -5,7 +5,9 @@
 <section>
     <p>Vous pouvez consulter créez un nouveau covoiturage en entrant toutres les informations necessaires çi-dessous.</p>
     <p class="text-white-50">N'oubliez pas que chaque covoiturage vous coutera 2 crédits.</p>
-
+    <?php if (!empty($_SESSION['errors']['no_credit'])): ?>
+        <div class="error-message"><?= $_SESSION['errors']['no_credit'] ?></div>
+    <?php endif; ?>
 
     <div class="container">
         <form id="registerCarpool" action="<?= BASE_URL ?>carpooling/register_carpool" method="POST" novalidate>

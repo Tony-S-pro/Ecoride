@@ -25,14 +25,14 @@
         <?php endif; ?>
 
         <div data-mdb-input-init="" class="form-outline mb-4" data-mdb-input-initialized="true">
-            <label class="form-label" for="email" style="margin-left: 0px;">Address email :</label>
-            <input type="email" name="email" id="email" class="form-control">
+            <label class="form-label" for="email">Address email :</label>
+            <input type="email" name="email" id="email" class="form-control" value="<?= $_SESSION['old']['email'] ?? '' ?>">
             <div id="email-error" class="error-message"></div>
         </div>
 
         <div data-mdb-input-init="" class="form-outline mb-4" data-mdb-input-initialized="true">
-        <label class="form-label" for="password" style="margin-left: 0px;">Mot de passe :</label>
-        <input type="password" name="password" id="password" class="form-control">
+        <label class="form-label" for="password">Mot de passe :</label>
+        <input type="password" name="password" id="password" class="form-control" value="<?= $_SESSION['old']['password'] ?? '' ?>">
         <div id="password-error" class="error-message"></div>
         </div>
 
