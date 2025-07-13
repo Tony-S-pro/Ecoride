@@ -5,6 +5,7 @@ use App\Core\Controller;
 use App\Core\Database;
 use App\Models\Carpool;
 use App\Models\Vehicle;
+use App\Models\User;
 
 class CarpoolingController extends Controller
 {
@@ -87,7 +88,7 @@ class CarpoolingController extends Controller
             }
 
             if (empty($arrival_city)) {
-                $errors['arrival_city'] = "Ville d'arrivée' requise.";
+                $errors['arrival_city'] = "Ville d'arrivée requise.";
             } elseif (strlen($arrival_city) < 3) {
                 $errors['arrival_city'] = "Requiert au moins 3 caractères.";
             }
@@ -99,7 +100,7 @@ class CarpoolingController extends Controller
             }
 
             if (empty($arrival_address)) {
-                $errors['arrival_address'] = "Adresse d'arrivée' requise.";
+                $errors['arrival_address'] = "Adresse d'arrivée requise.";
             } elseif (strlen($arrival_address) < 3) {
                 $errors['arrival_address'] = "Requiert au moins 3 caractères.";
             }
@@ -122,6 +123,13 @@ class CarpoolingController extends Controller
                 }
             }
 
+            //check if user have credits required (2)
+            $user = new User(Database::getPDOInstance());
+            $results = $user->getCreds($user_id);
+            if ($results['credit'] < 2) {
+                $errors['no_credit'] = "Vous n'avez pas les 2 crédits requis pour créer un covoiturage.";
+            }
+
             // In case of error -> back to carpooling view w/ messages
             if (!empty($errors)) {
                 // Store  errors in session
@@ -132,10 +140,10 @@ class CarpoolingController extends Controller
                 exit;
             }
 
-            // connect to db
-            $carpool = new Carpool(Database::getPDOInstance());
+            // take 2 credits and insert carpool into db
+            $user->takeCreds($user_id, 2);
 
-            // insert in db
+            $carpool = new Carpool(Database::getPDOInstance());
             $carpool->createCarpool([
                 'driver_id' => $user_id,
                 'departure_date' => $departure_date,
