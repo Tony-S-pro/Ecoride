@@ -115,8 +115,6 @@
     </div>
 </section>
 
-<?php dump($_SESSION, $_POST);?>
-
 
 
 
