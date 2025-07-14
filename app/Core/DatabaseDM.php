@@ -28,10 +28,7 @@ class DatabaseDM // Document Manager
                 );
 
             }else{
-                $uri = $_ENV['MDB_URI']?: throw new \RuntimeException(
-                    'Set the MONGODB_URI environment variable to your Atlas URI'
-                );
-                //$uri="mongodb+srv://admin_S25:passSTU25@cluster0.gwnbz87.mongodb.net/";
+                $uri = $_ENV['MDB_URI']?: throw new \RuntimeException('Set the MONGODB_URI environment variable to your Atlas URI');
                 $this->mongoClient = new Client(
                     uri: $uri,
                     uriOptions: [],
