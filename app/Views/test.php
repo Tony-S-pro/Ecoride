@@ -77,11 +77,16 @@ $modelDM->createDocument($newDoc);
 */
 
 /*
-$docs = $modelDM->readDocument([], ['sort' => ['creation_date' => -1]]); //1 ASC, -1 DSC
+$docs = $modelDM->readDocument(['blip'=>'bloop'], ['sort' => ['creation_date' => -1]]); //1 ASC, -1 DSC
+$results=[];
 foreach ($docs as $doc) {
     $results[]=$doc;
 }
 dump($results);
+
+$results_json = json_encode($results);
+dump($results_json);
+echo $results_json;
 */
 
 /*
@@ -118,6 +123,4 @@ dump($var1);
 
     
 ?>
-</p>
-
 
