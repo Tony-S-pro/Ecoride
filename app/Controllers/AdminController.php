@@ -346,7 +346,7 @@ class AdminController extends Controller
             exit;
         }
 
-        //get logs
+        //delete logs
         $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
         //To pass an ID to MongoDB w/ PHP Library, need to construct a MongoDB\BSON\ObjectID
         $delFilter = ['_id' => new \MongoDb\BSON\ObjectId($id) ];

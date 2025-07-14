@@ -1,28 +1,77 @@
 <?php
-
+/* app name, mail, domain */
 define('APP_NAME', 'Ecoride');
 define('APP_MAIL', 'jose.ecoride.2025@gmail.com');
 
-// Required php extensions
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    define('DOMAIN', 'localhost');
+} else {    
+    define('DOMAIN', 'tony-s-pro.alwaysdata.net');
+}
+
+
+
+/* SESSION */
+ini_set(option: 'session.use_only_cookies', value: 1); //session id thru cookies, not uri
+ini_set(option: 'session.use_strict_mode', value: 1);  //only use own session id + more complexe id
+session_set_cookie_params([
+    'lifetime' => 3600,         // 1h
+    'domain' => DOMAIN,
+    'path' => '/',              // any path in website
+    'secure' => true,           // https only
+    'httponly' => true          // no script access from client
+]);
+
+session_start();
+
+/* recreate id in a more complexe/secure way */
+/* recreate id if user comes back before 1h (lifetime) but after 30min */
+if (!isset($_SESSION['last_regeneration'])) {
+    session_regenerate_id(true);
+    $_SESSION['last_regeneration'] = time();
+} else {
+    $interval = 60*30;
+    if (time()-$_SESSION['last_regeneration'] >= $interval) {
+        session_regenerate_id(true);
+        $_SESSION['last_regeneration'] = time();
+    }
+}
+
+
+/* misc */
+date_default_timezone_set('Europe/Paris');
+
+
+
+/* Required php extensions */
 define('REQ_PHP_EXT', [
      'fileinfo', 'gd', 'gettext', 'mbstring', 'exif', 'mysqli', 'pdo_mysql', 'pdo_sqlite', 'php_mongodb.dll'
 ]);
 
-// DEBUG mode : true in dev, false in prod
+
+
+/* DEBUG mode : true in dev, false in prod */
 define('DEBUG', true);
 
+/* Debug Mode */
+error_reporting(E_ALL);
+DEBUG ? ini_set('display_errors', 1) : ini_set('display_errors', 0);
+
+
+
+/* DB */
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    
     define('BASE_APP', 'http://localhost/workspace/'.APP_NAME.'/');
     define('BASE_URL', 'http://localhost/workspace/'.APP_NAME."/public/");
 
-    // Database config (localhost)
+    /* Database config (localhost) */
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASS', '');
     define('DB_NAME', 'ecoride');
 
-    // Database config (localhost) for MongoDB
-    // no user@password by default on local
+    /* MongoDB Database config (localhost) (no user@password by default on local) */
     define('MDB_HOST', 'localhost');
     define('MDB_PORT', '27017');
     define('MDB_USER', '');
@@ -33,18 +82,19 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('BASE_APP', 'https://tony-s-pro.alwaysdata.net/');
     define('BASE_URL', 'https://tony-s-pro.alwaysdata.net/public/');
 
-    // Database config 
+    /* Database config */
     define('DB_HOST', 'mysql-tony-s-pro.alwaysdata.net');
     define('DB_USER', '409092_jose2025');
     define('DB_PASS', 'STUDI_ecoride25');
     define('DB_NAME', 'tony-s-pro_ecoride');
 
-    // Database config for MongoDB
-    // check .env
+    /* MongoDB Database config for (check .env) */
     define('MDB_NAME', 'ecoride');
 }
 
-/*SMTP*/
+
+
+/* SMTP */
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587); //587->tls, 465->ssl
 define('SMTP_USER', 'jose.ecoride.2025@gmail.com');
@@ -67,5 +117,4 @@ define('LEGAL_FR_2', 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI00
 define('LEGAL_FR_4', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460');
 
 define('ADMIN_ID', 5);
-define('EMPLOYEES_ID', [4]);
 

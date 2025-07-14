@@ -6,7 +6,7 @@
     <p>Notre Service Relation Client est à votre disposition : 
         Remplissez le formulaire ci-dessous et nous vous répondrons dans un délai de 48 heures ouvrées.*</p>
     <p class="text-white-50">* Ce site a été créé dans le cadre d'un projet de formation. Ce n'est pas un véritable site de covoiturage, une réponse est peu probable.</p>
-
+    
     <div class="w-100 p-4 d-flex justify-content-center pb-4">
 
         <form id="contactForm" action="<?= BASE_URL ?>contact/message" method="POST"  style="width: 22rem;" novalidate>
