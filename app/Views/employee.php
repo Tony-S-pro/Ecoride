@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="mt-2"><?=$c['comment']?></div>
-                <div class="m-2 p-1"><a href="#collapseCommentMailto<?=$c['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseCommentMailto<?=$c['id']?>" aria-expanded="false" aria-controls="collapseSearch">Contacter les intéressés</a></div>
+                <div class="m-2 p-1"><a href="#collapseCommentMailto<?=$c['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseCommentMailto<?=$c['id']?>" aria-expanded="false" aria-controls="collapseCommentMailto<?=$c['id']?>">Contacter les intéressés</a></div>
                 <div class="collapse" id="collapseCommentMailto<?=$c['id']?>">
                     <div class="card card-body d-flex flex-row gap-2 flex-wrap justify-content-around">
                         <div>conducteur : <a href="mailto:<?=$c['driver_email']?>"><?=$c['driver_pseudo']?></a></div>
@@ -57,8 +57,8 @@
                 </div>
                 <div class="mt-2"><?=$o['comment']?></div>
                 
-                <div class="m-2 p-1"><a href="#collapseObjectionMailto<?=$o['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseObjectionMailto<?=$o['id']?>" aria-expanded="false" aria-controls="collapseSearch">Contacter les intéressés</a></div>
-                <div class="m-2 p-1"><a href="#collapseObjectionCarpool<?=$o['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseObjectionCarpool<?=$o['id']?>" aria-expanded="false" aria-controls="collapseCarpool">Détails du covoiturage</a></div>
+                <div class="m-2 p-1"><a href="#collapseObjectionMailto<?=$o['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseObjectionMailto<?=$o['id']?>" aria-expanded="false" aria-controls="collapseObjectionMailto">Contacter les intéressés</a></div>
+                <div class="m-2 p-1"><a href="#collapseObjectionCarpool<?=$o['id']?>" data-bs-toggle="collapse" data-bs-target="#collapseObjectionCarpool<?=$o['id']?>" aria-expanded="false" aria-controls="collapseObjectionCarpool">Détails du covoiturage</a></div>
                 <div class="collapse" id="collapseObjectionMailto<?=$o['id']?>">
                     <div class="card card-body d-flex flex-row gap-2 flex-wrap justify-content-around">
                         <div>conducteur : <a href="mailto:<?=$o['driver_email']?>"><?=$o['driver_pseudo']?></a></div>

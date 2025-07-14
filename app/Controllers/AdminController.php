@@ -6,6 +6,9 @@ use App\Core\Database;
 use App\Models\Carpool;
 use App\Models\User;
 
+use App\Core\DatabaseDM;
+use App\Models\ObjectionsLogDM;
+
 class AdminController extends Controller
 {
     public function index(): void
@@ -300,5 +303,57 @@ class AdminController extends Controller
         ];        
 
         Controller::render($data['view'], $data);
+    }
+
+    public function objections_log(): void
+    {
+        // check if user's connected and has admin role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='admin' OR !$_SESSION['user']['id']===ADMIN_ID) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+
+        //get logs
+        $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+        $docs = $modelDM->readDocument([], ['sort' => ['creation_date' => -1]]); //1 ASC, -1 DSC
+        $results= [];
+        foreach ($docs as $doc) {
+            $doc['creation_date'] = date('d-m-y', strtotime($doc['creation_date']));
+            if(isset($doc['update_date'])) {
+                $doc['update_date'] = date('d-m-y', strtotime($doc['creation_date']));
+            }
+            $results[]=$doc;
+        }
+        $results_json = json_encode($results);
+        echo $results_json;
+        exit;
+        
+    }
+
+    public function delete_log($id): void
+    {
+        // check if user's connected and has admin role/id        
+        if (!isset($_SESSION['user'])) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+        if(!$_SESSION['user']['role']==='admin' OR !$_SESSION['user']['id']===ADMIN_ID) {
+            header('Location: '.BASE_URL.'login');
+            exit;
+        }
+
+        //get logs
+        $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+        //To pass an ID to MongoDB w/ PHP Library, need to construct a MongoDB\BSON\ObjectID
+        $delFilter = ['_id' => new \MongoDb\BSON\ObjectId($id) ];
+        $modelDM->deleteDocument($delFilter);
+
+        header('Location: '.BASE_URL.'admin');
+        exit;
+        
     }
 }

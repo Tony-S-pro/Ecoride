@@ -8,16 +8,19 @@ use App\Models\Review;
 use App\Models\User;
 use App\Models\View_participants;
 
+use App\Core\DatabaseDM;
+use App\Models\ObjectionsLogDM;
+
 class EmployeeController extends Controller
 {
     public function index(): void
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role       
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -108,12 +111,12 @@ class EmployeeController extends Controller
 
     public function validate_comment($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role       
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -128,12 +131,12 @@ class EmployeeController extends Controller
 
     public function reject_comment($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role      
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -151,12 +154,12 @@ class EmployeeController extends Controller
 
     public function validate_objection($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role        
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -180,18 +183,31 @@ class EmployeeController extends Controller
         //mark objection as reviewed
         $reviewModel->switchObjectionToReviewed($review_id);
 
+        //update objection_log
+        $employee_id = $_SESSION['user']['id'];
+        $date=date('Y-m-d H:i:s');
+        $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+        $updtFilter = ['user_id' => (string)$passenger, 'carpool_id' => (string)$carpool_id];
+        $updtData = [
+            'employee_id' => (string)$employee_id,
+            'decision' => 'accepted',
+            'objection' => '0',
+            'update_date' => $date
+        ];
+        $modelDM->updateDocument($updtFilter, $updtData);
+
         header('Location: '.BASE_URL.'employee/confirmation/objection_validated');
         exit;
     }
 
     public function reject_objection($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role        
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -215,6 +231,21 @@ class EmployeeController extends Controller
         //mark objection as reviewed
         $reviewModel->switchObjectionToReviewed($review_id);
 
+        //update objection_log
+        $passenger =  $reviewModel->findUserId($review_id);
+        $passenger = $passenger['user_id'];
+        $employee_id = $_SESSION['user']['id'];
+        $date=date('Y-m-d H:i:s');
+        $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+        $updtFilter = ['user_id' => (string)$passenger, 'carpool_id' => (string)$carpool_id];
+        $updtData = [
+            'employee_id' => (string)$employee_id,
+            'decision' => 'rejected',
+            'objection' => '0',
+            'update_date' => $date
+        ];
+        $modelDM->updateDocument($updtFilter, $updtData);
+
         header('Location: '.BASE_URL.'employee/confirmation/objection_rejected');
         exit;
 
@@ -222,12 +253,12 @@ class EmployeeController extends Controller
 
     public function confirmation($param)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role      
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }

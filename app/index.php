@@ -60,8 +60,8 @@ $allowedMethods = [
     'vehicles', 'register_vehicle', 'delete_vehicle', 'deleted', 'upload',
     'register_carpool', 'confirmed',
     'passenger', 'register_review', 
-    'chart', 'users', 'ban', 'reinstate', 'confirmation',
-    'validate_comment', 'reject_comment', 'validate_objection', 'reject_objection,', 'confirmation'
+    'chart', 'users', 'ban', 'reinstate', 'confirmation', 'objections_log', 'delete_log',
+    'validate_comment', 'reject_comment', 'validate_objection', 'reject_objection', 'confirmation'
 ];
 
 if (!in_array($controllerName, $allowedControllers) || !in_array($methodName, $allowedMethods)) {

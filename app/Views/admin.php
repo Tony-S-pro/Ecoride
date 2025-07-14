@@ -3,6 +3,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
 <script defer src="<?=BASE_URL?>assets/ajax/get-users.js"></script>
 <script defer src="<?=BASE_URL?>assets/ajax/get-charts.js"></script>
+<script defer src="<?=BASE_URL?>assets/ajax/get-logs.js"></script>
 
 <h1>Espace Admin</h1>
 
@@ -15,13 +16,13 @@
 <section class="m-2 p-3">
     <h2>Gestion des comptes Ecoride</h2>
     <p class="d-inline-flex gap-1">
-        <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#searchUsers" role="button" aria-expanded="false" aria-controls="searchUsers">Suspendre un compte</a>
+        <a class="btn btn-outline-light" data-bs-toggle="collapse" href="#searchUsers" role="button" aria-expanded="false" aria-controls="searchUsers">Suspendre un compte</a>
         <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#new_employee" aria-expanded="false" aria-controls="new_employee">Créer compte employé</button>
     </p>
     <div class="col">
         <div class="row">
             <div class="collapse multi-collapse overflow-y-auto" id="searchUsers">
-                <div class="card card-body border-secondary" id="searchUsers">
+                <div class="card card-body border-light" id="searchUsers">
 
                     <div class="search" >
                         <form action="admin/users" method="post" id="searchFormUsers">                            
@@ -114,6 +115,25 @@
         </div>
     </div>
 </section>
+
+
+<section class="m-2 p-3">
+    <h2>Journal des objections passagers</h2>
+    <p class="d-inline-flex gap-1">
+    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#objections" aria-expanded="false" aria-controls="collapseExample">Objections</button>
+    </p>
+    <div class="collapse" id="objections">
+    <div class="card card-body border-secondary">
+        <div class="m-2 p-3">
+            <div class="results" id="results-objections">
+            </div>
+        </div>
+    </div>
+    </div>
+
+</section>
+
+
 
 
 
