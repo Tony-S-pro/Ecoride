@@ -15,12 +15,12 @@ class EmployeeController extends Controller
 {
     public function index(): void
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role       
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -111,12 +111,12 @@ class EmployeeController extends Controller
 
     public function validate_comment($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role       
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -131,12 +131,12 @@ class EmployeeController extends Controller
 
     public function reject_comment($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role      
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -154,12 +154,12 @@ class EmployeeController extends Controller
 
     public function validate_objection($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role        
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -202,12 +202,12 @@ class EmployeeController extends Controller
 
     public function reject_objection($review_id)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role        
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
@@ -253,12 +253,12 @@ class EmployeeController extends Controller
 
     public function confirmation($param)
     {
-        // check if user's connected and has employee role/id        
+        // check if user's connected and has employee role      
         if (!isset($_SESSION['user'])) {
             header('Location: '.BASE_URL.'login');
             exit;
         }
-        if(!$_SESSION['user']['role']==='employee' OR !in_array($_SESSION['user']['id'], EMPLOYEES_ID)) {
+        if(!$_SESSION['user']['role']==='employee') {
             header('Location: '.BASE_URL.'signup');
             exit;
         }
