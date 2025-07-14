@@ -142,7 +142,8 @@ class Review extends Model
 
     public function validate($review_id)
     {
-        $query = "UPDATE $this->table SET validated = 1 WHERE id = :id;";
+        $date = date('Y-m-d');
+        $query = "UPDATE $this->table SET validated = 1, update_date = $date WHERE id = :id;";
         $stmt = $this->db->prepare($query);
         
         $stmt->bindValue(':id', $review_id, PDO::PARAM_STR);
@@ -151,7 +152,8 @@ class Review extends Model
 
     public function remove_comment($review_id)
     {
-        $query = "UPDATE $this->table SET comment = NULL WHERE id = :id;";
+        $date = date('Y-m-d');
+        $query = "UPDATE $this->table SET comment = NULL, update_date = $date WHERE id = :id;";
         $stmt = $this->db->prepare($query);        
         $stmt->bindValue(':id', $review_id, PDO::PARAM_STR);
         $stmt->execute();     
@@ -193,7 +195,7 @@ class Review extends Model
 
     public function switchObjectionToReviewed($review_id)
     {
-        $query = "UPDATE $this->table SET objection_reviewed = 1 WHERE id = :id;";
+        $query = "UPDATE $this->table SET objection_reviewed = 1, update_date = DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s') WHERE id = :id;";
         $stmt = $this->db->prepare($query);        
         $stmt->bindValue(':id', $review_id, PDO::PARAM_STR);
         $stmt->execute(); 

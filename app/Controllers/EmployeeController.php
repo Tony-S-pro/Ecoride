@@ -8,6 +8,9 @@ use App\Models\Review;
 use App\Models\User;
 use App\Models\View_participants;
 
+use App\Core\DatabaseDM;
+use App\Models\ObjectionsLogDM;
+
 class EmployeeController extends Controller
 {
     public function index(): void
@@ -180,6 +183,19 @@ class EmployeeController extends Controller
         //mark objection as reviewed
         $reviewModel->switchObjectionToReviewed($review_id);
 
+        //update objection_log
+        $employee_id = $_SESSION['user']['id'];
+        $date=date('Y-m-d H:i:s');
+        $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+        $updtFilter = ['user_id' => (string)$passenger, 'carpool_id' => (string)$carpool_id];
+        $updtData = [
+            'employee_id' => (string)$employee_id,
+            'decision' => 'accepted',
+            'objection' => '0',
+            'update_date' => $date
+        ];
+        $modelDM->updateDocument($updtFilter, $updtData);
+
         header('Location: '.BASE_URL.'employee/confirmation/objection_validated');
         exit;
     }
@@ -214,6 +230,21 @@ class EmployeeController extends Controller
 
         //mark objection as reviewed
         $reviewModel->switchObjectionToReviewed($review_id);
+
+        //update objection_log
+        $passenger =  $reviewModel->findUserId($review_id);
+        $passenger = $passenger['user_id'];
+        $employee_id = $_SESSION['user']['id'];
+        $date=date('Y-m-d H:i:s');
+        $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+        $updtFilter = ['user_id' => (string)$passenger, 'carpool_id' => (string)$carpool_id];
+        $updtData = [
+            'employee_id' => (string)$employee_id,
+            'decision' => 'rejected',
+            'objection' => '0',
+            'update_date' => $date
+        ];
+        $modelDM->updateDocument($updtFilter, $updtData);
 
         header('Location: '.BASE_URL.'employee/confirmation/objection_rejected');
         exit;

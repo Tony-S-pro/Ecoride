@@ -9,6 +9,9 @@ use App\Models\Review;
 use App\Models\User_Carpool;
 use App\Models\View_participants;
 
+use App\Core\DatabaseDM;
+use App\Models\ObjectionsLogDM;
+
 class ReviewController extends Controller
 {
     public function index(): void
@@ -62,7 +65,7 @@ class ReviewController extends Controller
         ];        
 
         $data = [
-            'title' => "Créer un covoiturage",
+            'title' => "Donnez votre avis",
             'view' => "review.passenger",
             'carpool' => $carpool_data,
             'driver' => $driver_data
@@ -139,6 +142,7 @@ class ReviewController extends Controller
             
             //create review in review
             $reviewModel = new Review(Database::getPDOInstance());
+            $date=date('Y-m-d H:i:s');
             $review = $reviewModel->create_review([
                 'user_id' => $user_id,
                 'carpool_id' => $carpool_id,
@@ -146,8 +150,22 @@ class ReviewController extends Controller
                 'comment' => $comment,
                 'validated' => $validated,
                 'objection' => $checkObjection,
-                'creation_date' => date('Y-m-d H:i:s')
+                'creation_date' => $date
             ]);
+
+            //if objection, make an objection_log entry
+            if($checkObjection='1') {
+                $modelDM = new ObjectionsLogDM(DatabaseDM::getDmInstance());
+                $newLog = [
+                'user_id' => (string)$user_id,
+                'carpool_id' => (string)$carpool_id,
+                'comment' => $comment,
+                'objection' => '1',
+                'creation_date' => $date
+                ];
+                $modelDM->createDocument($newLog);
+            }
+            
 
             //if no objection, then get price 
             if($checkObjection==='0') {
@@ -173,6 +191,7 @@ class ReviewController extends Controller
             $reviews_nb = $reviewModel->countByCarpoolId($carpool_id);            
             //change status
             if($reviews_nb>=$passengers_nb) {
+                $carpoolModel = new Carpool(Database::getPDOInstance());
                 $carpoolModel->changeStatusToValid($carpool_id);
             }
             

@@ -41,12 +41,12 @@ abstract class ModelDM
      * @param mixed $filter
      * @return \MongoDB\Driver\CursorInterface
      */
-    public function readDocument($filter)
+    public function readDocument($filter, $options =[])
     {
-        return $this->collection->find($filter);
+        return $this->collection->find($filter, $options);
     }
     // $modelDM = new modelDM();
-    // $docs = $modelDM->readDocument([]);
+    // $docs = $modelDM->readDocument(['title'=>$regEx], ['sort' => ['update_date' => -1]]);
     // foreach ($docs as $doc) {// Process and display document data}
 
     /**
@@ -61,7 +61,7 @@ abstract class ModelDM
         $this->collection->updateOne($filter, ['$set' => $updateData]);
     }
     // $modelDM = new modelDM();
-    // $updtFilter = ['title' => 'My New Title'];
+    // $updtFilter = ['title' => 'Title of doc to update'];
     // $updtData = ['content' => 'Updated content'];
     // $modelDM->updateDocument($updtFilter, $updtData);
 
@@ -76,7 +76,7 @@ abstract class ModelDM
         $this->collection->deleteOne($filter);
     }
     // $modelDM = new modelDM();
-    // $delFilter = ['title' => 'My Title'];
+    // $delFilter = ['title' => 'Title of doc to del'];
     // $modelDM->deleteDocument($delFilter);
 
 }
