@@ -114,7 +114,7 @@ Assurez-vous que le serveur local MySQL (via XAMPP dans cet exemple) a été dé
     ```
 - Si l'utilisateur `ecoride_admin` n'a pas été créé par le script précédent, exécutez les commandes SQL suivantes :
     ```sql
-    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY '01v_.fGZ$A26';
+    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
     GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
     FLUSH PRIVILEGES;
     ```
