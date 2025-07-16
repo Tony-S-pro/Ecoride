@@ -142,7 +142,7 @@ Le fichier `config/config.php` contient les infos de configurations par défaut 
     RewriteRule ^(.*)$ public/$1 [L]
     </IfModule>
     ```
-- Assurez-vous que le fichier `.htaccess` suivant est présent à la racine du dossier `Ecoride` pour le routeur et l'accès aux assets par le client:
+- Assurez-vous que le fichier `.htaccess` suivant est présent à la racine du dossier `Ecoride/public` pour le routeur et l'accès aux assets par le client:
     ```apache
     RewriteEngine On
     ##  If it's not a file/directory in /public
