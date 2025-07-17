@@ -10,7 +10,7 @@
                 </button> 
                 <div class="navbar-collapse collapse" id="navbarMenu" style=""> 
                     <ul class="navbar-nav me-auto ms-5 mb-2 mb-md-0"> 
-                        <li class="nav-item"><a class="nav-link <?=($view==='home') ? "active":""?>" aria-current="page" href="<?=BASE_URL?>">Acceuil</a></li> 
+                        <li class="nav-item"><a class="nav-link <?=($view==='home') ? "active":""?>" aria-current="page" href="<?=BASE_URL?>">Accueil</a></li> 
                         <li class="nav-item"><a class="nav-link <?=($view==='carpools') ? "active":""?>" href="<?=BASE_URL?>carpools">Covoiturages</a></li> 
                         <li class="nav-item"><a class="nav-link <?=($view==='contact') ? "active":""?>" href="<?=BASE_URL?>contact">Contact</a></li> 
                     </ul>
