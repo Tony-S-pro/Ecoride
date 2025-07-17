@@ -18,13 +18,13 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - Inscription des visiteurs.
 - Connexion des utilisateurs, des employés et de l'administrateur.
 - Recherche de covoiturage par ville (et/ou adresse) de départ, d'arrivée et date.
-- Filtrage des résultats par prix/durée maximum, note chauffeur, type d'énegie (thermique/élec), préférences fumeurs, etc.
+- Filtrage des résultats par prix/durée maximum, note chauffeur, type d’énergie (thermique/élec), préférences fumeurs, etc.
 - Option du covoiturage à la date la plus proche s'il n'y a pas de résultats.
 - Réservation (et annulation) de places sur les covoiturages par les utilisateurs (avec gestion du paiement par 'crédits').
 - Annulation des réservation et remboursement des crédits.
 - Affichage des covoiturages passés et à venir dans l'espace personnel des passagers.
 - Système d'avis et note, ainsi que la possibilité d'objecter et demander un remboursement pour les covoiturages passés.
-    - Système de log des objection (fonction NoSQL via MongoDB).
+    - Système de log des objection (fonction NoSQL via MongoDB).
 - Gestion des véhicules et préférences pour les utilisateurs chauffeurs (créer et supprimer).
 - Ajout d'une photo au profil des chauffeurs.
 - Création (et annulation) de covoiturages dans l'espace personnel des chauffeurs (avec gestion du paiement par 'crédits').
@@ -33,38 +33,38 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - Système de signalisation du démarrage et arrivée du covoiturage avec notification emails aux passagers pour valider le trajet.
 - Formulaire de contact (envoi par mail).
 - **Espace Employé :**
-    - Modération des commentaires sur les avis (accepter/effacer).
-    - Validation/rejet des demandes de remboursememnt.
-	    - Mise-à-jour des logs objection (fonction NoSQL via MongoDB)
+    - Modération des commentaires sur les avis (accepter/effacer).
+    - Validation/rejet des demandes de remboursement.
+        - Mise-à-jour des logs objection (fonction NoSQL via MongoDB)
 - **Espace Admin :**
-    - Affichage de statistiques : covoiturages/jour (graph), crédits par/jour (graph), total des crédits. via MongoDB.
-    - Création de comptes employés.
-    - Suspension/réinstauration de comptes utilisateurs.
-	- Affichage et suppression des logs des objections utilisateurs et décisions employée (fonction NoSQL via MongoDB).
-	
----	
-	
+    - Affichage de statistiques : covoiturages/jour (graph), crédits par/jour (graph), total des crédits. via MongoDB.
+    - Création de comptes employés.
+    - Suspension/ré-instauration de comptes utilisateurs.
+    - Affichage et suppression des logs des objections utilisateurs et décisions employée (fonction NoSQL via MongoDB).
+    
+--- 
+    
 ## Technologies Utilisées
 
 **Frontend :** 
-    - HTML5
-	- CSS3 (Bootstrap 5.3)
-	- JavaScript (jQuery 3.7.1/AJAX) pour afficher du contenu sans recharger la page.
+    - HTML5
+    - CSS3 (Bootstrap 5.3)
+    - JavaScript (jQuery 3.7.1/AJAX) pour afficher du contenu sans recharger la page.
 **Backend :** PHP 8.2.
 **Base de Données Relationnelle :** MySQL (dév : MariaDB/XAMPP en localhost, prod : MySQL sur www.alwaysdata.com) via l'extension PDO.
 **Base de Données NoSQL :** MongoDB (dev : localhost, prod : MongoDB/MongoDB Atlas) pour les logs.
 **Développement Local/Serveur :** XAMPP (Apache, MariaDB, PHP).
 **Dépendances PHP :**
-    - `composer/composer` Composer et son autoload pour gérer les dépendances
-    - `mongodb/mongodb` pour communiquer avec la bdd NoSQL.
-	- `vlucas/phpdotenv` pour gérer le .env contenant les information de connection MongoDB
-    - `phpmailer/phpmailer` PHPMailer pour l'envoi d'emails via smtp.
-	- `symfony/var-dumper` utile pendant le dévelppement
+    - `composer/composer` Composer et son autoload pour gérer les dépendances
+    - `mongodb/mongodb` pour communiquer avec la bdd NoSQL.
+    - `vlucas/phpdotenv` pour gérer le .env contenant les information de connection MongoDB
+    - `phpmailer/phpmailer` PHPMailer pour l'envoi d'emails via smtp.
+    - `symfony/var-dumper` utile pendant le dévelppement
 **Gestion de version et dépôt :** Git et GitHub.
 **Outil de gestion de projet :** Trello.
 **Production/Hébergement :**
-    - PHP/MySQL : Alwaysdata
-    - MongoDB : MongoDB Atlas
+    - PHP/MySQL : Alwaysdata
+    - MongoDB : MongoDB Atlas
 
 ---
 
@@ -81,43 +81,43 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 ### Installation locale via XAMPP
 
 **Cloner le dépôt (Git) :**
-    ```bash
-    git clone [https://github.com/Tony-S-pro/Ecoride/] Ecoride
-    cd Ecoride
-    ```
+    ```bash
+    git clone [https://github.com/Tony-S-pro/Ecoride/] Ecoride
+    cd Ecoride
+    ```
 
 **Installer les dépendances (Composer) :**
 À la racine du dossier de l'app `Ecoride` (là où se trouve `composer.json`), exécutez :
-    ```bash
-    composer install
-    ```
+    ```bash
+    composer install
+    ```
 Les dépendances sont dans le dossier `Ecoride/vendor/`.
 
 3. **Configurer la bdd MySQL (XAMPP) :**
 Assurez-vous que le serveur local MySQL (via XAMPP dans cet exemple) a été démarré et ouvrez un client SQL. Par exemple le Shell MySQL accessible depuis le panneau de contrôle XAMPP (ou DBeaver, DbGate, SQL Workbench, un terminal d'IDE, etc).
 
 - Créez une nouvelle base de données pour le projet :
-    ```sql
-    CREATE DATABASE IF NOT EXISTS ecoride CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-    ```
+    ```sql
+    CREATE DATABASE IF NOT EXISTS ecoride CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+    ```
 - Placez vous dans la bdd :
-    ```sql
-    USE ecoride;
-    ```
+    ```sql
+    USE ecoride;
+    ```
 - Exécutez le script de création des tables `ecoride.sql`. Copier le contenu du fichier dans la shell, ou utiliser la commande `source` si depuis le dossier du fichier la shell :
-    ```sql
-    source C:/xampp/htdocs/Ecoride/docs/ecoride.sql
-    ```
+    ```sql
+    source C:/xampp/htdocs/Ecoride/docs/ecoride.sql
+    ```
 - Idem pour le script d'insertion des données de test `ecoride_data.sql`.
-    ```sql
-    source C:/xampp/htdocs/Ecoride/docs/ecoride_data.sql
-    ```
+    ```sql
+    source C:/xampp/htdocs/Ecoride/docs/ecoride_data.sql
+    ```
 - Si l'utilisateur `ecoride_admin` n'a pas été créé par le script précédent, exécutez les commandes SQL suivantes :
-    ```sql
-    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
-    GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
-    FLUSH PRIVILEGES;
-    ```
+    ```sql
+    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
+    GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
+    FLUSH PRIVILEGES;
+    ```
 **Configuration de connection de l'app :**
 Le fichier `config/config.php` contient les infos de configurations par défaut pour l'environnement local (XAMPP).
 
@@ -136,21 +136,21 @@ Le fichier `config/config.php` contient les infos de configurations par défaut 
 
 **Configurer le serveur :**
 - Assurez-vous que le fichier `.htaccess` suivant est présent à la racine du dossier `Ecoride` pour pointer vers `Ecoride/public` comme point d'entrée à l'app:
-    ```apache
-    <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(.*)$ public/$1 [L]
-    </IfModule>
-    ```
+    ```apache
+    <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+    </IfModule>
+    ```
 - Assurez-vous que le fichier `.htaccess` suivant est présent à la racine du dossier `Ecoride/public` pour le routeur et l'accès aux assets par le client:
-    ```apache
-    RewriteEngine On
-    ##  If it's not a file/directory in /public
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    ## then redirect towards index.php and pass filename as 'url' param
-    RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
-    ```
+    ```apache
+    RewriteEngine On
+    ##  If it's not a file/directory in /public
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    ## then redirect towards index.php and pass filename as 'url' param
+    RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+    ```
 - Relancer le serveur.
 
 **Lancer l'application :**
@@ -166,61 +166,61 @@ Organisation des fichiers :
 ```markdown
 Ecoride/
 │
-├── app/                         # Application MVC
-│   ├── Controllers/
-│   │   └── HomeController.php   # Exemple de contrôleur (pour la homepage)
-│   │
-│   ├── Core/
-│   │   ├── Controller.php       # Contrôleur parent commun (parent des autres contrôleurs)
-│   │   ├── Database.php         # Connexion PDO
-│   │   ├── Database.php         # Connexion MongoDB (Document Manager)
-│   │   ├── ImageHelper.php      # Methodes d'upload/redimensionnement d'images
-│   │   └── MailHelper.php       # Methodes pour l'utilisaton de phpmailer
-│   │
-│   ├── Models/
-│   │   ├── Model.php            # Classe modèle de base (parent des autres modèles)
-│   │   └── ModelDM.php          # Classe modèle NoSQL de base
-│   │
-│   ├── Views/
-│   │   ├── elements/
-│   │   │   ├── header.php       # En-tête des pages HTML
-│   │   │   └── footer.php       # Pied de page des pages HTML
-│   │   ├── error404.php         # Vue d’erreur de base
-│   │   ├── home.php             # Exemple de vue (correspondant à HomeController)
-│   │   └── layout.php           # Layout de base│   │
-│   │
-│   ├── .htaccess                # Fichier config Apache, gère l’accès aux fichiers
-│   ├── autoload.php             # Fonction autoload pour charger les classes sans composer
-│   └── index.php                # Routeur qui demarre l'app en appelant le controlleur aproprié à l'url
+├── app/                         # Application MVC
+│   ├── Controllers/
+│   │   └── HomeController.php   # Exemple de contrôleur (pour la homepage)
+│   │
+│   ├── Core/
+│   │   ├── Controller.php       # Contrôleur parent commun (parent des autres contrôleurs)
+│   │   ├── Database.php         # Connexion PDO
+│   │   ├── Database.php         # Connexion MongoDB (Document Manager)
+│   │   ├── ImageHelper.php      # Méthodes d'upload/redimensionnement d'images
+│   │   └── MailHelper.php       # Méthodes pour l’utilisation de phpmailer
+│   │
+│   ├── Models/
+│   │   ├── Model.php            # Classe modèle de base (parent des autres modèles)
+│   │   └── ModelDM.php          # Classe modèle NoSQL de base
+│   │
+│   ├── Views/
+│   │   ├── elements/
+│   │   │   ├── header.php       # En-tête des pages HTML
+│   │   │   └── footer.php       # Pied de page des pages HTML
+│   │   ├── error404.php         # Vue d’erreur de base
+│   │   ├── home.php             # Exemple de vue (correspondant à HomeController)
+│   │   └── layout.php           # Layout de base│   │
+│   │
+│   ├── .htaccess                # Fichier config Apache, gère l’accès aux fichiers
+│   ├── autoload.php             # Fonction autoload pour charger les classes sans composer
+│   └── index.php                # Routeur qui démarre l'app en appelant le contrôleur aproprié à l'url
 │
 ├── config/
-│   ├── .env                     # Fichier de config pour MongoDB uniquement, pour l'instant
-│   └── config.php               # Configuration de l'app (mdp de la bdd, constantes, etc)
+│   ├── .env                     # Fichier de config pour MongoDB uniquement, pour l'instant
+│   └── config.php               # Configuration de l'app (mdp de la bdd, constantes, etc)
 │
-├── docs/                        # Documentation à fournir dans le cadre de l'ECF
+├── docs/                        # Documentation à fournir dans le cadre de l'ECF
 │
-├── public/                      # Dossier web accessible à l'utilisateurs
-│   ├── assets/                  # Dossier des resources statiques (css/js/images/polices/etc)
-│   │   ├── ajax                 # Dossier des appels AJAX
-│   │   ├── css/
-│   │   │   └── style.css        # Feuille de style (chargé après bootstrap)
-│   │   ├── img/
-│   │   ├── js/
-│   │   │   └── script.js        # Script js (chargé après bootstrap)
-│   │   ├── uploads/             # Dossier des uploads utilisateur (photos)
-│   │   └── favicon.ico          # Icone de l'app
-│   │
-│   ├── .htaccess                # Fichier config Apache, ici le redirect vers index.php et accès aux assets
-│   ├── index.php                # Point d'entrée de l'app
-│   └── robot.txt                # Fichier destiné aux crawlers des moteurs de recherche
+├── public/                      # Dossier web accessible à l'utilisateurs
+│   ├── assets/                  # Dossier des ressources statiques (css/js/images/etc)
+│   │   ├── ajax                 # Dossier des appels AJAX
+│   │   ├── css/
+│   │   │   └── style.css        # Feuille de style (chargé après bootstrap)
+│   │   ├── img/
+│   │   ├── js/
+│   │   │   └── script.js        # Script js (chargé après bootstrap)
+│   │   ├── uploads/             # Dossier des uploads utilisateur (photos)
+│   │   └── favicon.ico          # Icône de l'app
+│   │
+│   ├── .htaccess                # Fichier config Apache, ici le redirect vers index.php et accès aux assets
+│   ├── index.php                # Point d'entrée de l'app
+│   └── robot.txt                # Fichier destiné aux crawlers des moteurs de recherche
 │
-├── vendor/                      # Dossier packages/libraries
+├── vendor/                      # Dossier packages/libraries
 │
-├── .htaccess                    # Fichier config Apache, redirige vers public/index.php
-├── composer.json                # Decrit les dépendances du projet + set up de l'autoload de Composer
-├── composer.lock                # Decrit les versions des dépendances du projet
-├── README.md                    # Ce fichier
-└── robot.txt                    # Fichier destiné aux crawlers des moteurs de recherche
+├── .htaccess                    # Fichier config Apache, redirige vers public/index.php
+├── composer.json                # Décrit les dépendances du projet + set up de l'autoload de Composer
+├── composer.lock                # Décrit les versions des dépendances du projet
+├── README.md                    # Ce fichier
+└── robot.txt                    # Fichier destiné aux crawlers des moteurs de recherche
 ```
 
 - On à démarré le projet avec un framework MVC de base
