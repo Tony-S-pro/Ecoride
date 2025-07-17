@@ -1,12 +1,12 @@
 <?php
 /* app name, mail, domain */
 define('APP_NAME', 'Ecoride');
-define('APP_MAIL', 'jose.ecoride.2025@gmail.com');
+define('APP_MAIL', 'youEmail@gmail.com');
 
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('DOMAIN', 'localhost');
 } else {    
-    define('DOMAIN', 'tony-s-pro.alwaysdata.net');
+    define('DOMAIN', 'my-app.com');
 }
 
 
@@ -79,17 +79,17 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('MDB_NAME', 'ecoride');
 
 } else {
-    define('BASE_APP', 'https://tony-s-pro.alwaysdata.net/');
-    define('BASE_URL', 'https://tony-s-pro.alwaysdata.net/public/');
+    define('BASE_APP', 'https://my-app.com/');
+    define('BASE_URL', 'https://my-app.com/public/');
 
     /* Database config */
-    define('DB_HOST', 'mysql-tony-s-pro.alwaysdata.net');
-    define('DB_USER', '409092_jose2025');
-    define('DB_PASS', 'STUDI_ecoride25');
-    define('DB_NAME', 'tony-s-pro_ecoride');
+    define('DB_HOST', 'host');
+    define('DB_USER', 'user_name');
+    define('DB_PASS', 'password');
+    define('DB_NAME', 'database_name');
 
     /* MongoDB Database config for (check .env) */
-    define('MDB_NAME', 'ecoride');
+    define('MDB_NAME', 'noSql_database_name');
 }
 
 
@@ -97,10 +97,10 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 /* SMTP */
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587); //587->tls, 465->ssl
-define('SMTP_USER', 'jose.ecoride.2025@gmail.com');
-define('SMTP_PASS', 'opzdkdkeuonqodna'); //app password 16char to set up in account after 2step auth
-define('SMTP_FROM', 'jose.ecoride.2025@gmail.com');
-define('SMTP_FROM_NAME', 'Ecoride Contact');
+define('SMTP_USER', 'yourEmail@gmail.com');
+define('SMTP_PASS', 'aaaaaaaaaaaaaaaa'); //app password 16char to set up in account after 2step auth
+define('SMTP_FROM', 'yourEmail@gmail.com');
+define('SMTP_FROM_NAME', 'yourName');
 
 
 /* Legal mentions / cookies policy */

@@ -184,7 +184,7 @@ class Review extends Model
         return $results;
     }
 
-    public function findUserId($review_id)
+    public function findUserId($review_id): array|null
     {
         $stmt = $this->db->prepare("SELECT user_id FROM $this->table WHERE id = :id");
         $stmt->execute(['id' => $review_id]);
