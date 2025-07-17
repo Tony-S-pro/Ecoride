@@ -10,7 +10,7 @@ class User extends Model
 {
     protected string $table = 'users';
 
-    public function is_mail_in_db($email)
+    public function isEmailIn($email): bool
     {
         $query = "SELECT email FROM users WHERE email = :email ;";
         $stmt = $this->db->prepare($query);
@@ -35,7 +35,7 @@ class User extends Model
             firstname,
             name,
             role,
-            inscription_date
+            subscription_date
         ) VALUES (
             :email,
             :password,
@@ -43,7 +43,7 @@ class User extends Model
             :firstname,
             :name,
             :role,
-            :inscription_date
+            :subscription_date
         )";
 
         $stmt = $db->prepare($query);
@@ -61,7 +61,7 @@ class User extends Model
                 'firstname' => $data['firstname'],
                 'name' => $data['name'],
                 'role' => $data['role'],
-                'inscription_date' => $data['inscription_date']
+                'subscription_date' => $data['subscription_date']
             ]);
 
             $data['id'] = $db->lastInsertId();
@@ -74,4 +74,159 @@ class User extends Model
             return false;
         }
     }
+
+    public function findByEmail($email)
+    {
+        $query = "SELECT * FROM $this->table WHERE email = :email ;";
+        $stmt = $this->db->prepare($query);
+        
+        //$stmt->execute(['email' => $email]);
+        //binding the value is more secure than sending it directly
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+        return $results;        
+    }
+
+    public function getIdByEmail($user_email)
+    {
+        $query = "SELECT id FROM $this->table WHERE email = :email;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':email', $user_email, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        
+        return $results;        
+    }
+
+    public function getCreds($user_id)
+    {
+        $query = "SELECT credit FROM $this->table WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        
+        return $results;
+        
+    }
+
+    public function takeCreds($user_id, $price)
+    {
+        $query = "UPDATE $this->table SET credit = credit - :credit WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':credit', $price, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();        
+    }
+
+    public function giveCreds($user_id, $price)
+    {
+        $query = "UPDATE $this->table SET credit = credit + :credit WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':credit', $price, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();        
+    }
+
+    public function getEmail($user_id)
+    {
+        $query = "SELECT email FROM $this->table WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        
+        return $results;        
+    }
+
+    public function uploadPhotoPath($file_name, $user_id)
+    {
+        $query = "UPDATE $this->table SET photo = :photo WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':photo', $file_name, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute(); 
+    }
+
+    public function findPhotoById($user_id): array|null
+    {
+        $query = "SELECT photo FROM $this->table WHERE id = :id ;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        $results = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+        return $results;        
+    }
+
+    public function findUsers(?string $id, ?string $pseudo, ?string $email, ?string $role = 'user')
+    {
+        $query = "SELECT * FROM $this->table WHERE role = :role AND ";
+        
+        if($id!==null) {
+            $query .="id = :id AND ";
+        }
+        if($pseudo!==null) {
+            $query .="pseudo LIKE :pseudo AND ";
+        }
+        if($email!==null) {
+            $query .="email LIKE :email AND ";
+        }
+
+        $query = trim($query, "AND ");
+        $query .= " ORDER BY id ASC;";
+
+        $stmt = $this->db->prepare($query);
+        
+        if($role!==null) {
+            $stmt->bindValue(':role', $role, PDO::PARAM_STR);
+        }
+        if($id!==null) {
+            $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        }
+        if($pseudo!==null) {
+            $stmt->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+        }
+        if($email!==null) {
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        }
+        
+        $stmt->execute();
+        
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+       return $results;
+    }
+
+    /**
+     * Set the user's suspended status
+     * @param mixed $user_id
+     * @param bool $suspended true:set to 1, false: set to 0
+     * @return void
+     */
+    public function setUserSuspended($user_id, bool $suspended)
+    {
+        $sus = $suspended ? 1 : 0;
+
+        $query = "UPDATE $this->table SET suspended = $sus WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();  
+    }
+
+
+
+    
 }

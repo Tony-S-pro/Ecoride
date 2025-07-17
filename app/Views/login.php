@@ -1,48 +1,51 @@
+<script src="<?= BASE_URL ?>assets/js/login-form-validation.js" defer></script>
 
 <div class="d-flex flex-row justify-content-center">
     <h1>Connectez-vous à Ecoride</h1>
 </div>
 
+
+
+
+        
 <section class="w-100 p-4 d-flex justify-content-center pb-4">
                 
-    <form method="post" style="width: 22rem;">
+    <form id="loginForm" action="<?= BASE_URL ?>login/login" method="post" style="width: 22rem;" novalidate>
 
-        <?php 
-        if(isset($errors)) {
-            if(!empty($errors)) {
-                echo '<div class="alert alert-warning">'
-                .implode("<br>", $errors)
-                .'</div>';
-            }
-        }
-        ?>
+        <?php \App\Core\Controller::set_csrf();  ?>
+        
+        <?php if (isset($errors)) : ?>
+            <?php if (!empty($errors)) : ?>
+                <div style="color:red;">
+                    <?php foreach ($errors as $error) : ?>
+                        <p><?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
 
-        <!-- Email input -->
         <div data-mdb-input-init="" class="form-outline mb-4" data-mdb-input-initialized="true">
-            <input type="email" name="loginMail" id="loginMail" class="form-control">
-            <label class="form-label" for="loginMail" style="margin-left: 0px;">Address mail</label>
-            <div class="form-notch">
-                <div class="form-notch-leading" style="width: 9px;">dqzdqzdqd</div>
-                <div class="form-notch-middle" style="width: 88.8px;">eaéeéeaéa</div>
-                <div class="form-notch-trailing">eéaeaéeaéeaé</div>
-            </div>
+            <label class="form-label" for="email">Address email :</label>
+            <input type="email" name="email" id="email" class="form-control" value="<?= $_SESSION['old']['email'] ?? '' ?>">
+            <div id="email-error" class="error-message"></div>
         </div>
 
-        <!-- Password input -->
         <div data-mdb-input-init="" class="form-outline mb-4" data-mdb-input-initialized="true">
-        <input type="password" name="loginPsw" id="loginPsw" class="form-control">
-        <label class="form-label" for="loginPsw" style="margin-left: 0px;">Mot de passe</label>
-        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 64px;"></div><div class="form-notch-trailing"></div></div></div>
+        <label class="form-label" for="password">Mot de passe :</label>
+        <input type="password" name="password" id="password" class="form-control" value="<?= $_SESSION['old']['password'] ?? '' ?>">
+        <div id="password-error" class="error-message"></div>
+        </div>
 
         <!-- 2 column grid layout for inline styling -->
         <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-            <input name="loginCheck" class="form-check-input" type="checkbox" value="accept" id="loginCheck" checked="">
-            <label class="form-check-label" for="loginCheck">J'ai lu les <a href="<?=BASE_APP?>mentions">mentions légales</a> et accepte l'utilisation de cookies décrite sur la page de <a href="<?=BASE_APP?>mentions/cookies">politique de cookies</a>.</label>
+            <div class="col d-flex justify-content-center">
+                <!-- Checkbox -->
+                <div class="form-check">
+                    <input name="check" id="check" class="form-check-input" type="checkbox" value="accept" required>
+                    <label class="form-check-label" for="check">J'ai lu les <a href="<?=BASE_APP?>mentions">mentions légales</a> et accepte l'utilisation de cookies décrite sur la page de <a href="<?=BASE_APP?>mentions/cookies">politique de cookies</a>.</label>
+                </div>            
             </div>
-        </div>
+            <div id="check-error" class="error-message"></div>
         </div>
 
         <div class="col mb-4">
@@ -51,7 +54,7 @@
         </div>
 
         <!-- Submit button -->
-        <button type="submit" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-primary btn-block mb-4" data-mdb-button-initialized="true">Se connecter</button>
+        <button type="submit" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-warning btn-block mb-4" data-mdb-button-initialized="true">Se connecter</button>
 
         <!-- Register buttons -->
         <div class="text-center">

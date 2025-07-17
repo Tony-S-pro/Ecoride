@@ -33,6 +33,11 @@ class SignupController extends Controller
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            // check CSRF token
+            if(!Controller::is_csrf_valid()) {
+                exit("Error - CSRF token invalid");
+            }
+
             $errors = [];
             $pseudo = trim($_POST['pseudo'] ?? '');
             $name = trim($_POST['name'] ?? '');
@@ -88,7 +93,7 @@ class SignupController extends Controller
             $userModel = new User(Database::getPDOInstance());
 
             // check if email already in db
-            $existCheck = $userModel->is_mail_in_db(strtolower($email));
+            $existCheck = $userModel->isEmailIn(strtolower($email));
             if ($existCheck===true) {
                     $errors['email'] = "Cette adresse email est déjà utilisée.";
             
@@ -111,11 +116,15 @@ class SignupController extends Controller
                 'name' => $name,
                 'firstname' => $firstname,
                 'role' => 'user',
-                'inscription_date' => date('Y-m-d H:i:s')
+                'subscription_date' => date('Y-m-d H:i:s')
             ]);
 
+            // creation of a (non session) cookie
+
             // user session
+            $id = $userModel->getIdByEmail($email); //note: useless, create() returns data sent + user's id now
             $_SESSION['user'] = [
+                'id' => $id['id'],
                 'pseudo' => $pseudo,
                 'email' => $email,
                 'role' => 'user'

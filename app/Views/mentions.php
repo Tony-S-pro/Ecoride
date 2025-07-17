@@ -1,3 +1,4 @@
+<?php defined('ROOT_PATH') OR exit("You don't have permission to access this resource."); ?>
         <h1>Mentions légales</h1></br>
 
         <section>
@@ -32,7 +33,7 @@
             
             <p>Le Propriétaire du site ne collecte aucune données personnelles. En ce qui concerne les données collectées par l'hébergeur :</p>
             <p>Conformément aux dispositions de <a href="<?=LEGAL_FR_4?>">la loi 78-17 du 6 janvier 1978 modifiée</a>, l’utilisateur du site <?=BASE_APP?> dispose d’un droit d’accès, de modification et de suppression des informations collectées. Pour exercer ce droit, envoyez un message au Délégué à la Protection des Données de l'hébergeur : <?=LEGAL_DPO_NAME?>, <a href="mailto:<?=LEGAL_DPO_MAIL?>"><?=LEGAL_DPO_MAIL?></a>.</p>
-            <p>Pour plus d'informations sur la façon dont l'hébergeur traite vos données (type de données, finalité, destinataire...), lisez <a href="<?=LEGAL_HOST_POLICY?>">leur politique de confidentialité</a>.</p>
+            <p>Pour plus d'informations sur la façon dont l'hébergeur traite vos données (type de données, finalité, destinataire...), consultez <a href="<?=LEGAL_HOST_POLICY?>">leur mentions légales</a>.</p>
         </section><hr>
 
         <section>

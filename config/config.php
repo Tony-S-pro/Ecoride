@@ -1,47 +1,120 @@
 <?php
-
+/* app name, mail, domain */
 define('APP_NAME', 'Ecoride');
-define('APP_MAIL', 'exemple@mail.com');
-
-// Required php extensions
-define('REQ_PHP_EXT', [
-     'fileinfo', 'gd', 'gettext', 'mbstring', 'exif', 'mysqli', 'pdo_mysql', 'pdo_sqlite'
-]);
-
-// DEBUG mode : true in dev, false in prod
-define('DEBUG', true);
+define('APP_MAIL', 'youEmail@gmail.com');
 
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    define('DOMAIN', 'localhost');
+} else {    
+    define('DOMAIN', 'my-app.com');
+}
+
+
+
+/* SESSION */
+ini_set(option: 'session.use_only_cookies', value: 1); //session id thru cookies, not uri
+ini_set(option: 'session.use_strict_mode', value: 1);  //only use own session id + more complexe id
+session_set_cookie_params([
+    'lifetime' => 3600,         // 1h
+    'domain' => DOMAIN,
+    'path' => '/',              // any path in website
+    'secure' => true,           // https only
+    'httponly' => true          // no script access from client
+]);
+
+session_start();
+
+/* recreate id in a more complexe/secure way */
+/* recreate id if user comes back before 1h (lifetime) but after 30min */
+if (!isset($_SESSION['last_regeneration'])) {
+    session_regenerate_id(true);
+    $_SESSION['last_regeneration'] = time();
+} else {
+    $interval = 60*30;
+    if (time()-$_SESSION['last_regeneration'] >= $interval) {
+        session_regenerate_id(true);
+        $_SESSION['last_regeneration'] = time();
+    }
+}
+
+
+/* misc */
+date_default_timezone_set('Europe/Paris');
+
+
+
+/* Required php extensions */
+define('REQ_PHP_EXT', [
+     'fileinfo', 'gd', 'gettext', 'mbstring', 'exif', 'mysqli', 'pdo_mysql', 'pdo_sqlite', 'php_mongodb.dll'
+]);
+
+
+
+/* DEBUG mode : true in dev, false in prod */
+define('DEBUG', true);
+
+/* Debug Mode */
+error_reporting(E_ALL);
+DEBUG ? ini_set('display_errors', 1) : ini_set('display_errors', 0);
+
+
+
+/* DB */
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    
     define('BASE_APP', 'http://localhost/workspace/'.APP_NAME.'/');
     define('BASE_URL', 'http://localhost/workspace/'.APP_NAME."/public/");
 
-    // Database config (localhost)
+    /* Database config (localhost) */
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASS', '');
     define('DB_NAME', 'ecoride');
 
-} else {
-    define('ROOT_APP', 'https://my-app.com/');
-    define('ROOT_URL', 'https://my-app.com/public/');
+    /* MongoDB Database config (localhost) (no user@password by default on local) */
+    define('MDB_HOST', 'localhost');
+    define('MDB_PORT', '27017');
+    define('MDB_USER', '');
+    define('MDB_PASS', '');
+    define('MDB_NAME', 'ecoride');
 
-    // Database config 
+} else {
+    define('BASE_APP', 'https://my-app.com/');
+    define('BASE_URL', 'https://my-app.com/public/');
+
+    /* Database config */
     define('DB_HOST', 'host');
-    define('DB_USER', 'username');
-    define('DB_PASS', 'psw');
-    define('DB_NAME', 'db');
+    define('DB_USER', 'user_name');
+    define('DB_PASS', 'password');
+    define('DB_NAME', 'database_name');
+
+    /* MongoDB Database config for (check .env) */
+    define('MDB_NAME', 'noSql_database_name');
 }
 
+
+
+/* SMTP */
+define('SMTP_HOST', 'smtp.gmail.com');
+define('SMTP_PORT', 587); //587->tls, 465->ssl
+define('SMTP_USER', 'yourEmail@gmail.com');
+define('SMTP_PASS', 'aaaaaaaaaaaaaaaa'); //app password 16char to set up in account after 2step auth
+define('SMTP_FROM', 'yourEmail@gmail.com');
+define('SMTP_FROM_NAME', 'yourName');
+
+
 /* Legal mentions / cookies policy */
-define('LEGAL_HOST', 'Nom_Hebergeur');
-define('LEGAL_HOST_ADRSS', 'Adresse_Hebergeur');
-define('LEGAL_HOST_MAIL', 'hebergeur@mail.com');
-define('LEGAL_HOST_PHONE', '+33 1 23 45 67 89');
-define('LEGAL_DPO_NAME', 'Nom_du_DPO');
-define('LEGAL_DPO_MAIL', 'adresse_du_DPO@mail.com');
-define('LEGAL_HOST_POLICY', 'https://www.hebergeur.com/Politique-de-Confidentialite');
-define('LEGAL_CONTRIB', 'Contributeurs, webmaster, crédit photos, ...');
+define('LEGAL_HOST', 'ALWAYSDATA, SARL');
+define('LEGAL_HOST_ADRSS', '91 rue du Faubourg Saint Honoré - 75008 Paris');
+define('LEGAL_HOST_MAIL', 'contact@alwaysdata.com');
+define('LEGAL_HOST_PHONE', '+33 1 84 16 23 40');
+define('LEGAL_DPO_NAME', '"A l’attention du Délégué à la Protection des Données (DPO)"');
+define('LEGAL_DPO_MAIL', ' dpo@alwaysdata.com');
+define('LEGAL_HOST_POLICY', 'https://www.alwaysdata.com/fr/mentions-legales');
+define('LEGAL_CONTRIB', '');
 define('LEGAL_FR_1', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000801164#LEGIARTI000042038977');
 define('LEGAL_FR_2', 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032655082');
 define('LEGAL_FR_4', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460');
+
+define('ADMIN_ID', 5);
 

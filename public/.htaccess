@@ -1,0 +1,8 @@
+RewriteEngine On
+
+##  If it's not a file/directory in /public
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+## then redirect towards index.php and pass filename as 'url' param
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
