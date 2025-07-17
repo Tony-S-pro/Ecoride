@@ -48,6 +48,11 @@ class CarpoolingController extends Controller
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            // check CSRF token
+            if(!Controller::is_csrf_valid()) {
+                exit("Error - CSRF token invalid");
+            }
+
             $errors = [];
             $departure_date = $_POST['departure_date'] ?? '';
             $departure_time = $_POST['departure_time'] ?? '';

@@ -11,6 +11,8 @@
 
     <div class="container">
         <form id="registerCarpool" action="<?= BASE_URL ?>carpooling/register_carpool" method="POST" novalidate>
+
+            <?php \App\Core\Controller::set_csrf(); ?>
             
             <div class="d-flex flex-row flex-wrap justify-content-between">
 
