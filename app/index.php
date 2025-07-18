@@ -36,8 +36,7 @@ $allowedControllers = [
     'ReviewController',
     'UserController',
     'AdminController',
-    'EmployeeController',
-    'TestController', 'RandomController'
+    'EmployeeController'
 ];
 $allowedMethods = [
     'index', 

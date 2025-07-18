@@ -47,7 +47,7 @@ class HomeController extends Controller
         
         
         $data = [
-            'title' => "Home title",
+            'title' => "Bienvenue sur la plateforme de covoiturage écologique !",
             'view' => "home",
         ];        
 
