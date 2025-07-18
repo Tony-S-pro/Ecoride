@@ -19,7 +19,7 @@ Utilisateur2 (conducteur) : user2@mail.com / azerty123U ...
 */
 INSERT INTO users (name, firstname, email, password, pseudo, credit, role) VALUES
 ('Admin', 'Sys', 'admin@ecoride.fr', '$2y$10$mpiJptPn.gagIVCyY77Z5OECpUvL4feUWOOxlMUP2p7GqmonJ0Nyu', 'admin', 0, 'admin'),
-('Dupont', 'Pierre', 'employee1@ecoride.fr', '$2y$10$TsSCfAhNQEMBMgCFBelbCOzy7EDfbTR2izh6sBjlcatHDXekPtQW.', 'employee', 0, 'employee'),
+('Dupont', 'Pierre', 'employe@ecoride.fr', '$2y$10$TsSCfAhNQEMBMgCFBelbCOzy7EDfbTR2izh6sBjlcatHDXekPtQW.', 'employee', 0, 'employee'),
 ('Leroy', 'Marie', 'user1@mail.com', '$2y$10$WoOYo.q8cORBGUx9Ce4iAOmeXPNdQFjnHiD5lSIUDETya.2QR917S', 'user1', 20, 'user'),
 ('Da Silva', 'Paulo', 'user2@mail.com', '$2y$10$e4NXbhwIyaE90KrGPilq1eRcgm2ZObNuSqfLTuNXhR90O74qR37Um', 'user2', 20, 'user'),
 ('Meunier', 'Sophie', 'user3@mail.com', '$2y$10$3tcO/W/iLSNy2rr./RyVeuL4arNhBSrgytLprCvLnU8XWrNvNn3YO', 'user3', 20, 'user'),
@@ -70,7 +70,7 @@ INSERT INTO reviews (user_id, carpool_id, rating, comment, objection, validated,
 INSERT INTO user_carpool (user_id, carpool_id, participation_date) VALUES 
 (3, 1, '2025-07-14 16:25:10'),
 (3, 2, '2025-07-14 16:26:10'),
-(3, 2, '2025-07-14 16:27:10'),
+(3, 3, '2025-07-14 16:27:10'),
 (5, 8, '2025-07-16 14:28:00'),
 (6, 9, '2025-07-18 14:28:00');
 

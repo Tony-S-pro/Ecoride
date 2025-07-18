@@ -8,7 +8,7 @@ use PDOException;
 
 class View_carpools_status extends Model
 {
-    protected string $table = 'View_carpools_status';
+    protected string $table = 'view_carpools_status';
 
     public function findByUser_past(string|int $user_id): ?array
     {

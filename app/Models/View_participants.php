@@ -8,7 +8,7 @@ use PDOException;
 
 class View_participants extends Model
 {
-    protected string $table = 'View_participants';
+    protected string $table = 'view_participants';
 
     /**
      * Count passenger reservations in a carpool
