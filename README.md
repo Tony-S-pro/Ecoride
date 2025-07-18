@@ -25,7 +25,7 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - Annulation des réservation et remboursement des crédits.
 - Affichage des covoiturages passés et à venir dans l'espace personnel des passagers.
 - Système d'avis et note, ainsi que la possibilité d'objecter et demander un remboursement pour les covoiturages passés.
--- Système de log des objection (fonction NoSQL via MongoDB).
+    - Système de log des objection (fonction NoSQL via MongoDB).
 - Gestion des véhicules et préférences pour les utilisateurs chauffeurs (créer et supprimer).
 - Ajout d'une photo au profil des chauffeurs.
 - Création (et annulation) de covoiturages dans l'espace personnel des chauffeurs (avec gestion du paiement par 'crédits').
