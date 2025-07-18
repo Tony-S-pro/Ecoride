@@ -189,40 +189,4 @@ class CarpoolingController extends Controller
 
         Controller::render($data['view'], $data);
     }
-
-    /*
-
-    public function delete_vehicle($vehicle_id)
-    {
-        // check if user's connected
-        if (!isset($_SESSION['user'])) {
-            header('Location: '.BASE_URL.'login');
-            exit;
-        }        
-
-        $user_id = $_SESSION['user']['id'];
-
-        //driver_id to be sure that the driver is deleting their own carpool
-        $vehicle = new Vehicle(Database::getPDOInstance());
-        $vehicle->deleteVehicle($user_id, $vehicle_id);
-
-        //remove id from $_SESSION['user']['vehicles'][id]
-        $res = $vehicle->findAllIdByUser($user_id);
-        $_SESSION['user']['vehicles'] = $res;
-
-        header('Location: '.BASE_URL.'vehicles/deleted');
-        exit;
-
-    }
-
-    public function deleted()
-    {
-        $data = [
-            'title' => "Véhicule supprimé",
-            'view' => "vehicles.deleted"
-        ];        
-
-        Controller::render($data['view'], $data);
-    }
-    */
 }
