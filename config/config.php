@@ -116,5 +116,5 @@ define('LEGAL_FR_1', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT00000080116
 define('LEGAL_FR_2', 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032655082');
 define('LEGAL_FR_4', 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460');
 
-define('ADMIN_ID', 5);
+define('ADMIN_ID', 1);
 
