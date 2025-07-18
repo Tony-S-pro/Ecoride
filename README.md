@@ -52,18 +52,26 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - HTML5
 - CSS3 (Bootstrap 5.3)
 - JavaScript (jQuery 3.7.1/AJAX) pour afficher du contenu sans recharger la page.
+
 **Backend :** PHP 8.2.
+
 **Base de Données Relationnelle :** MySQL (dév : MariaDB/XAMPP en localhost, prod : MySQL sur www.alwaysdata.com) via l'extension PDO.
+
 **Base de Données NoSQL :** MongoDB (dev : localhost, prod : MongoDB/MongoDB Atlas) pour les logs.
+
 **Développement Local/Serveur :** XAMPP (Apache, MariaDB, PHP).
+
 **Dépendances PHP :**
 - `composer/composer` Composer et son autoload pour gérer les dépendances
 - `mongodb/mongodb` pour communiquer avec la bdd NoSQL.
 - `vlucas/phpdotenv` pour gérer le .env contenant les information de connection MongoDB
 - `phpmailer/phpmailer` PHPMailer pour l'envoi d'emails via smtp.
 - `symfony/var-dumper` utile pendant le dévelppement
+- 
 **Gestion de version et dépôt :** Git et GitHub.
+  
 **Outil de gestion de projet :** Trello.
+
 **Production/Hébergement :**
 - PHP/MySQL : Alwaysdata
 - MongoDB : MongoDB Atlas
