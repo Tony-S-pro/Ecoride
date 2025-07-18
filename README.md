@@ -3,6 +3,7 @@
 EcoRide est une plateforme de covoiturage développée dans le cadre de l'Évaluation en Cours de Formation (ECF) pour la validation des compétences du titre professionnel développeur Web et Web Mobile (DWWM).
 
 **Présentation** 
+
 D'après le Centre Interprofessionnel Technique d’Études de la Pollution Atmosphérique (CITEPA), le secteur des transports est le 1er secteur émetteur de gaz à effet de serre en France, totalisant 30% des émissions de CO2. Si on s’intéresse uniquement aux véhicules particuliers, on peut noter par exemple qu’un actif sur deux utilise une voiture pour aller au travail. Sur une distance de 10km, cela représente jusqu’à 2,2 kg d'émissions de CO2 avec un seul véhicule thermique plein de sièges vides. 
 
 Or le covoiturage permet de diminuer le nombre de voitures sur la route, de réduire les embouteillages et de faire des économies sur les trajets. C’est un geste simple qui permet d'agir collectivement face à l’urgence de la crise climatique et que la jeune startup "EcoRide" vise à rendre plus accessible via une application web éponyme.
