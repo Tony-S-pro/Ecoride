@@ -112,12 +112,14 @@ Assurez-vous que le serveur local MySQL (via XAMPP dans cet exemple) a été dé
     ```sql
     source C:/xampp/htdocs/Ecoride/docs/ecoride_data.sql
     ```
-- Si l'utilisateur `ecoride_admin` n'a pas été créé par le script précédent, exécutez les commandes SQL suivantes :
-    ```sql
-    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
-    GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
-    FLUSH PRIVILEGES;
-    ```
+- Vous pouver ajouter un User/admin de la dbb si vous le désirez (optionnel):
+    ```sql
+    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
+    GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
+    FLUSH PRIVILEGES;
+    ```
+L'utilisateur `ecoride_admin` (psw: `Admin_Jose_12345`) a tous les droits dans la base de données `ecoride`.
+
 **Configuration de connection de l'app :**
 Le fichier `config/config.php` contient les infos de configurations par défaut pour l'environnement local (XAMPP).
 
@@ -128,7 +130,7 @@ Le fichier `config/config.php` contient les infos de configurations par défaut 
 (Notez que la chaîne de connexion pour MongoDB Atlas (`MDB_URI`) se trouve dans `config\.env`.)
 
 **Configurer l'extension PHP MongoDB pour XAMPP :**
-- Téléchargez le fichier `.dll` de l'extension MongoDB correspondant à votre version de PHP et à votre architecture depuis PECL ([https://pecl.php.net/package/mongodb](https://pecl.php.net/package/mongodb)).
+- Téléchargez le fichier `.dll` de l'extension MongoDB correspondant à votre PHP depuis PECL ([https://pecl.php.net/package/mongodb](https://pecl.php.net/package/mongodb)).
 - Placez le fichier `php_mongodb.dll` dans votre dossier d'extensions PHP (exemple : `C:\xampp\php\ext\`).
 - Ouvrez `php.ini` (via XAMPP : Apache > Config > PHP (php.ini) ou dans le dossier `xampp\php`).
 - Ajoutez la ligne `extension=mongodb` (ou `extension=php_mongodb.dll`).
