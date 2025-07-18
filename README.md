@@ -3,6 +3,7 @@
 EcoRide est une plateforme de covoiturage développée dans le cadre de l'Évaluation en Cours de Formation (ECF) pour la validation des compétences du titre professionnel développeur Web et Web Mobile (DWWM).
 
 **Présentation** 
+
 D'après le Centre Interprofessionnel Technique d’Études de la Pollution Atmosphérique (CITEPA), le secteur des transports est le 1er secteur émetteur de gaz à effet de serre en France, totalisant 30% des émissions de CO2. Si on s’intéresse uniquement aux véhicules particuliers, on peut noter par exemple qu’un actif sur deux utilise une voiture pour aller au travail. Sur une distance de 10km, cela représente jusqu’à 2,2 kg d'émissions de CO2 avec un seul véhicule thermique plein de sièges vides. 
 
 Or le covoiturage permet de diminuer le nombre de voitures sur la route, de réduire les embouteillages et de faire des économies sur les trajets. C’est un geste simple qui permet d'agir collectivement face à l’urgence de la crise climatique et que la jeune startup "EcoRide" vise à rendre plus accessible via une application web éponyme.
@@ -24,7 +25,7 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - Annulation des réservation et remboursement des crédits.
 - Affichage des covoiturages passés et à venir dans l'espace personnel des passagers.
 - Système d'avis et note, ainsi que la possibilité d'objecter et demander un remboursement pour les covoiturages passés.
-    - Système de log des objection (fonction NoSQL via MongoDB).
+    - Système de log des objection (fonction NoSQL via MongoDB).
 - Gestion des véhicules et préférences pour les utilisateurs chauffeurs (créer et supprimer).
 - Ajout d'une photo au profil des chauffeurs.
 - Création (et annulation) de covoiturages dans l'espace personnel des chauffeurs (avec gestion du paiement par 'crédits').
@@ -33,38 +34,47 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - Système de signalisation du démarrage et arrivée du covoiturage avec notification emails aux passagers pour valider le trajet.
 - Formulaire de contact (envoi par mail).
 - **Espace Employé :**
-    - Modération des commentaires sur les avis (accepter/effacer).
-    - Validation/rejet des demandes de remboursement.
-        - Mise-à-jour des logs objection (fonction NoSQL via MongoDB)
+    - Modération des commentaires sur les avis (accepter/effacer).
+    - Validation/rejet des demandes de remboursement.
+        - Mise-à-jour des logs objection (fonction NoSQL via MongoDB)
 - **Espace Admin :**
-    - Affichage de statistiques : covoiturages/jour (graph), crédits par/jour (graph), total des crédits. via MongoDB.
-    - Création de comptes employés.
-    - Suspension/ré-instauration de comptes utilisateurs.
-    - Affichage et suppression des logs des objections utilisateurs et décisions employée (fonction NoSQL via MongoDB).
+    - Affichage de statistiques : covoiturages/jour (graph), crédits par/jour (graph), total des crédits. via MongoDB.
+    - Création de comptes employés.
+    - Suspension/ré-instauration de comptes utilisateurs.
+    - Affichage et suppression des logs des objections utilisateurs et décisions employée (fonction NoSQL via MongoDB).
     
 --- 
     
 ## Technologies Utilisées
 
-**Frontend :** 
-    - HTML5
-    - CSS3 (Bootstrap 5.3)
-    - JavaScript (jQuery 3.7.1/AJAX) pour afficher du contenu sans recharger la page.
+**Frontend :**
+- Modération des commentaires sur les avis (accepter/effacer).
+- HTML5
+- CSS3 (Bootstrap 5.3)
+- JavaScript (jQuery 3.7.1/AJAX) pour afficher du contenu sans recharger la page.
+
 **Backend :** PHP 8.2.
+
 **Base de Données Relationnelle :** MySQL (dév : MariaDB/XAMPP en localhost, prod : MySQL sur www.alwaysdata.com) via l'extension PDO.
+
 **Base de Données NoSQL :** MongoDB (dev : localhost, prod : MongoDB/MongoDB Atlas) pour les logs.
+
 **Développement Local/Serveur :** XAMPP (Apache, MariaDB, PHP).
+
 **Dépendances PHP :**
-    - `composer/composer` Composer et son autoload pour gérer les dépendances
-    - `mongodb/mongodb` pour communiquer avec la bdd NoSQL.
-    - `vlucas/phpdotenv` pour gérer le .env contenant les information de connection MongoDB
-    - `phpmailer/phpmailer` PHPMailer pour l'envoi d'emails via smtp.
-    - `symfony/var-dumper` utile pendant le dévelppement
+- `composer/composer` Composer et son autoload pour gérer les dépendances
+- `mongodb/mongodb` pour communiquer avec la bdd NoSQL.
+- `vlucas/phpdotenv` pour gérer le .env contenant les information de connection MongoDB
+- `phpmailer/phpmailer` PHPMailer pour l'envoi d'emails via smtp.
+- `symfony/var-dumper` utile pendant le dévelppement
+
 **Gestion de version et dépôt :** Git et GitHub.
+  
 **Outil de gestion de projet :** Trello.
+
 **Production/Hébergement :**
-    - PHP/MySQL : Alwaysdata
-    - MongoDB : MongoDB Atlas
+- PHP/MySQL : Alwaysdata
+- MongoDB : MongoDB Atlas
 
 ---
 
@@ -81,43 +91,43 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 ### Installation locale via XAMPP
 
 **Cloner le dépôt (Git) :**
-    ```bash
-    git clone [https://github.com/Tony-S-pro/Ecoride/] Ecoride
-    cd Ecoride
-    ```
+```bash
+git clone [https://github.com/Tony-S-pro/Ecoride/] Ecoride
+cd Ecoride
+```
 
 **Installer les dépendances (Composer) :**
 À la racine du dossier de l'app `Ecoride` (là où se trouve `composer.json`), exécutez :
-    ```bash
-    composer install
-    ```
+```bash
+composer install
+```
 Les dépendances sont dans le dossier `Ecoride/vendor/`.
 
 3. **Configurer la bdd MySQL (XAMPP) :**
 Assurez-vous que le serveur local MySQL (via XAMPP dans cet exemple) a été démarré et ouvrez un client SQL. Par exemple le Shell MySQL accessible depuis le panneau de contrôle XAMPP (ou DBeaver, DbGate, SQL Workbench, un terminal d'IDE, etc).
 
 - Créez une nouvelle base de données pour le projet :
-    ```sql
-    CREATE DATABASE IF NOT EXISTS ecoride CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-    ```
+```sql
+CREATE DATABASE IF NOT EXISTS ecoride CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+```
 - Placez vous dans la bdd :
-    ```sql
-    USE ecoride;
-    ```
+```sql
+USE ecoride;
+```
 - Exécutez le script de création des tables `ecoride.sql`. Copier le contenu du fichier dans la shell, ou utiliser la commande `source` si depuis le dossier du fichier la shell :
-    ```sql
-    source C:/xampp/htdocs/Ecoride/docs/ecoride.sql
-    ```
+```sql
+source C:/xampp/htdocs/Ecoride/docs/ecoride.sql
+```
 - Idem pour le script d'insertion des données de test `ecoride_data.sql`.
-    ```sql
-    source C:/xampp/htdocs/Ecoride/docs/ecoride_data.sql
-    ```
+```sql
+source C:/xampp/htdocs/Ecoride/docs/ecoride_data.sql
+```
 - Vous pouver ajouter un User/admin de la dbb si vous le désirez (optionnel):
-    ```sql
-    CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
-    GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
-    FLUSH PRIVILEGES;
-    ```
+```sql
+CREATE USER IF NOT EXISTS 'ecoride_admin'@'localhost' IDENTIFIED BY 'Admin_Jose_12345';
+GRANT ALL PRIVILEGES ON ecoride.* TO 'ecoride_admin'@'localhost';
+FLUSH PRIVILEGES;
+```
 L'utilisateur `ecoride_admin` (psw: `Admin_Jose_12345`) a tous les droits dans la base de données `ecoride`.
 
 **Configuration de connection de l'app :**
@@ -138,21 +148,21 @@ Le fichier `config/config.php` contient les infos de configurations par défaut 
 
 **Configurer le serveur :**
 - Assurez-vous que le fichier `.htaccess` suivant est présent à la racine du dossier `Ecoride` pour pointer vers `Ecoride/public` comme point d'entrée à l'app:
-    ```apache
-    <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(.*)$ public/$1 [L]
-    </IfModule>
-    ```
+```apache
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+```
 - Assurez-vous que le fichier `.htaccess` suivant est présent à la racine du dossier `Ecoride/public` pour le routeur et l'accès aux assets par le client:
-    ```apache
-    RewriteEngine On
-    ##  If it's not a file/directory in /public
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    ## then redirect towards index.php and pass filename as 'url' param
-    RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
-    ```
+```apache
+RewriteEngine On
+##  If it's not a file/directory in /public
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+## then redirect towards index.php and pass filename as 'url' param
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+```
 - Relancer le serveur.
 
 **Lancer l'application :**
