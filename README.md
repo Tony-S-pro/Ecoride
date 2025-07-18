@@ -67,7 +67,7 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 - `vlucas/phpdotenv` pour gérer le .env contenant les information de connection MongoDB
 - `phpmailer/phpmailer` PHPMailer pour l'envoi d'emails via smtp.
 - `symfony/var-dumper` utile pendant le dévelppement
-- 
+
 **Gestion de version et dépôt :** Git et GitHub.
   
 **Outil de gestion de projet :** Trello.
