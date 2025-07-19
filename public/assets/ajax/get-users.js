@@ -7,7 +7,6 @@ function getHtmlUsers(result)
     let btn='';
     let btnBan = '';
     let btnReinstate = '';
-    console.log(result);
 
     x=x+`<div class="m2 p3">`;
     
