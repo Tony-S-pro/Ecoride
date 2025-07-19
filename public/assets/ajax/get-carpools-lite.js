@@ -1,5 +1,5 @@
 
-function getHtml(result)
+function getHtmlLite(result)
 {
     let i=0;
     let x='';
@@ -52,7 +52,7 @@ function getHtml(result)
     return x;
 }
 
-function getHtml_noResults()
+function getHtmlLite_noResults()
 {
     let x='';
     x=x+`<div class="m-2 error-message">Aucun covoiturages disponibles</div>`;
@@ -79,12 +79,12 @@ $('#searchForm-lite').on('submit', function(e) {
             let x = JSON.stringify(response);
             //alert(x);
             //console.log(response);
-            let html = getHtml(response);
+            let html = getHtmlLite(response);
             //alert(html);
             $("#results-carpool-lite").html(html);
         },
         error:function (e) {
-            $("#results-carpool-lite").html(getHtml_noResults());
+            $("#results-carpool-lite").html(getHtmlLite_noResults());
         }
     });
 

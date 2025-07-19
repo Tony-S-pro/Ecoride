@@ -130,13 +130,6 @@ $('#searchForm-full').on('submit', function(e) {
 });
 
 
-// $(document).on("click", "#btn-AddNew", function() {
-//     //alert('feik,pioef,k');
-//     $("#myModal").modal('show');
-    
-// });
-
-
 
 
 
