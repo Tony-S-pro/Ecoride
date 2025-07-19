@@ -18,8 +18,8 @@ Utilisateur1 (passager) : user1@mail.com / azerty123U
 Utilisateur2 (conducteur) : user2@mail.com / azerty123U ...
 */
 INSERT INTO users (name, firstname, email, password, pseudo, credit, role) VALUES
-('Admin', 'Sys', 'admin@ecoride.fr', '$2y$10$mpiJptPn.gagIVCyY77Z5OECpUvL4feUWOOxlMUP2p7GqmonJ0Nyu', 'admin', 0, 'admin'),
-('Dupont', 'Pierre', 'employe@ecoride.fr', '$2y$10$TsSCfAhNQEMBMgCFBelbCOzy7EDfbTR2izh6sBjlcatHDXekPtQW.', 'employee', 0, 'employee'),
+('Admin', 'Sys', 'admin@ecoride.fr', '$2y$10$mpiJptPn.gagIVCyY77Z5OECpUvL4feUWOOxlMUP2p7GqmonJ0Nyu', 'admin', 100, 'admin'),
+('Dupont', 'Pierre', 'employe@ecoride.fr', '$2y$10$TsSCfAhNQEMBMgCFBelbCOzy7EDfbTR2izh6sBjlcatHDXekPtQW.', 'employee', 50, 'employee'),
 ('Leroy', 'Marie', 'user1@mail.com', '$2y$10$WoOYo.q8cORBGUx9Ce4iAOmeXPNdQFjnHiD5lSIUDETya.2QR917S', 'user1', 20, 'user'),
 ('Da Silva', 'Paulo', 'user2@mail.com', '$2y$10$e4NXbhwIyaE90KrGPilq1eRcgm2ZObNuSqfLTuNXhR90O74qR37Um', 'user2', 20, 'user'),
 ('Meunier', 'Sophie', 'user3@mail.com', '$2y$10$3tcO/W/iLSNy2rr./RyVeuL4arNhBSrgytLprCvLnU8XWrNvNn3YO', 'user3', 20, 'user'),
@@ -52,9 +52,9 @@ VALUES
 (4, 1, '2025-07-16', '08:30', 'Paris', 'rue des Départs', 'Lyon', 'rue des Arrivées', 5, 12, NULL, '2025-07-10 14:26:00', 'valide'),
 (4, 1, '2025-07-17', '08:30', 'Paris', 'rue des Départs', 'Rouen', 'rue des Arrivées', 3, 6, NULL, '2025-07-10 14:27:00', 'termine'),
 (4, 1, '2025-07-18', '08:30', 'Paris', 'rue des Départs', 'Rouen', 'rue des Arrivées', 3, 6, NULL, '2025-07-10 14:28:00', 'termine'),
-(4, 2, '2025-07-21', '08:30', 'Paris', 'rue des Départs', 'Rouen', 'rue des Arrivées', 3, 5, 'Je peux vous déposer à la gare.', '2025-07-18 14:20:00', 'planifie'),
-(4, 2, '2025-07-21', '08:30', 'Paris', 'rue des Départs', 'Rouen', 'rue des Arrivées', 3, 5, 'Je dois passer par une boulangerie.', '2025-07-18 14:21:00', 'planifie'),
-(4, 2, '2025-07-21', '12:00', 'Paris', 'rue des Départs', 'Versailles', 'Gare Rive-Droite', 2, 3, 'Je serais peut-être 5-10min en retard.', '2025-07-18 14:22:00', 'planifie'),
+(4, 2, '2025-07-23', '08:30', 'Paris', 'rue des Départs', 'Rouen', 'rue des Arrivées', 3, 5, 'Je peux vous déposer à la gare.', '2025-07-18 14:20:00', 'planifie'),
+(4, 2, '2025-07-24', '08:30', 'Paris', 'rue des Départs', 'Rouen', 'rue des Arrivées', 3, 5, 'Je dois passer par une boulangerie.', '2025-07-18 14:21:00', 'planifie'),
+(4, 2, '2025-07-25', '12:00', 'Paris', 'rue des Départs', 'Versailles', 'Gare Rive-Droite', 2, 3, 'Je serais peut-être 5-10min en retard.', '2025-07-18 14:22:00', 'planifie'),
 (6, 4, '2025-07-17', '06:30', 'Herblay-Sur-Seine', 'rue des Départs', 'Pontoise', 'rue des Arrivées', 1, 3, NULL, '2025-07-10 14:28:00', 'termine'),
 (5, 3, '2025-07-18', '18:10', 'Pontoise', 'rue des Départs', 'Poissy', 'rue des Arrivées', 1, 4, NULL, '2025-07-12 14:28:00', 'termine');
 
