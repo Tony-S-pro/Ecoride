@@ -14,7 +14,6 @@ $(document).ready(function(){
 				yValues.push(response[i].yVal);
 				y2Values.push(response[i].y2Val);
 			}
-			console.log(xValues, yValues, y2Values);
 
 			const chartdata = {
 				labels: xValues,
