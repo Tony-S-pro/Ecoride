@@ -1,5 +1,5 @@
 
-function getHtml(result)
+function getHtmlUsers(result)
 {
     let i=0;
     let x='';
@@ -7,6 +7,7 @@ function getHtml(result)
     let btn='';
     let btnBan = '';
     let btnReinstate = '';
+    console.log(result);
 
     x=x+`<div class="m2 p3">`;
     
@@ -31,7 +32,7 @@ function getHtml(result)
     return x;
 }
 
-function getHtml_noResults()
+function getHtml_noUsersResults()
 {
     let x='';
     x=x+`<div class="m-2 error-message">Aucun utilisateur trouvé.</div>`;
@@ -59,12 +60,12 @@ $('#searchFormUsers').on('submit', function(e) {
             let x = JSON.stringify(response);
             //alert(x);
             //console.log(response);
-            let html = getHtml(response);
+            let html = getHtmlUsers(response);
             //alert(html);
             $("#results-users").html(html);
         },
         error:function (e) {
-            $("#results-users").html(getHtml_noResults());
+            $("#results-users").html(getHtml_noUsersResults());
         }
     });
 
