@@ -1,4 +1,4 @@
-function getHtml(result)
+function getLogsHtml(result)
 {
     let i=0;
     let x='';
@@ -9,7 +9,7 @@ function getHtml(result)
     
     for(i=0;i<result.length;i++)
     {   
-        result[i].hasOwnProperty( 'update_date' ) ? updated=` (maj : ${result[i]['update_date']})` : updated='';
+       result[i].hasOwnProperty( 'update_date' ) ? updated=` (maj : ${result[i]['update_date']})` : updated='';
 
         if (result[i].hasOwnProperty( 'decision' )) {
             if (result[i]['decision']=='accepted') {
@@ -34,7 +34,7 @@ function getHtml(result)
             </div>
         
             <div>
-            <a href="admin/delete_log/${result[i]['_id']['$oid']}"><button type="button" class="btn btn-danger btn-sm">X</button></a>
+            <a href="admin/delete_log/${result[i]['id']}"><button type="button" class="btn btn-danger btn-sm">X</button></a>
             </div>
         </div><hr>
         
@@ -46,7 +46,7 @@ function getHtml(result)
     return x;
 }
 
-function getHtml_noResults()
+function getHtml_noObjections()
 {
     let x='';
     x=x+`<div class="m-2 error-message">Aucunes entrées objection trouvées.</div>`;
@@ -64,14 +64,18 @@ $(document).ready(function(){
         success:function(response) {            
             let x = JSON.stringify(response);
             if (x = null) {
-                $("#results-objections").html(getHtml_noResults());
             } else {
-                let html = getHtml(response);
+                let id='';
+                response.forEach(r =>  {
+                    id = r['_id']['$oid'];
+                    r['id']= id;
+                });
+                let html = getLogsHtml(response);
                 $("#results-objections").html(html);
             }            
         },
         error:function (e) {
-            $("#results-objections").html(getHtml_noResults());
+            $("#results-objections").html(getHtml_noObjections());
         }
     });
 });
