@@ -1,5 +1,7 @@
 <?php defined('ROOT_PATH') OR exit("You don't have permission to access this resource."); ?>
 
+<script src="<?= BASE_URL ?>assets/js/registerVehicle-form-validation.js" defer></script>
+
 <h1>Véhicules et préférences</h1>
 <p>Vous pouvez, sur cette page, associer ou supprimer des vehicules à votre compte. Vous devez fournir des détails spécifiques sur le modèle de la voiture et vos préférences pour le trajet.</p>
 <p>Vous pouvez également fournir un portrait de vous-même que vos future passagers pourront voir lorsqu'ils réservent un covoiturage</p>
