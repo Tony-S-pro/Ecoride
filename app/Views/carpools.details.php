@@ -48,8 +48,10 @@
         <div class="overflow-y-auto mt-3 pb-5" style="max-width: max-w-sm; max-height: 300px;">
             <?php if (!empty($comments)) :?>
                 <?php foreach($comments as $c) : ?>
-                    <p>Commentaire du : <?=date('d/m/y', strtotime($c['creation_date']))?> (note : <?=$c['rating']?>/5)
-                    <i><?=($c['comment'] !=null) ? ' </br>'.$c['comment'] : ''?></i></p>
+                    <?php if($c['comment'] !=null) :?>                    
+                        <p>Commentaire du : <?=date('d/m/y', strtotime($c['creation_date']))?> (note : <?=$c['rating']?>/5)</br>
+                        <i><?=$c['comment']?></i></p>
+                    <?php endif ;?>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>

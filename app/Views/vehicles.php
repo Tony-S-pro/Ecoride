@@ -39,68 +39,73 @@
             <div class="collapse multi-collapse overflow-y-auto" id="new_vehicle">
                 <div class="card card-body border-success mb-2" id="new_vehicle">
                     <form id="registerVehicle" action="<?= BASE_URL ?>vehicles/register_vehicle" method="POST" novalidate>
-                        <div class="d-flex flex-row flex-wrap">
-                        <div class="mb-3 flex-grow-1">
-                            <label for="brand">Marque :</label>
-                            <input type="text" class="form-control" name="brand" id="brand" value="<?= $_SESSION['old']['brand'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['brand'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['brand'] ?></div>
-                            <?php endif; ?>
-                        </div>
 
-                        <div class="mb-3 flex-grow-1">
-                            <label for="model">Modèle :</label>
-                            <input type="text" class="form-control" name="model" id="model" value="<?= $_SESSION['old']['model'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['model'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['model'] ?></div>
-                            <?php endif; ?>
-                        </div>
-                        </div>
+                        <div class="d-flex flex-row flex-wrap gap-3">
+                            <div class="flex-grow-1">
+                                <label for="brand">Marque :</label>
+                                <input type="text" class="form-control" name="brand" id="brand" value="<?= $_SESSION['old']['brand'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['brand'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['brand'] ?></div>
+                                <?php endif; ?>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="fuel">Energie :</label>
-                            <select class="form-control" name="fuel" id="fuel" value="<?= $_SESSION['old']['fuel'] ?? '' ?>" required>
-                                <option value="essence">essence</option>
-                                <option value="diesel">diesel</option>
-                                <option value="electrique">électrique</option>
-                                <option value="hybride">hybride</option>
-                                <option value="autre">autre</option>
-                            </select>
-                            <?php if (!empty($_SESSION['errors']['fuel'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['fuel'] ?></div>
-                            <?php endif; ?>
-                        </div>
+                            <div class="flex-grow-1">
+                                <label for="model">Modèle :</label>
+                                <input type="text" class="form-control" name="model" id="model" value="<?= $_SESSION['old']['model'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['model'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['model'] ?></div>
+                                <?php endif; ?>
+                            </div>                                        
+                        </div>                        
 
-                        <div class="mb-3">
-                            <label for="registration_date">Année (1ère immatriculation) :</label>
-                            <input type="number" class="form-control" min="1900" max="2099" name="registration_date" id="registration_date" value="<?= $_SESSION['old']['registration_date'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['registration_date'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['registration_date'] ?></div>
-                            <?php endif; ?>
-                        </div>
+                        <div class="d-flex flex-row flex-wrap gap-3">
+                            <div class="">
+                                <label for="fuel">Energie :</label>
+                                <select class="form-control" name="fuel" id="fuel" value="<?= $_SESSION['old']['fuel'] ?? '' ?>" required>
+                                    <option value="essence">essence</option>
+                                    <option value="diesel">diesel</option>
+                                    <option value="electrique">électrique</option>
+                                    <option value="hybride">hybride</option>
+                                    <option value="autre">autre</option>
+                                </select>
+                                <?php if (!empty($_SESSION['errors']['fuel'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['fuel'] ?></div>
+                                <?php endif; ?>
+                            </div>                
 
-                        <div class="mb-3">
-                            <label for="registration">Immatriculation :</label>
-                            <input type="text" class="form-control" name="registration" id="registration" value="<?= $_SESSION['old']['registration'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['registration'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['registration'] ?></div>
-                            <?php endif; ?>
-                        </div>
+                            <div class="">
+                                <label for="registration_date">Année (1ère immatriculation) :</label>
+                                <input type="number" class="form-control" min="1900" max="2099" name="registration_date" id="registration_date" value="<?= $_SESSION['old']['registration_date'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['registration_date'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['registration_date'] ?></div>
+                                <?php endif; ?>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="color">Couleur :</label>
-                            <input type="text" class="form-control" name="color" id="color" value="<?= $_SESSION['old']['color'] ?? '' ?>" required>
-                            <?php if (!empty($_SESSION['errors']['color'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['color'] ?></div>
-                            <?php endif; ?>
-                        </div>
+                            <div class="flex-grow-1">
+                                <label for="registration">Immatriculation :</label>
+                                <input type="text" class="form-control" name="registration" id="registration" value="<?= $_SESSION['old']['registration'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['registration'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['registration'] ?></div>
+                                <?php endif; ?>
+                            </div>                            
+                        </div> 
 
-                        <div class="mb-3">
-                            <label for="seats">Places disponibles (4 par défaut) :</label>
-                            <input type="number" class="form-control" min="1" max="9" name="seats" id="seats" value="<?= $_SESSION['old']['seats'] ?? '' ?>">
-                            <?php if (!empty($_SESSION['errors']['seats'])): ?>
-                                <div class="error-message"><?= $_SESSION['errors']['seats'] ?></div>
-                            <?php endif; ?>
+                        <div class="d-flex flex-row flex-wrap gap-3">                              
+                            <div class="flex-grow-1">
+                                <label for="color">Couleur :</label>
+                                <input type="text" class="form-control" name="color" id="color" value="<?= $_SESSION['old']['color'] ?? '' ?>" required>
+                                <?php if (!empty($_SESSION['errors']['color'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['color'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="">
+                                <label for="seats">Places disponibles (4 par défaut) :</label>
+                                <input type="number" class="form-control" min="1" max="9" name="seats" id="seats" value="<?= $_SESSION['old']['seats'] ?? '' ?>">
+                                <?php if (!empty($_SESSION['errors']['seats'])): ?>
+                                    <div class="error-message"><?= $_SESSION['errors']['seats'] ?></div>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                         <div class="mb-3">
