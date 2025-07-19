@@ -199,7 +199,7 @@ Ecoride/
 │   │   │   └── footer.php       # Pied de page des pages HTML
 │   │   ├── error404.php         # Vue d’erreur de base
 │   │   ├── home.php             # Exemple de vue (correspondant à HomeController)
-│   │   └── layout.php           # Layout de base│   │
+│   │   └── layout.php           # Layout de base
 │   │
 │   ├── .htaccess                # Fichier config Apache, gère l’accès aux fichiers
 │   ├── autoload.php             # Fonction autoload pour charger les classes sans composer
