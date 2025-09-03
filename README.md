@@ -48,7 +48,6 @@ En résumé, Ecoride faciliterait l'organisation et l'exécution de déplacement
 ## Technologies Utilisées
 
 **Frontend :**
-- Modération des commentaires sur les avis (accepter/effacer).
 - HTML5
 - CSS3 (Bootstrap 5.3)
 - JavaScript (jQuery 3.7.1/AJAX) pour afficher du contenu sans recharger la page.
